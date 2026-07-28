@@ -173,6 +173,8 @@
   .final{text-align:center;padding:110px 0}
   .final h2{font-size:clamp(2.1rem,5vw,3.4rem);font-weight:800}
   .final p{color:var(--silver);font-size:1.15rem;max-width:560px;margin:20px auto 36px}
+  .cta-note{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .ps-line{margin-top:22px;color:var(--muted);font-size:.92rem;font-style:italic}
 
   footer{border-top:1px solid var(--line-soft);padding:48px 0 40px}
   .foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
@@ -296,6 +298,7 @@
           <button class="btn btn-primary btn-lg" onclick="book()">Book a Demo</button>
           <a class="btn btn-ghost btn-lg" href="#audio">Hear it handle a call →</a>
         </div>
+        <div class="cta-note">30 minutes · You'll hear a live call · No contracts</div>
       </div>
       <div class="hero-visual">
         <div class="phone">
@@ -439,6 +442,7 @@
         <div class="player" id="demoPlayer"><div class="tag">Recorded demo call</div><h3>AC out in a heat wave → booked for 8 AM the next morning</h3><div class="player-ctrl"><button class="play" aria-label="Play demo call">▶</button><div class="wave" id="demoWave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="dur" id="demoTime">2:39</span></div><audio id="demoAudio" src="/audio/receptionaide-demo-call.m4a" preload="metadata"></audio></div>
         </div>
         <p class="audio-note">Answered, qualified, booked, and confirmed by ReceptionAIde's Conversational AI. It tells callers up front they're speaking with an AI assistant and that the call may be recorded. This recording is from our HVAC demo line. Yours is trained on your business: your listings, your areas, your showing rules.</p>
+        <a class="btn btn-ghost" href="#" onclick="book();return false" style="margin-top:20px">Make it answer my phone →</a>
       </div>
       <figure class="split-media">
         <img src="/img/homebuyer-couple-showing-confirmed-dusk.jpg" alt="A couple stands in front of a house at dusk, one of them smiling on the phone as their showing is confirmed.">
@@ -471,7 +475,7 @@
         </div>
         <div class="founding-cta">
           <button class="btn btn-primary btn-lg" onclick="book()">Claim a founding spot</button>
-          <div class="spots">◆ LIMITED SPOTS REMAINING</div>
+          <div class="spots">◆ FOUNDING PRICING LOCKED FOR LIFE · LIMITED SPOTS</div>
         </div>
       </div>
     </div>
@@ -484,6 +488,7 @@
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">Can it handle customers who don't speak English?<span class="plus">+</span></div><div class="faq-a"><p>Yes. It's multilingual. It answers in English, Spanish, and other languages, so a language barrier doesn't cost you the job.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">What if it can't answer something?<span class="plus">+</span></div><div class="faq-a"><p>It takes a detailed message or routes the call to you, and texts you a full summary either way. Nothing gets buried in a voicemail box.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">Do I have to change my phone number?<span class="plus">+</span></div><div class="faq-a"><p>No. We forward your existing number, so your customers call the same number they always have. Nothing changes on your trucks or your signs.</p></div></div>
+      <div class="faq-item" onclick="fq(this)"><div class="faq-q">What if it gets something wrong?<span class="plus">+</span></div><div class="faq-a"><p>It works from your playbook only: your services, your prices, your rules. Anything outside the playbook becomes a message or a transfer to you, never a guess. And nothing answers your line until you've heard it and signed off.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">What does it cost?<span class="plus">+</span></div><div class="faq-a"><p>Every shop is different, so we price it to your call volume and setup right in the demo: no surprises, no long contracts. Most owners find it costs less than the jobs they're losing each month.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">How long until it's live?<span class="plus">+</span></div><div class="faq-a"><p>Days, not months. We do the building, you approve it and go. Founding partners get moved to the front of the line.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">What happens when a hot lead calls?<span class="plus">+</span></div><div class="faq-a"><p>Your rules decide: it can route the call straight to your cell, or book the showing and text you a summary the second the call ends. Either way the lead gets an answer instead of your voicemail.</p></div></div>
@@ -495,7 +500,9 @@
       <span class="eyebrow">The power behind the powerhouse</span>
       <h2>Be the agent who picks up.</h2>
       <p>Book a 30-minute demo. We'll play you a live call and show you exactly how it would sound answering for your business.</p>
-      <button class="btn btn-primary btn-lg" onclick="book()">Book a Demo</button>
+      <button class="btn btn-primary btn-lg" onclick="book()">Book My 30-Minute Demo</button>
+      <div class="cta-note">Founding pricing locked for life, while spots last</div>
+      <p class="ps-line">P.S. The demo is a live call and your real numbers, not a slideshow.</p>
     </div>
   </section>
 
