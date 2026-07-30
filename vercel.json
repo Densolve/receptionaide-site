@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/buildingkidz", "destination": "/buildingkidz/schools/san-jose/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/buildingkidz/schools/san-jose", "destination": "https://building-kidz-receptionaide-demo.vercel.app/schools/san-jose/index.html" },
+    { "source": "/buildingkidz/schools/san-jose/", "destination": "https://building-kidz-receptionaide-demo.vercel.app/schools/san-jose/index.html" },
+    { "source": "/buildingkidz/:path*", "destination": "https://building-kidz-receptionaide-demo.vercel.app/:path*" }
+  ]
+}
