@@ -2,7 +2,9 @@
   "redirects": [
     { "source": "/windrose", "destination": "/windrose/", "permanent": false },
     { "source": "/hotel", "destination": "/hotel/", "permanent": false },
-    { "source": "/arbys", "destination": "/arbys/", "permanent": false },
+    { "source": "/restaurant", "destination": "/restaurant/", "permanent": false },
+    { "source": "/arbys", "destination": "/restaurant/", "permanent": false },
+    { "source": "/arbys/", "destination": "/restaurant/", "permanent": false },
     { "source": "/meridian", "destination": "/meridian/", "permanent": false },
     { "source": "/medical", "destination": "/medical/", "permanent": false }
   ],
@@ -11,8 +13,8 @@
     { "source": "/windrose/:path*", "destination": "https://the-windrose-demo.vercel.app/:path*" },
     { "source": "/hotel/", "destination": "https://the-windrose-demo.vercel.app/index.html" },
     { "source": "/hotel/:path*", "destination": "https://the-windrose-demo.vercel.app/:path*" },
-    { "source": "/arbys/", "destination": "https://simi-valley-restaurant-demo.vercel.app/index.html" },
-    { "source": "/arbys/:path*", "destination": "https://simi-valley-restaurant-demo.vercel.app/:path*" },
+    { "source": "/restaurant/", "destination": "https://simi-valley-restaurant-demo.vercel.app/index.html" },
+    { "source": "/restaurant/:path*", "destination": "https://simi-valley-restaurant-demo.vercel.app/:path*" },
     { "source": "/meridian/", "destination": "https://meridian-health-demo-eight.vercel.app/index.html" },
     { "source": "/meridian/:path*", "destination": "https://meridian-health-demo-eight.vercel.app/:path*" },
     { "source": "/medical/", "destination": "https://meridian-health-demo-eight.vercel.app/index.html" },
