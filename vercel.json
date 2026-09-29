@@ -2,6 +2,7 @@
   "redirects": [
     { "source": "/windrose", "destination": "/windrose/", "permanent": false },
     { "source": "/hotel", "destination": "/hotel/", "permanent": false },
+    { "source": "/property", "destination": "/property/", "permanent": false },
     { "source": "/tallowood", "destination": "/tallowood/", "permanent": false },
     { "source": "/meridian", "destination": "/meridian/", "permanent": false },
     { "source": "/medical", "destination": "/medical/", "permanent": false }
@@ -11,6 +12,8 @@
     { "source": "/windrose/:path*", "destination": "https://the-windrose-demo.vercel.app/:path*" },
     { "source": "/hotel/", "destination": "https://the-windrose-demo.vercel.app/index.html" },
     { "source": "/hotel/:path*", "destination": "https://the-windrose-demo.vercel.app/:path*" },
+    { "source": "/property/", "destination": "https://property-management-demo-pink.vercel.app/index.html" },
+    { "source": "/property/:path*", "destination": "https://property-management-demo-pink.vercel.app/:path*" },
     { "source": "/tallowood/", "destination": "https://property-management-demo-pink.vercel.app/index.html" },
     { "source": "/tallowood/:path*", "destination": "https://property-management-demo-pink.vercel.app/:path*" },
     { "source": "/meridian/", "destination": "https://meridian-health-demo-eight.vercel.app/index.html" },
