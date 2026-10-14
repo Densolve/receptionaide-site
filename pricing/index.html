@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing · ReceptionAide</title>
+<meta name="description" content="ReceptionAide pricing: four plans for an AI receptionist built for you, each with a monthly price and a one-time build fee, priced options, and a running total you can send to anyone.">
+<meta property="og:title" content="Pricing · ReceptionAide">
+<meta property="og:description" content="Four plans, priced options, and a running total. Pick your industry and see what an AI receptionist built for you costs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://receptionaide.com/pricing/">
+<meta property="og:image" content="https://receptionaide.com/img/hands-smartphone-glowing-incoming-call-waveform.jpg">
+<meta name="theme-color" content="#05080F">
+<link rel="canonical" href="https://receptionaide.com/pricing/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><path d='M20 5 L34 33 H26 L20 20 L14 33 H6 Z' fill='%235BC8FF'/><circle cx='20' cy='27' r='3.4' fill='%235BC8FF'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#05080F;--navy:#0A1628;--panel:#0D1E36;--panel-2:#102A49;
+    --line:rgba(91,200,255,.16);--line-soft:rgba(120,150,190,.14);
+    --blue:#2A8FFF;--cyan:#5BC8FF;--silver:#C3D1E2;--white:#D5DFEA;--muted:#90A3BE;
+    --ok:#34d399;--gold:#FFCB6B;--grad:linear-gradient(135deg,#2A8FFF 0%,#5BC8FF 100%);--maxw:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--white);font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip;padding-bottom:100px}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit}
+  ul{list-style:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);display:inline-block;margin-bottom:18px}
+  h1,h2,h3{font-family:"Sora",sans-serif;line-height:1.08;letter-spacing:-.02em}
+  .section{padding:76px 0;position:relative}
+  .section-head{max-width:760px;margin-bottom:36px}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.7rem);font-weight:700}
+  .section-head p{color:var(--muted);font-size:1.06rem;margin-top:14px}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+  .ns{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:20px 0;color:var(--silver)}
+
+  header{position:sticky;top:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(7,12,22,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .logo-img{height:34px;width:auto;display:block}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a{color:var(--muted);font-size:.95rem;font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--white)}
+  .btn{font-family:"Sora",sans-serif;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:10px;cursor:pointer;border:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;min-height:44px}
+  .btn-primary{background:var(--grad);color:#04111f;box-shadow:0 6px 22px rgba(42,143,255,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(42,143,255,.55)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--white);border:1px solid var(--line)}
+  .btn-ghost:hover{background:rgba(91,200,255,.1);border-color:var(--cyan)}
+  .btn-sm{padding:9px 16px;font-size:.88rem;border-radius:9px}
+  .btn-link{background:none;border:none;color:var(--cyan);padding:6px 0;font-weight:600;cursor:pointer;font-size:.9rem}
+
+  /* hero */
+  .hero{position:relative;padding:76px 0 40px;overflow:hidden}
+  .hero-grid{position:absolute;inset:0;z-index:0;opacity:.4;background-image:linear-gradient(rgba(91,200,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(91,200,255,.05) 1px,transparent 1px);background-size:54px 54px;mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000,transparent 75%)}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;z-index:0}
+  .blob.b1{width:560px;height:560px;background:radial-gradient(circle,#1559b8,transparent 70%);top:-220px;right:-140px}
+  .hero-inner{position:relative;z-index:2;max-width:860px}
+  .hero h1{font-size:clamp(2.1rem,5.2vw,3.7rem);font-weight:800;margin:6px 0 18px}
+  .hero h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{font-size:clamp(1.02rem,2vw,1.2rem);color:var(--silver);max-width:680px;margin-bottom:30px}
+
+  .seg-label{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .seg{display:inline-flex;flex-wrap:wrap;gap:6px;padding:6px;border-radius:14px;background:rgba(13,30,54,.7);border:1px solid var(--line-soft);max-width:100%}
+  .seg:empty{display:none}
+  .seg button{background:transparent;border:1px solid transparent;color:var(--silver);font-family:"Sora",sans-serif;font-weight:600;font-size:.9rem;padding:10px 15px;border-radius:10px;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;min-height:44px}
+  .seg button:hover{color:var(--white);background:rgba(91,200,255,.08)}
+  .seg button[aria-pressed=true]{background:var(--grad);color:#04111f;box-shadow:0 4px 16px rgba(42,143,255,.35)}
+  .ind-intro{color:var(--muted);margin-top:16px;font-size:1rem;max-width:720px;min-height:1.6em}
+  .demo-line{display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:10px 16px;border-radius:12px;background:rgba(13,30,54,.7);border:1px solid var(--line);font-size:.95rem;color:var(--silver);max-width:100%}
+  .demo-line:empty{display:none}
+  .demo-line .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);flex:0 0 auto}
+  .demo-line a{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--cyan);white-space:nowrap}
+
+  /* tier cards */
+  .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+  .tier{background:var(--panel);border:1px solid var(--line-soft);border-radius:18px;padding:26px 22px 22px;display:flex;flex-direction:column;position:relative;transition:transform .22s,border-color .22s,box-shadow .22s;cursor:pointer}
+  .tier:hover{transform:translateY(-3px);border-color:var(--line)}
+  .tier.rec{border-color:rgba(91,200,255,.45)}
+  .tier.sel{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan),0 18px 50px rgba(3,12,26,.6)}
+  .tier.scoped{background:linear-gradient(180deg,#0f1f38,#0b1527);border-style:dashed;cursor:default}
+  .tier.scoped:hover{transform:none}
+  .tier .badge{position:absolute;top:-12px;left:22px;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;background:var(--grad);color:#04111f;padding:5px 10px;border-radius:999px;font-weight:600}
+  .tier.scoped .badge{background:rgba(255,203,107,.18);color:var(--gold);border:1px solid rgba(255,203,107,.4)}
+  .tier .num{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.14em;color:var(--blue)}
+  .tier h3{font-size:1.45rem;font-weight:700;margin:6px 0 4px}
+  .tier .tag{color:var(--muted);font-size:.9rem;min-height:2.9em}
+  .tier .rec-why{font-size:.78rem;color:var(--cyan);min-height:1.3em;margin-top:4px}
+  .tier .price{margin:14px 0 2px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+  .tier .price .amt{font-family:"Sora",sans-serif;font-weight:800;font-size:2.1rem;letter-spacing:-.03em}
+  .tier .price .per{color:var(--muted);font-size:.9rem}
+  .tier .price-note{font-size:.76rem;color:var(--muted);min-height:1.2em}
+  .tier .annual-note{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ok);min-height:1.2em;margin-top:2px}
+  .tier .build{margin-top:10px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:.9rem;color:var(--silver)}
+  .tier .build b{font-family:"IBM Plex Mono",monospace;color:var(--white);font-weight:600}
+  .tier .build small{display:block;color:var(--muted);font-size:.76rem;line-height:1.4;margin-top:3px}
+  .tier .build a{color:var(--cyan)}
+  .tier .usage{margin-top:10px;font-size:.8rem;color:var(--muted);line-height:1.45}
+  .tier .usage b{color:var(--silver);font-weight:600}
+  .tier .plus{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .tier ul.feat{margin-top:8px}
+  .tier ul.feat li{display:flex;gap:9px;align-items:flex-start;color:var(--silver);font-size:.9rem;padding:5px 0;line-height:1.4}
+  .tier ul.feat li .ck{color:var(--cyan);font-weight:700;flex:0 0 auto;margin-top:1px}
+  .tier .worth{margin-top:8px;font-size:.78rem;color:var(--gold)}
+  .tier details{margin-top:10px;font-size:.84rem;color:var(--muted)}
+  .tier details summary{cursor:pointer;color:var(--cyan);font-weight:600;font-size:.84rem;list-style:none;padding:6px 0}
+  .tier details summary::-webkit-details-marker{display:none}
+  .tier details summary::before{content:"+ ";font-weight:700}
+  .tier details[open] summary::before{content:"- "}
+  .tier details ul{margin-top:8px;padding-left:14px}
+  .tier details li{list-style:disc;padding:3px 0;line-height:1.4}
+  .tier .spacer{flex:1}
+  .tier .pick{margin-top:16px;width:100%}
+  .tier.sel .pick{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.5);color:var(--ok)}
+  .tier .scope-note{margin-top:16px;font-size:.84rem;color:var(--silver);line-height:1.45}
+  .tier .scope-btn{margin-top:10px;width:100%}
+  .trust{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
+
+  /* fit helper */
+  .fit{background:linear-gradient(180deg,var(--ink),var(--navy) 55%,var(--ink))}
+  details.fit-wrap summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  details.fit-wrap summary::-webkit-details-marker{display:none}
+  details.fit-wrap summary .mark{font-family:"IBM Plex Mono",monospace;color:var(--cyan);font-size:1.4rem;font-weight:600;flex:0 0 auto;margin-top:6px}
+  details.fit-wrap[open] summary .mark{transform:rotate(45deg)}
+  details.fit-wrap summary h2{font-size:clamp(1.8rem,4vw,2.7rem);font-weight:700}
+  details.fit-wrap summary .eyebrow{display:block}
+  .fit-lead{color:var(--muted);font-size:1.06rem;margin:14px 0 30px;max-width:760px}
+  .fit-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:34px;align-items:start}
+  .q{margin-bottom:24px}
+  .q h3{font-size:1.02rem;font-weight:600;margin-bottom:4px}
+  .q h3 .n{color:var(--blue);font-family:"IBM Plex Mono",monospace;font-size:.78rem;margin-right:10px;letter-spacing:.1em}
+  .q .hint{font-size:.8rem;color:var(--muted);margin-bottom:10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:rgba(255,255,255,.03);border:1px solid var(--line-soft);color:var(--silver);border-radius:999px;padding:10px 15px;font-size:.9rem;cursor:pointer;transition:border-color .2s,background .2s,color .2s;text-align:left;line-height:1.35;min-height:44px}
+  .chip:hover{border-color:var(--cyan);color:var(--white)}
+  .chip[aria-pressed=true]{background:rgba(42,143,255,.16);border-color:var(--cyan);color:var(--white)}
+  .q .ans-note{margin-top:8px;font-size:.86rem;color:var(--gold)}
+  .fit-out{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;position:sticky;top:92px}
+  .fit-out .pre{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .fit-out .name{font-family:"Sora",sans-serif;font-weight:800;font-size:1.8rem;margin:8px 0 4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fit-out.empty .name{background:none;-webkit-text-fill-color:var(--silver);color:var(--silver);font-size:1.3rem;font-weight:600}
+  .fit-out .why{color:var(--muted);font-size:.93rem;margin:8px 0 14px}
+  .fit-out h4{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px}
+  .fit-out ul{color:var(--silver);font-size:.9rem}
+  .fit-out li{padding:3px 0}
+  .fit-out li::before{content:"+ ";color:var(--cyan);font-weight:700}
+  .fit-out li.sug::before{content:"? ";color:var(--gold)}
+  .fit-out .btn{width:100%;margin-top:16px}
+
+  /* options */
+  .groups{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .group{background:var(--panel);border:1px solid var(--line-soft);border-radius:18px;padding:22px 22px 10px}
+  .group h3{font-size:1rem;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+  .group h3 .cnt{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--muted);letter-spacing:.1em}
+  .group.adv{grid-column:1 / -1}
+  .group.adv details summary{cursor:pointer;font-family:"Sora",sans-serif;font-weight:600;font-size:1rem;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:6px 0;min-height:44px}
+  .group.adv details summary::-webkit-details-marker{display:none}
+  .group.adv details summary .hintt{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--muted);letter-spacing:.1em;font-weight:500}
+  .group.adv .adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+  .opt{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line-soft)}
+  .opt:first-of-type{border-top:none}
+  .opt input{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin-top:2px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer;position:relative;flex:0 0 auto}
+  .opt input:checked{background:var(--grad);border-color:transparent}
+  .opt input:checked::after{content:"";position:absolute;left:8px;top:3px;width:5px;height:11px;border:solid #04111f;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .opt input:disabled{cursor:not-allowed;opacity:.55}
+  .opt label{cursor:pointer;display:block}
+  .opt .t{font-weight:600;font-size:.98rem;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .opt .d{color:var(--muted);font-size:.86rem;margin-top:3px;line-height:1.45}
+  .opt .state{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--line-soft);color:var(--muted)}
+  .opt .state.inc{color:var(--ok);border-color:rgba(52,211,153,.4)}
+  .opt .state.req{color:var(--gold);border-color:rgba(255,203,107,.4)}
+  .opt .p{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:.9rem;color:var(--white);white-space:nowrap}
+  .opt .p small{display:block;color:var(--muted);font-size:.74rem}
+  .opt .p .incl{color:var(--ok)}
+  .opt.off .t,.opt.off .p{opacity:.5}
+  .qty{display:inline-flex;align-items:center;gap:4px;margin-top:8px;border:1px solid var(--line-soft);border-radius:8px;padding:2px}
+  .qty button{width:36px;height:36px;border:none;background:rgba(255,255,255,.05);border-radius:6px;cursor:pointer;font-weight:700;line-height:1}
+  .qty button:hover{background:rgba(91,200,255,.15)}
+  .qty span{font-family:"IBM Plex Mono",monospace;min-width:22px;text-align:center;font-size:.88rem}
+
+  /* compare */
+  .cmp-wrap{overflow-x:auto;border:1px solid var(--line-soft);border-radius:16px;background:var(--panel)}
+  table.cmp{width:100%;border-collapse:collapse;min-width:720px}
+  .cmp th,.cmp td{padding:13px 16px;text-align:center;border-top:1px solid var(--line-soft);font-size:.9rem}
+  .cmp thead th{font-family:"Sora",sans-serif;font-weight:600;border-top:none;background:rgba(5,10,20,.35)}
+  .cmp th[scope=row],.cmp thead th:first-child{text-align:left;color:var(--silver);font-weight:500;font-family:"IBM Plex Sans",system-ui,sans-serif}
+  .cmp td .y{color:var(--cyan);font-weight:700}
+  .cmp td .n{color:var(--muted)}
+  .cmp td .o{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--silver);letter-spacing:.04em}
+  .cmp th.sel,.cmp td.sel{background:rgba(42,143,255,.08)}
+  .cmp-hint{color:var(--muted);font-size:.84rem;margin-top:10px}
+
+  /* build covers */
+  .build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .bcard{background:var(--panel);border:1px solid var(--line-soft);border-radius:16px;padding:22px}
+  .bcard h3{font-size:1rem;font-weight:600;margin-bottom:4px}
+  .bcard .fee{font-family:"IBM Plex Mono",monospace;color:var(--cyan);font-size:.9rem;margin-bottom:10px}
+  .bcard li{font-size:.86rem;color:var(--silver);padding:3px 0;display:flex;gap:8px;line-height:1.4}
+  .bcard li::before{content:"·";color:var(--cyan);font-weight:700}
+  .bcard .go{margin-top:10px;font-size:.8rem;color:var(--muted)}
+  .build-note{margin-top:16px;color:var(--muted);font-size:.9rem;max-width:860px}
+
+  /* notes + faq */
+  .note-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:56px}
+  .note{background:var(--panel);border:1px solid var(--line-soft);border-radius:16px;padding:22px}
+  .note h3{font-size:1rem;font-weight:600;margin-bottom:8px}
+  .note p{color:var(--muted);font-size:.93rem}
+  .faq-item{border-top:1px solid var(--line-soft)}
+  .faq-item:last-child{border-bottom:1px solid var(--line-soft)}
+  .faq-q{width:100%;background:none;border:none;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:"Sora",sans-serif;font-weight:600;font-size:1.04rem;padding:20px 0;cursor:pointer;color:var(--white)}
+  .faq-q .plus{color:var(--cyan);font-size:1.5rem;flex:0 0 auto;transition:transform .25s;line-height:1}
+  .faq-q[aria-expanded=true] .plus{transform:rotate(45deg)}
+  .faq-a{display:none;color:var(--muted);padding:0 0 20px}
+  .faq-a.open{display:block}
+  .faq-a p{font-size:.97rem}
+
+  .final{text-align:center;padding:84px 0 56px}
+  .final h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:800}
+  .final p{color:var(--silver);font-size:1.1rem;max-width:560px;margin:18px auto 30px}
+  .final .how{color:var(--muted);font-size:.88rem;margin-top:14px}
+
+  footer{border-top:1px solid var(--line-soft);padding:44px 0 36px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+  .foot .tag{color:var(--muted);font-size:.92rem;margin-top:8px}
+  .foot .logo-img{height:28px}
+  .foot-links{display:flex;flex-wrap:wrap;gap:10px 26px;color:var(--muted);font-size:.92rem}
+  .foot-links a:hover{color:var(--white)}
+  .copy{color:var(--muted);font-size:.84rem;margin-top:28px;font-family:"IBM Plex Mono",monospace;line-height:1.6}
+
+  /* sticky quote bar */
+  .quote{position:fixed;left:0;right:0;bottom:0;z-index:90;background:rgba(7,12,22,.92);backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+  .quote .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:80px;padding-top:10px;padding-bottom:10px}
+  .q-left{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .q-tier{font-family:"Sora",sans-serif;font-weight:700;font-size:1rem}
+  .q-tier small{display:block;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .q-num{line-height:1.15}
+  .q-num .v{font-family:"Sora",sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.02em}
+  .q-num .v.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .q-num small{display:block;font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .q-meta{color:var(--muted);font-size:.78rem;max-width:300px;line-height:1.4}
+  .q-meta b{color:var(--silver);font-weight:600}
+  .q-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .q-right .btn .s{display:none}
+  .nudge{color:var(--gold);font-size:.8rem;max-width:320px;line-height:1.4}
+  .nudge:empty{display:none}
+  .nudge button{color:var(--gold);text-decoration:underline;background:none;border:none;cursor:pointer;font-weight:600}
+  .q-detail,.q-more{display:none}
+  .toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%) translateY(10px);background:var(--panel-2);border:1px solid var(--line);color:var(--white);padding:10px 16px;border-radius:10px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:95;max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:1180px){.q-meta,.nudge{display:none}}
+  @media(max-width:1000px){.tiers,.build-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:860px){
+    .nav-links{display:none}
+    .nav .btn{padding:9px 14px;font-size:.86rem;white-space:nowrap}
+    .logo-img{height:28px}
+    .hero{padding:52px 0 36px}
+    .section{padding:56px 0}
+    .fit-grid,.groups,.note-grid,.group.adv .adv-grid{grid-template-columns:1fr}
+    .fit-out{position:static}
+    .q-tier small,.q-tier .ind,.q-num .ann{display:none}
+    .quote .wrap{flex-direction:column;align-items:stretch;gap:8px;min-height:0;padding-top:10px;padding-bottom:10px}
+    .q-left{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:10px}
+    .q-tier{font-size:.98rem}
+    .q-num .v{font-size:1.08rem}
+    .q-right{flex-wrap:nowrap}
+    .q-right .btn{flex:1;min-width:0;padding:10px 8px;font-size:.84rem;white-space:nowrap}
+    .q-right .btn .l{display:none}
+    .q-right .btn .s{display:inline}
+    .q-more{display:inline}
+    .q-detail.open{display:block;color:var(--muted);font-size:.8rem;line-height:1.45;padding-top:4px}
+    .q-detail.open b{color:var(--silver)}
+  }
+  @media(max-width:560px){.tiers,.build-grid{grid-template-columns:1fr}.seg button{padding:9px 12px;font-size:.84rem}.tier .rec-why:empty,.tier .price-note:empty,.tier .tag{min-height:0}.tier .rec-why:empty,.tier .price-note:empty{display:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="/"><img class="logo-img" src="/img/receptionaide-logo.png" alt="ReceptionAide"></a>
+    <nav class="nav-links" aria-label="Page sections">
+      <a href="/">All industries</a><a href="#plans">Plans</a><a href="#fit">Which plan</a><a href="#options">Options</a><a href="#compare">Compare</a><a href="#faq">FAQ</a>
+    </nav>
+    <button class="btn btn-primary" onclick="book()">Book a Call</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div><div class="blob b1" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">Pricing</span>
+      <h1>An AI receptionist, <span class="hl">built for you.</span><br>Priced in the open.</h1>
+      <p class="sub">Four plans, each includes the one before it. The monthly price and the one-time build fee are both shown, every option is priced next to it, and the total updates as you choose. Plan prices are the same in every industry.</p>
+      <noscript><p class="ns">This page needs JavaScript to show the plans and totals. For the price list, email contact@receptionaide.com.</p></noscript>
+      <div class="seg-label">Your industry</div>
+      <div class="seg" id="industrySeg" role="group" aria-label="Choose your industry"></div>
+      <p class="ind-intro" id="indIntro"></p>
+      <div class="demo-line" id="demoLine"></div>
+    </div>
+  </section>
+
+  <section class="section" id="plans">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Plans</span>
+        <h2>Each plan includes everything in the plan before it.</h2>
+        <p>Monthly covers the AI receptionist, the phone system and our management. The build fee is paid once and covers setup, your information, test calls and go-live on a written date.</p>
+      </div>
+      <div class="tiers" id="tierGrid"></div>
+      <p class="trust" id="trustLine"></p>
+    </div>
+  </section>
+
+  <section class="section fit" id="fit">
+    <div class="wrap">
+      <details class="fit-wrap" id="fitWrap" open>
+        <summary><h2><span class="eyebrow">Not sure which plan?</span>Four short questions.</h2><span class="mark" aria-hidden="true">+</span></summary>
+        <p class="fit-lead">Your answers point at a plan and the options worth adding. The plans above stay open; nothing is hidden behind the questions.</p>
+        <div class="fit-grid">
+          <div id="questions"></div>
+          <aside class="fit-out empty" id="fitOut" aria-live="polite">
+            <div class="pre">Our suggestion</div>
+            <div class="name" id="fitName">Answer the four questions to see a suggestion.</div>
+            <div class="why" id="fitWhy"></div>
+            <div id="fitLists"></div>
+            <button class="btn btn-primary" id="fitApply" disabled>Use this plan</button>
+          </aside>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section" id="options" style="background:linear-gradient(180deg,var(--ink),var(--navy) 50%,var(--ink))">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Options</span>
+        <h2>Add what you need. Each one is priced.</h2>
+        <p>Options marked Included come with your plan. Options marked with a plan name unlock when you move up.</p>
+      </div>
+      <div class="groups" id="groups"></div>
+    </div>
+  </section>
+
+  <section class="section" id="compare">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Compare</span><h2>Side by side.</h2></div>
+      <div class="cmp-wrap"><table class="cmp" id="cmpTable"></table></div>
+      <p class="cmp-hint">A check mark means included in the plan. A dot means not in the plan. Add-on prices are per month.</p>
+    </div>
+  </section>
+
+  <section class="section" id="build">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">The build fee</span><h2>What the build fee covers.</h2></div>
+      <div class="build-grid" id="buildGrid"></div>
+      <p class="build-note" id="buildNote"></p>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="note-grid">
+        <div class="note"><h3>Minutes and texts</h3><p id="usageNote"></p></div>
+        <div class="note"><h3>What callers hear and what we never do</h3><p id="complianceNote"></p></div>
+        <div class="note"><h3>Connecting your software</h3><p id="integrationNote"></p></div>
+        <div class="note"><h3>Paying yearly</h3><p id="annualNote"></p></div>
+      </div>
+      <div class="section-head"><span class="eyebrow">FAQ</span><h2>Questions we get on the call.</h2></div>
+      <div id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Hear it before you buy it.</h2>
+      <p>Fifteen minutes. We walk through the quote you built, you call the live line, and you decide.</p>
+      <button class="btn btn-primary" style="padding:16px 30px;font-size:1.05rem;border-radius:12px" onclick="book()">Book a 15-minute call</button>
+      <p class="how">When you book, we copy your quote to your clipboard. Paste it into the booking notes so the call starts from it.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img class="logo-img" src="/img/receptionaide-logo.png" alt="ReceptionAide">
+        <div class="tag">AI receptionist and call monitoring for small businesses.</div>
+      </div>
+      <div class="foot-links"><a href="/">All industries</a><a href="#plans">Plans</a><a href="#options">Options</a><a href="#faq">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="#" onclick="book();return false">Book a Call</a></div>
+    </div>
+    <div class="copy">© 2026 ReceptionAide LLC · contact@receptionaide.com · Prices in US dollars as of <span id="priceDate"></span>, identical in every industry. We quote what this page shows.</div>
+  </div>
+</footer>
+
+<div class="quote" id="quote" aria-live="polite">
+  <div class="wrap">
+    <div class="q-left">
+      <div class="q-tier"><small>Your quote</small><span id="qTier">Pick a plan</span></div>
+      <div class="q-num"><span class="v grad" id="qMonthly">$0</span><small>a month</small></div>
+      <div class="q-num"><span class="v" id="qBuild">$0</span><small>one time</small></div>
+      <button class="btn-link q-more" id="qMore" onclick="toggleDetail()" aria-expanded="false" aria-controls="qDetail">Details</button>
+      <div class="q-meta" id="qMeta"></div>
+      <div class="nudge" id="nudge"></div>
+    </div>
+    <div class="q-right">
+      <button class="btn btn-ghost btn-sm" onclick="copyQuote()"><span class="l">Copy quote</span><span class="s">Copy</span></button>
+      <button class="btn btn-ghost btn-sm" id="emailBtn" onclick="emailQuote()"><span class="l">Email myself this quote</span><span class="s">Email</span></button>
+      <button class="btn btn-primary btn-sm" onclick="book()"><span class="l">Book a 15-minute call</span><span class="s">Book a call</span></button>
+    </div>
+    <div class="q-detail" id="qDetail"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="/pricing/pricing-data.js"></script>
+<script>
+(function(){
+  const D=window.RA_PRICING;
+  const $=id=>document.getElementById(id);
+  if(!D){document.querySelector('.hero-inner').insertAdjacentHTML('beforeend','<p class="ns">The price list did not load. For prices, email contact@receptionaide.com.</p>');window.book=function(){window.open('https://api.leadconnectorhq.com/widget/booking/zF5lnnLqKPt5QJeqKkJN','_blank','noopener');};return;}
+  const money=n=>'$'+Math.round(n).toLocaleString('en-US');
+  const num=n=>n.toLocaleString('en-US');
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+  const selectable=D.tiers.filter(t=>!t.scoped);
+  const state={industry:D.industries[0].key,tier:(selectable.find(t=>t.recommended)||selectable[1]||selectable[0]).id,addons:{},answers:[]};
+  const addonList=D.addonGroups.flatMap(g=>g.addons);
+  const addon=k=>addonList.find(a=>a.key===k);
+  const ind=()=>D.industries.find(i=>i.key===state.industry)||D.industries[0];
+  const tier=()=>D.tiers.find(t=>t.id===state.tier);
+  const tierById=id=>D.tiers.find(t=>t.id===id);
+  const tierFeatures=t=>{const f=ind().tierFeatures;return (f&&f[t.id]&&f[t.id].length)?f[t.id]:t.features;};
+  const isIncluded=(a,tid)=>!!(a.includedFrom&&(tid||state.tier)>=a.includedFrom);
+  const includedQty=(a,tid)=>(a.includedQtyFrom&&(tid||state.tier)>=a.includedQtyFrom)?(a.includedQty||1):0;
+  const isLocked=(a,tid)=>!!(a.minTier&&(tid||state.tier)<a.minTier);
+  const isRequired=a=>(ind().requiredAddons||[]).includes(a.key);
+  const isForIndustry=a=>!a.industries||a.industries.includes(state.industry);
+  const addonMonthly=(a,tid)=>a.monthlyByTier?(a.monthlyByTier[tid||state.tier]||a.monthly):a.monthly;
+  const reqAddons=()=>(ind().requiredAddons||[]).map(addon).filter(Boolean);
+  const requiredMonthly=tid=>reqAddons().reduce((s,a)=>s+addonMonthly(a,tid),0);
+  const requiredOnce=()=>reqAddons().reduce((s,a)=>s+a.oneTime,0);
+  const chosenAddons=()=>Object.entries(state.addons).map(([k,q])=>({a:addon(k),q})).filter(x=>x.a&&isForIndustry(x.a)&&!isIncluded(x.a)&&!isLocked(x.a)&&!isRequired(x.a)&&x.q>0);
+
+  // ---- URL state ----
+  function readURL(){
+    const p=new URLSearchParams(location.search);
+    if(p.get('i')&&D.industries.some(i=>i.key===p.get('i')))state.industry=p.get('i');
+    if(p.get('t')&&selectable.some(t=>t.id===+p.get('t')))state.tier=+p.get('t');
+    if(p.get('a'))p.get('a').split(',').forEach(s=>{const [k,q]=s.split(':');if(addon(k))state.addons[k]=Math.max(1,+q||1);});
+  }
+  function writeURL(){
+    const p=new URLSearchParams();p.set('i',state.industry);p.set('t',state.tier);
+    const a=chosenAddons().map(({a,q})=>q>1?a.key+':'+q:a.key);
+    if(a.length)p.set('a',a.join(','));
+    try{history.replaceState(null,'',location.pathname+'?'+p.toString()+location.hash);}catch(e){}
+  }
+
+  // ---- industry ----
+  function renderIndustry(){
+    $('industrySeg').innerHTML=D.industries.map(i=>`<button type="button" data-fk="ind:${i.key}" aria-pressed="${i.key===state.industry}" onclick="setIndustry('${i.key}')">${esc(i.label)}</button>`).join('');
+    $('indIntro').textContent=ind().intro||'';
+    const dl=ind().demoLine;
+    $('demoLine').innerHTML=dl?`<span class="dot" aria-hidden="true"></span><span>${esc(dl.label)}${dl.number?' <a href="tel:+1'+dl.number.replace(/\D/g,'')+'">'+esc(dl.number)+'</a>':''}</span>`:'';
+    $('complianceNote').textContent=ind().compliance||'';
+    $('integrationNote').textContent=ind().integration||'';
+    $('emailBtn').style.display=ind().noEmailQuote?'none':'';
+  }
+  window.setIndustry=function(k){
+    state.industry=k;state.answers=[];
+    Object.keys(state.addons).forEach(key=>{const a=addon(key);if(!a||!isForIndustry(a))delete state.addons[key];});
+    renderAll();
+  };
+
+  // ---- tiers ----
+  function newlyIncludedValue(t){
+    return addonList.filter(a=>isForIndustry(a)&&!a.monthlyByTier&&((a.includedFrom===t.id)||(a.includedQtyFrom===t.id))).reduce((s,a)=>s+(a.includedQtyFrom===t.id?a.monthly*(a.includedQty||1):a.monthly),0);
+  }
+  function renderTiers(){
+    const req=reqAddons();const reqO=requiredOnce();
+    $('tierGrid').innerHTML=D.tiers.map((t,i)=>{
+      const sel=t.id===state.tier&&!t.scoped;const reqM=requiredMonthly(t.id);const headline=t.monthly+reqM;
+      const worth=t.scoped?0:newlyIncludedValue(t);
+      const buildSmall=reqO?`<small>plus ${req.filter(a=>a.oneTime).map(a=>money(a.oneTime)+' '+esc(a.name)+' setup').join(' and ')}; ${t.buildFrom?'from ':''}${money(t.build+reqO)} one time in total</small>`:'';
+      return `<article class="tier ${t.recommended?'rec':''} ${t.scoped?'scoped':''} ${sel?'sel':''}" ${t.scoped?'':`onclick="pickTier(${t.id})"`} aria-label="${esc(t.name)} plan">
+        ${t.scoped?'<span class="badge">Scoped per client</span>':t.recommended?'<span class="badge">'+esc(t.badge||'Recommended')+'</span>':''}
+        <div class="num">PLAN 0${t.id}</div>
+        <h3>${esc(t.name)}</h3>
+        <div class="tag">${esc(t.tagline)}</div>
+        <div class="rec-why">${t.recommended&&ind().recommendedReason?'Recommended '+esc(ind().recommendedReason):''}</div>
+        <div class="price"><span class="amt">${money(headline)}</span><span class="per">a month</span></div>
+        <div class="price-note">${reqM?'includes the '+req.map(a=>esc(a.name)+', '+money(addonMonthly(a,t.id))+' a month').join(' and ')+'; plan '+money(t.monthly):''}</div>
+        <div class="annual-note">${t.annualMonths?'or '+money(t.monthly*t.annualMonths)+' a year for the plan: pay for '+t.annualMonths+' months, get 12':'billed monthly'}</div>
+        <div class="build"><b>${t.buildFrom?'from ':''}${money(t.build)}</b> one-time build${buildSmall}${t.scoped?'<small>quoted after a scoping call, in writing before you sign</small>':'<small><a href="#build" onclick="event.stopPropagation()">What it covers</a></small>'}</div>
+        <div class="usage"><b>${num(t.minutes)} minutes</b> and <b>${num(t.texts)} texts</b> a month, then ${'$'+D.overagePerMinute.toFixed(2)} a minute and ${'$'+D.overagePerText.toFixed(2)} a text</div>
+        <div class="plus">${i===0?'Includes':'Everything in '+esc(D.tiers[i-1].name)+', plus'}</div>
+        <ul class="feat">${tierFeatures(t).map(f=>`<li><span class="ck" aria-hidden="true">✓</span><span>${esc(f)}</span></li>`).join('')}</ul>
+        ${worth>=100?`<div class="worth">The options this plan adds are ${money(worth)} a month separately</div>`:''}
+        <details onclick="event.stopPropagation()"><summary>See what is included</summary><ul>${(t.more||[]).map(m=>`<li>${esc(m)}</li>`).join('')}</ul></details>
+        <div class="spacer"></div>
+        ${t.scoped?`<div class="scope-note">${esc(t.scopedNote||'')}</div><button type="button" class="btn btn-primary btn-sm scope-btn" data-fk="tier:${t.id}" onclick="book()">Book a scoping call</button>`:`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" aria-pressed="${sel}" onclick="event.stopPropagation();pickTier(${t.id})">${sel?'Selected':'Select '+esc(t.name)}</button>`}
+      </article>`;}).join('');
+    $('trustLine').textContent=D.trustLine||'';
+  }
+  window.pickTier=function(id){
+    const to=tierById(id);if(!to||to.scoped)return;
+    // Quantities on options with an included unit mean "beyond the included one"; adjust when the included count changes between plans.
+    addonList.forEach(a=>{if(!a.qty||!a.includedQtyFrom||!state.addons[a.key])return;const before=includedQty(a,state.tier),after=includedQty(a,id);const q=state.addons[a.key]-(after-before);if(q<=0)delete state.addons[a.key];else state.addons[a.key]=q;});
+    state.tier=id;renderAll();
+  };
+
+  // ---- fit helper ----
+  function renderQuestions(){
+    const qs=ind().questions||[];
+    $('questions').innerHTML=qs.map((q,qi)=>{const sel=state.answers[qi];const a=sel!==undefined?q.answers[sel]:null;
+      return `<div class="q" role="group" aria-labelledby="q${qi}"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="chips">${q.answers.map((x,ai)=>`<button type="button" class="chip" data-fk="q:${qi}:${ai}" aria-pressed="${sel===ai}" onclick="answer(${qi},${ai})">${esc(x.label)}</button>`).join('')}</div>${a&&a.note?`<div class="ans-note">${esc(a.note)}</div>`:''}</div>`;}).join('');
+    renderFit();
+  }
+  window.answer=function(qi,ai){state.answers[qi]=ai;renderQuestions();restoreFocus();};
+  function suggestion(){
+    const qs=ind().questions||[];
+    if(!qs.length||qs.some((q,i)=>state.answers[i]===undefined))return null;
+    let minTier=1;const adds=new Set(),sugs=new Set();
+    qs.forEach((q,i)=>{const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
+    const t=tierById(minTier);
+    const covered=(a,tid)=>isIncluded(a,tid)||includedQty(a,tid)>0;
+    const addKeys=[...adds].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!isRequired(a);});
+    const sugKeys=[...sugs].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!adds.has(k);});
+    return {tier:t,addons:addKeys,suggest:sugKeys};
+  }
+  function renderFit(){
+    const s=suggestion(),out=$('fitOut');
+    if(!s){out.classList.add('empty');$('fitName').textContent='Answer the four questions to see a suggestion.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
+    out.classList.remove('empty');
+    const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
+    $('fitName').textContent=s.tier.name;
+    $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
+    const line=k=>{const a=addon(k);return `${esc(a.name)}: ${money(addonMonthly(a,s.tier.id))} a month${a.oneTime?', '+money(a.oneTime)+' setup':''}`;};
+    $('fitLists').innerHTML=(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
+    $('fitApply').disabled=false;
+  }
+  $('fitApply').addEventListener('click',()=>{
+    const s=suggestion();if(!s)return;
+    state.tier=s.tier.id;s.addons.forEach(k=>{state.addons[k]=state.addons[k]||1;});
+    renderAll();$('plans').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // ---- options ----
+  function optRow(a){
+    const inc=isIncluded(a),lock=isLocked(a),req=isRequired(a),incQ=includedQty(a),qty=state.addons[a.key]||0,on=qty>0;
+    const checked=inc||req||(on&&!lock);
+    const disabled=inc||lock||req;
+    let st='';
+    if(inc)st='<span class="state inc">Included</span>';
+    else if(lock)st=`<span class="state">From ${esc(tierById(a.minTier).name)}</span>`;
+    else if(req)st=`<span class="state req">Required for ${esc(ind().label.toLowerCase())}</span>`;
+    else if(incQ)st=`<span class="state inc">${incQ} included</span>`;
+    if(a.term)st+=`<span class="state">${esc(a.term)}</span>`;
+    const q=Math.max(1,qty);const id='opt-'+a.key;
+    const qtyUI=(a.qty&&checked&&!inc)?`<span class="qty"><button type="button" data-fk="qty:${a.key}:-1" aria-label="Fewer ${esc(a.name)}" onclick="qtyChange('${a.key}',-1)">−</button><span aria-live="polite">${q}</span><button type="button" data-fk="qty:${a.key}:1" aria-label="More ${esc(a.name)}" onclick="qtyChange('${a.key}',1)">+</button></span>`:'';
+    const m=addonMonthly(a)*(a.qty?q:1),o=a.oneTime*(a.qty?q:1);
+    const price=inc?'<span class="incl">Included</span>':`${money(m)} a month`;
+    const label=a.name+(incQ&&!inc?' (beyond the included one)':'');
+    return `<div class="opt ${inc?'inc':''} ${lock?'off':''}"><input type="checkbox" id="${id}" data-fk="opt:${a.key}" ${checked?'checked':''} ${disabled?'disabled':''} onchange="toggleAddon('${a.key}',this.checked)"><label for="${id}"><span class="t">${esc(label)}${st}</span><span class="d">${esc(a.desc)}</span></label><span class="p">${price}${(!inc&&o)?`<small>${money(o)} setup</small>`:''}${qtyUI}</span></div>`;
+  }
+  function renderOptions(){
+    $('groups').innerHTML=D.addonGroups.map(g=>{
+      const items=g.addons.filter(isForIndustry);if(!items.length)return '';
+      const chosen=items.filter(a=>state.addons[a.key]&&!isIncluded(a)&&!isLocked(a)&&!isRequired(a)).length;
+      if(g.advanced)return `<div class="group adv"><details ${chosen||state.advOpen?'open':''} ontoggle="advToggle(this)"><summary>${esc(g.label)}<span class="hintt">${chosen?chosen+' added · ':''}${items.length} more options</span></summary><div class="adv-grid">${items.map(optRow).join('')}</div></details></div>`;
+      return `<div class="group"><h3>${esc(g.label)}<span class="cnt">${chosen?chosen+' added':''}</span></h3>${items.map(optRow).join('')}</div>`;}).join('');
+  }
+  window.advToggle=function(el){state.advOpen=el.open;};
+  window.toggleAddon=function(k,on){if(on)state.addons[k]=state.addons[k]||1;else delete state.addons[k];renderAll();};
+  window.qtyChange=function(k,d){const a=addon(k);state.addons[k]=Math.min(a.max||99,Math.max(1,(state.addons[k]||1)+d));renderAll();};
+
+  // ---- compare ----
+  function renderCompare(){
+    const head=`<caption class="sr">Plan comparison</caption><thead><tr><th scope="col">What you get</th>${D.tiers.map(t=>`<th scope="col" class="${t.id===state.tier?'sel':''}">${esc(t.name)}<br><span class="mono" style="font-size:.74rem;color:var(--muted);font-weight:500">${money(t.monthly)} a month</span></th>`).join('')}</tr></thead>`;
+    const rows=D.compare.map(r=>`<tr><th scope="row">${esc(r.label)}</th>${r.tiers.map((v,i)=>`<td class="${D.tiers[i].id===state.tier?'sel':''}">${v===true?'<span class="y" role="img" aria-label="Included">✓</span>':v===false?'<span class="n" role="img" aria-label="Not in this plan">·</span>':`<span class="o">${esc(v)}</span>`}</td>`).join('')}</tr>`).join('');
+    $('cmpTable').innerHTML=head+'<tbody>'+rows+'</tbody>';
+  }
+
+  // ---- build covers ----
+  function renderBuild(){
+    const B=D.buildCovers||{shared:[]};
+    $('buildGrid').innerHTML=D.tiers.map(t=>`<div class="bcard"><h3>${esc(t.name)}</h3><div class="fee">${t.buildFrom?'from ':''}${money(t.build)} one time${t.id>1?' · everything in '+esc(tierById(t.id-1).name)+', plus':''}</div><ul>${(t.id===1?B.shared:[]).concat(t.buildAdds||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="go">${esc(t.goLive||'')}</div></div>`).join('');
+    $('buildNote').textContent=B.note||'';
+  }
+
+  // ---- totals ----
+  function totals(){
+    const t=tier();let monthly=t.monthly,once=t.build;const lines=[];
+    reqAddons().forEach(a=>{monthly+=addonMonthly(a);once+=a.oneTime;lines.push({a,n:1,req:true});});
+    chosenAddons().forEach(({a,q})=>{const n=a.qty?q:1;monthly+=addonMonthly(a)*n;once+=a.oneTime*n;lines.push({a,n});});
+    return {t,monthly,once,lines};
+  }
+  function nudge(){
+    const t=tier();const n=tierById(t.id+1);if(!n||n.scoped)return null;
+    const chosen=chosenAddons();if(!chosen.length)return null;
+    if(!chosen.every(({a,q})=>isIncluded(a,n.id)||(a.qty?includedQty(a,n.id)>=q:includedQty(a,n.id)>0)))return null;
+    const cur=totals().monthly,next=n.monthly+requiredMonthly(n.id);
+    if(cur<next-50)return null;
+    return {n,diff:next-cur};
+  }
+  window.switchTo=function(id){pickTier(id);};
+  function renderSummary(){
+    const {t,monthly,once,lines}=totals();
+    $('qTier').innerHTML=`${esc(t.name)}<span class="ind"> · ${esc(ind().label)}</span>`;
+    $('qMonthly').textContent=money(monthly);
+    $('qBuild').textContent=money(once);
+    const opts=lines.length?lines.map(({a,n,req})=>esc(a.name)+(n>1?' ×'+n:'')+(req?' (required)':'')).join(', '):'No options added';
+    const annual=t.annualMonths?`Or ${money(t.monthly*t.annualMonths)} a year for the plan.`:'Plan billed monthly.';
+    const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included. ${annual} ${opts}.`;
+    $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
+    const nd=nudge();
+    $('nudge').innerHTML=nd?`${esc(nd.n.name)} includes everything you selected${nd.diff>0?' for '+money(nd.diff)+' more a month':nd.diff<0?' for '+money(-nd.diff)+' less a month':' at the same price'}. <button type="button" onclick="switchTo(${nd.n.id})">Switch</button>`:'';
+    $('usageNote').textContent=D.usage||'';
+    $('annualNote').textContent=D.annualNote||'';
+    $('priceDate').textContent=(D.version||'').replace(/-draft$/,'');
+    fitBar();
+  }
+  window.toggleDetail=function(){const d=$('qDetail');d.classList.toggle('open');$('qMore').setAttribute('aria-expanded',d.classList.contains('open'));fitBar();};
+  function fitBar(){const h=$('quote').offsetHeight;document.body.style.paddingBottom=(h+20)+'px';$('toast').style.bottom=(h+24)+'px';}
+  function quoteText(){
+    const {t,monthly,once,lines}=totals();
+    return [`ReceptionAide quote (${ind().label})`,`Plan: ${t.name}, ${money(t.monthly)} a month, ${money(t.build)} one-time build`,
+      ...lines.map(({a,n,req})=>`Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${money(addonMonthly(a)*n)} a month${a.oneTime?', '+money(a.oneTime*n)+' setup':''}`),
+      `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,
+      `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,
+      t.annualMonths?`Yearly option for the plan: ${money(t.monthly*t.annualMonths)} (pay for ${t.annualMonths} months, get 12)`:'Plan billed monthly',
+      `Prices as of ${(D.version||'').replace(/-draft$/,'')}, identical in every industry.`,`Link: ${location.href}`].join('\n');
+  }
+  function copyText(txt,cb,fail){
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(cb,()=>fallback(txt,cb,fail));else fallback(txt,cb,fail);
+  }
+  function fallback(txt,cb,fail){const ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){(fail||cb)();}document.body.removeChild(ta);}
+  window.copyQuote=function(){copyText(quoteText(),()=>toast('Quote copied'),()=>toast('Copy did not work here. The link in your address bar carries the same quote.'));};
+  window.emailQuote=function(){
+    const {t}=totals();
+    location.href='mailto:?subject='+encodeURIComponent(`ReceptionAide quote: ${t.name}, ${ind().label}`)+'&body='+encodeURIComponent(quoteText());
+  };
+  window.book=function(){
+    copyText(quoteText(),()=>toast('Your quote is copied. Paste it into the booking notes.'),()=>{});
+    window.open(D.booking,'_blank','noopener');
+  };
+  let toastT;function toast(m){const el=$('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),3200);}
+
+  // ---- faq ----
+  function renderFaq(){$('faqList').innerHTML=(D.faq||[]).map((f,i)=>`<div class="faq-item"><button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-${i}" onclick="fq(this)"><span>${esc(f.q)}</span><span class="plus" aria-hidden="true">+</span></button><div class="faq-a" id="faq-a-${i}"><p>${esc(f.a)}</p></div></div>`).join('');}
+  window.fq=function(btn){const a=document.getElementById(btn.getAttribute('aria-controls'));const open=!a.classList.contains('open');a.classList.toggle('open',open);btn.setAttribute('aria-expanded',open);};
+
+  // ---- focus survives re-render ----
+  let lastFocus=null;
+  document.addEventListener('focusin',e=>{const el=e.target.closest&&e.target.closest('[data-fk]');if(el)lastFocus=el.getAttribute('data-fk');});
+  function restoreFocus(){if(!lastFocus)return;const el=document.querySelector(`[data-fk="${lastFocus}"]`);if(el&&document.activeElement!==el){try{el.focus({preventScroll:true});}catch(e){}}}
+
+  function renderAll(){renderIndustry();renderTiers();renderQuestions();renderOptions();renderCompare();renderSummary();writeURL();restoreFocus();}
+  readURL();renderFaq();renderBuild();renderAll();
+  if(window.innerWidth<=860)$('fitWrap').removeAttribute('open');
+  window.addEventListener('resize',fitBar);
+
+  const hdr=$('hdr');function onScroll(){hdr.classList.toggle('scrolled',document.documentElement.scrollTop>20);}
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

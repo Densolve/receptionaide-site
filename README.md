@@ -1,4 +1,4 @@
 # receptionaide.com
 
-Live site for ReceptionAide (AI front office for HVAC). Served via GitHub Pages at receptionaide.com.
-Canonical home of the site. Ops framework lives in the private Densolve/receptionaide repo.
+Live site for ReceptionAide (AI receptionist and call monitoring for small businesses). Static HTML, deployed on Vercel from `main`; see CLAUDE.md for deploy mechanics.
+Public prices live in `pricing/pricing-data.js` and render at `/pricing/`. Ops framework lives in the private Densolve/receptionaide repo.
