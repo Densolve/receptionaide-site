@@ -121,6 +121,12 @@
   .tier .scope-note{margin-top:16px;font-size:.84rem;color:var(--silver);line-height:1.45}
   .tier .scope-btn{margin-top:10px;width:100%}
   .trust{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
+  .tier.na{opacity:.75;cursor:default}.tier.na:hover{transform:none}
+  .enterprise{margin-top:28px;background:var(--panel);border:1px dashed rgba(255,203,107,.4);border-radius:16px;padding:22px 24px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+  .enterprise:empty{display:none}
+  .enterprise .ent-title{font-family:"Sora",sans-serif;font-weight:700;color:var(--gold);white-space:nowrap}
+  .enterprise p{color:var(--silver);font-size:.92rem;line-height:1.5;min-width:0}
+  @media(max-width:860px){.enterprise{grid-template-columns:1fr}}
 
   /* fit helper */
   .fit{background:linear-gradient(180deg,var(--ink),var(--navy) 55%,var(--ink))}
@@ -317,6 +323,7 @@
       </div>
       <div class="tiers" id="tierGrid"></div>
       <p class="trust" id="trustLine"></p>
+      <div class="enterprise" id="enterprise"></div>
     </div>
   </section>
 
@@ -433,6 +440,8 @@
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
   const selectable=D.tiers.filter(t=>!t.scoped);
   const state={industry:D.industries[0].key,tier:(selectable.find(t=>t.recommended)||selectable[1]||selectable[0]).id,addons:{},answers:[]};
+  const indMin=()=>(ind().minTier||1);
+  const belowMin=t=>t.id<indMin();
   const addonList=D.addonGroups.flatMap(g=>g.addons);
   const addon=k=>addonList.find(a=>a.key===k);
   const ind=()=>D.industries.find(i=>i.key===state.industry)||D.industries[0];
@@ -441,7 +450,7 @@
   const tierFeatures=t=>{const f=ind().tierFeatures;return (f&&f[t.id]&&f[t.id].length)?f[t.id]:t.features;};
   const isIncluded=(a,tid)=>!!(a.includedFrom&&(tid||state.tier)>=a.includedFrom);
   const includedQty=(a,tid)=>(a.includedQtyFrom&&(tid||state.tier)>=a.includedQtyFrom)?(a.includedQty||1):0;
-  const isLocked=(a,tid)=>!!(a.minTier&&(tid||state.tier)<a.minTier);
+  const isLocked=(a,tid)=>{const t=tid||state.tier;return !!((a.minTier&&t<a.minTier)||(a.maxTier&&t>a.maxTier));};
   const isRequired=a=>(ind().requiredAddons||[]).includes(a.key);
   const isForIndustry=a=>!a.industries||a.industries.includes(state.industry);
   const addonMonthly=(a,tid)=>a.monthlyByTier?(a.monthlyByTier[tid||state.tier]||a.monthly):a.monthly;
@@ -455,6 +464,7 @@
     const p=new URLSearchParams(location.search);
     if(p.get('i')&&D.industries.some(i=>i.key===p.get('i')))state.industry=p.get('i');
     if(p.get('t')&&selectable.some(t=>t.id===+p.get('t')))state.tier=+p.get('t');
+    if(state.tier<indMin())state.tier=indMin();
     if(p.get('a'))p.get('a').split(',').forEach(s=>{const [k,q]=s.split(':');if(addon(k))state.addons[k]=Math.max(1,+q||1);});
   }
   function writeURL(){
@@ -476,6 +486,7 @@
   }
   window.setIndustry=function(k){
     state.industry=k;state.answers=[];
+    if(state.tier<indMin())state.tier=indMin();
     Object.keys(state.addons).forEach(key=>{const a=addon(key);if(!a||!isForIndustry(a))delete state.addons[key];});
     renderAll();
   };
@@ -487,31 +498,32 @@
   function renderTiers(){
     const req=reqAddons();const reqO=requiredOnce();
     $('tierGrid').innerHTML=D.tiers.map((t,i)=>{
-      const sel=t.id===state.tier&&!t.scoped;const reqM=requiredMonthly(t.id);const headline=t.monthly+reqM;
+      const sel=t.id===state.tier&&!t.scoped;const reqM=requiredMonthly(t.id);const headline=t.monthly+reqM;const na=belowMin(t);
       const worth=t.scoped?0:newlyIncludedValue(t);
       const buildSmall=reqO?`<small>plus ${req.filter(a=>a.oneTime).map(a=>money(a.oneTime)+' '+esc(a.name)+' setup').join(' and ')}; ${t.buildFrom?'from ':''}${money(t.build+reqO)} one time in total</small>`:'';
-      return `<article class="tier ${t.recommended?'rec':''} ${t.scoped?'scoped':''} ${sel?'sel':''}" ${t.scoped?'':`onclick="pickTier(${t.id})"`} aria-label="${esc(t.name)} plan">
+      return `<article class="tier ${t.recommended?'rec':''} ${t.scoped?'scoped':''} ${na?'na':''} ${sel?'sel':''}" ${(t.scoped||na)?'':`onclick="pickTier(${t.id})"`} aria-label="${esc(t.name)} plan">
         ${t.scoped?'<span class="badge">Scoped per client</span>':t.recommended?'<span class="badge">'+esc(t.badge||'Recommended')+'</span>':''}
         <div class="num">PLAN 0${t.id}</div>
         <h3>${esc(t.name)}</h3>
         <div class="tag">${esc(t.tagline)}</div>
         <div class="rec-why">${t.recommended&&ind().recommendedReason?'Recommended '+esc(ind().recommendedReason):''}</div>
-        <div class="price"><span class="amt">${money(headline)}</span><span class="per">a month</span></div>
+        ${na?`<div class="price"><span class="amt" style="font-size:1.25rem">Not offered for ${esc(ind().label.toLowerCase())}</span></div><div class="price-note">Plans for ${esc(ind().label.toLowerCase())} start at ${esc(tierById(indMin()).name)}.</div><div class="annual-note"></div>`:`<div class="price"><span class="amt">${money(headline)}</span><span class="per">a month</span></div>
         <div class="price-note">${reqM?'includes the '+req.map(a=>esc(a.name)+', '+money(addonMonthly(a,t.id))+' a month').join(' and ')+'; plan '+money(t.monthly):''}</div>
-        <div class="annual-note">${t.annualMonths?'or '+money(t.monthly*t.annualMonths)+' a year for the plan: pay for '+t.annualMonths+' months, get 12':'billed monthly'}</div>
+        <div class="annual-note">${t.annualMonths?'or '+money(t.monthly*t.annualMonths)+' a year for the plan: pay for '+t.annualMonths+' months, get 12'+(t.buildWaivedOnAnnual?', build fee waived':''):'billed monthly'}</div>
         <div class="build"><b>${t.buildFrom?'from ':''}${money(t.build)}</b> one-time build${buildSmall}${t.scoped?'<small>quoted after a scoping call, in writing before you sign</small>':'<small><a href="#build" onclick="event.stopPropagation()">What it covers</a></small>'}</div>
-        <div class="usage"><b>${num(t.minutes)} minutes</b> and <b>${num(t.texts)} texts</b> a month, then ${'$'+D.overagePerMinute.toFixed(2)} a minute and ${'$'+D.overagePerText.toFixed(2)} a text</div>
+        <div class="usage"><b>${num(t.minutes)} minutes</b> and <b>${num(t.texts)} texts</b> a month, then ${'$'+D.overagePerMinute.toFixed(2)} a minute and ${'$'+D.overagePerText.toFixed(2)} a text</div>`}
         <div class="plus">${i===0?'Includes':'Everything in '+esc(D.tiers[i-1].name)+', plus'}</div>
         <ul class="feat">${tierFeatures(t).map(f=>`<li><span class="ck" aria-hidden="true">✓</span><span>${esc(f)}</span></li>`).join('')}</ul>
         ${worth>=100?`<div class="worth">The options this plan adds are ${money(worth)} a month separately</div>`:''}
         <details onclick="event.stopPropagation()"><summary>See what is included</summary><ul>${(t.more||[]).map(m=>`<li>${esc(m)}</li>`).join('')}</ul></details>
         <div class="spacer"></div>
-        ${t.scoped?`<div class="scope-note">${esc(t.scopedNote||'')}</div><button type="button" class="btn btn-primary btn-sm scope-btn" data-fk="tier:${t.id}" onclick="book()">Book a scoping call</button>`:`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" aria-pressed="${sel}" onclick="event.stopPropagation();pickTier(${t.id})">${sel?'Selected':'Select '+esc(t.name)}</button>`}
+        ${t.scoped?`<div class="scope-note">${esc(t.scopedNote||'')}</div><button type="button" class="btn btn-primary btn-sm scope-btn" data-fk="tier:${t.id}" onclick="book()">Book a scoping call</button>`:na?`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" onclick="event.stopPropagation();pickTier(${indMin()})">See ${esc(tierById(indMin()).name)}</button>`:`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" aria-pressed="${sel}" onclick="event.stopPropagation();pickTier(${t.id})">${sel?'Selected':'Select '+esc(t.name)}</button>`}
       </article>`;}).join('');
     $('trustLine').textContent=D.trustLine||'';
+    const E=D.enterprise;$('enterprise').innerHTML=E?`<div class="ent-title">${esc(E.title)}</div><p>${esc(E.text)}</p><button type="button" class="btn btn-ghost btn-sm" onclick="book()">Book a scoping call</button>`:'';
   }
   window.pickTier=function(id){
-    const to=tierById(id);if(!to||to.scoped)return;
+    const to=tierById(id);if(!to||to.scoped||belowMin(to))return;
     // Quantities on options with an included unit mean "beyond the included one"; adjust when the included count changes between plans.
     addonList.forEach(a=>{if(!a.qty||!a.includedQtyFrom||!state.addons[a.key])return;const before=includedQty(a,state.tier),after=includedQty(a,id);const q=state.addons[a.key]-(after-before);if(q<=0)delete state.addons[a.key];else state.addons[a.key]=q;});
     state.tier=id;renderAll();
@@ -528,8 +540,9 @@
   function suggestion(){
     const qs=ind().questions||[];
     if(!qs.length||qs.some((q,i)=>state.answers[i]===undefined))return null;
-    let minTier=1;const adds=new Set(),sugs=new Set();
-    qs.forEach((q,i)=>{const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
+    let minTier=indMin(),scoping=false;const adds=new Set(),sugs=new Set();
+    qs.forEach((q,i)=>{const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);if(a.scoping)scoping=true;(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
+    if(scoping)return {scoping:true};
     const t=tierById(minTier);
     const covered=(a,tid)=>isIncluded(a,tid)||includedQty(a,tid)>0;
     const addKeys=[...adds].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!isRequired(a);});
@@ -540,15 +553,18 @@
     const s=suggestion(),out=$('fitOut');
     if(!s){out.classList.add('empty');$('fitName').textContent='Answer the four questions to see a suggestion.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
     out.classList.remove('empty');
+    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans above cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').disabled=false;$('fitApply').textContent='Book a scoping call';$('fitApply').dataset.mode='scoping';return;}
+    $('fitApply').textContent='Use this plan';$('fitApply').dataset.mode='';
     const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
     $('fitName').textContent=s.tier.name;
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
-    const line=k=>{const a=addon(k);return `${esc(a.name)}: ${money(addonMonthly(a,s.tier.id))} a month${a.oneTime?', '+money(a.oneTime)+' setup':''}`;};
+    const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);return `${esc(a.name)}: ${m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
     $('fitLists').innerHTML=(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
     $('fitApply').disabled=false;
   }
   $('fitApply').addEventListener('click',()=>{
     const s=suggestion();if(!s)return;
+    if(s.scoping){book();return;}
     state.tier=s.tier.id;s.addons.forEach(k=>{state.addons[k]=state.addons[k]||1;});
     renderAll();$('plans').scrollIntoView({behavior:'smooth',block:'start'});
   });
@@ -560,16 +576,17 @@
     const disabled=inc||lock||req;
     let st='';
     if(inc)st='<span class="state inc">Included</span>';
-    else if(lock)st=`<span class="state">From ${esc(tierById(a.minTier).name)}</span>`;
+    else if(lock)st=(a.maxTier&&state.tier>a.maxTier)?`<span class="state">Up to ${esc(tierById(a.maxTier).name)}</span>`:`<span class="state">From ${esc(tierById(a.minTier).name)}</span>`;
     else if(req)st=`<span class="state req">Required for ${esc(ind().label.toLowerCase())}</span>`;
     else if(incQ)st=`<span class="state inc">${incQ} included</span>`;
     if(a.term)st+=`<span class="state">${esc(a.term)}</span>`;
     const q=Math.max(1,qty);const id='opt-'+a.key;
     const qtyUI=(a.qty&&checked&&!inc)?`<span class="qty"><button type="button" data-fk="qty:${a.key}:-1" aria-label="Fewer ${esc(a.name)}" onclick="qtyChange('${a.key}',-1)">−</button><span aria-live="polite">${q}</span><button type="button" data-fk="qty:${a.key}:1" aria-label="More ${esc(a.name)}" onclick="qtyChange('${a.key}',1)">+</button></span>`:'';
     const m=addonMonthly(a)*(a.qty?q:1),o=a.oneTime*(a.qty?q:1);
-    const price=inc?'<span class="incl">Included</span>':`${money(m)} a month`;
+    const oneTimeOnly=!m&&o>0;
+    const price=inc?'<span class="incl">Included</span>':oneTimeOnly?`${money(o)} one time`:`${money(m)} a month`;
     const label=a.name+(incQ&&!inc?' (beyond the included one)':'');
-    return `<div class="opt ${inc?'inc':''} ${lock?'off':''}"><input type="checkbox" id="${id}" data-fk="opt:${a.key}" ${checked?'checked':''} ${disabled?'disabled':''} onchange="toggleAddon('${a.key}',this.checked)"><label for="${id}"><span class="t">${esc(label)}${st}</span><span class="d">${esc(a.desc)}</span></label><span class="p">${price}${(!inc&&o)?`<small>${money(o)} setup</small>`:''}${qtyUI}</span></div>`;
+    return `<div class="opt ${inc?'inc':''} ${lock?'off':''}"><input type="checkbox" id="${id}" data-fk="opt:${a.key}" ${checked?'checked':''} ${disabled?'disabled':''} onchange="toggleAddon('${a.key}',this.checked)"><label for="${id}"><span class="t">${esc(label)}${st}</span><span class="d">${esc(a.desc)}</span></label><span class="p">${price}${(!inc&&o&&!oneTimeOnly)?`<small>${money(o)} setup</small>`:''}${qtyUI}</span></div>`;
   }
   function renderOptions(){
     $('groups').innerHTML=D.addonGroups.map(g=>{
@@ -618,7 +635,7 @@
     $('qMonthly').textContent=money(monthly);
     $('qBuild').textContent=money(once);
     const opts=lines.length?lines.map(({a,n,req})=>esc(a.name)+(n>1?' ×'+n:'')+(req?' (required)':'')).join(', '):'No options added';
-    const annual=t.annualMonths?`Or ${money(t.monthly*t.annualMonths)} a year for the plan.`:'Plan billed monthly.';
+    const annual=t.annualMonths?`Or ${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
     const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included. ${annual} ${opts}.`;
     $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
     const nd=nudge();
@@ -633,10 +650,10 @@
   function quoteText(){
     const {t,monthly,once,lines}=totals();
     return [`ReceptionAide quote (${ind().label})`,`Plan: ${t.name}, ${money(t.monthly)} a month, ${money(t.build)} one-time build`,
-      ...lines.map(({a,n,req})=>`Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${money(addonMonthly(a)*n)} a month${a.oneTime?', '+money(a.oneTime*n)+' setup':''}`),
+      ...lines.map(({a,n,req})=>{const m=addonMonthly(a)*n;return `Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime*n)+' setup':''):money(a.oneTime*n)+' one time'}`;}),
       `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,
       `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,
-      t.annualMonths?`Yearly option for the plan: ${money(t.monthly*t.annualMonths)} (pay for ${t.annualMonths} months, get 12)`:'Plan billed monthly',
+      t.annualMonths?`Yearly option for the plan: ${money(t.monthly*t.annualMonths)} (pay for ${t.annualMonths} months, get 12${t.buildWaivedOnAnnual?', build fee waived':''})`:'Plan billed monthly',
       `Prices as of ${(D.version||'').replace(/-draft$/,'')}, identical in every industry.`,`Link: ${location.href}`].join('\n');
   }
   function copyText(txt,cb,fail){

@@ -2,36 +2,37 @@
    Source of the structure: research/pricing/2026-10-13-pricing-design-final.md in the private ReceptionAide folder.
    The "-draft" suffix comes off the version when Jaron and Blake sign off. Prices are in US dollars and identical in every industry. */
 window.RA_PRICING = {
-  version: "2026-10-13-draft",
+  version: "2026-10-14-draft",
   booking: "https://api.leadconnectorhq.com/widget/booking/zF5lnnLqKPt5QJeqKkJN",
   overagePerMinute: 0.25,
   overagePerText: 0.05,
   trustLine: "It says it is an AI receptionist on every call, and every call starts with a recording notice.",
-  usage: "A minute is the whole call from answer to hang-up, rounded up per call. A text is one message of up to 320 characters, sent or received. Talk-in-browser minutes count inside your plan's minutes. Bookings, records, recordings, the weekly report, team alerts and logins are not metered. Beyond your allowance: $0.25 a minute and $0.05 a text, itemized on your next ReceptionAide invoice. One invoice, no separate carrier bill. We tell you when a month passes 80 percent of your allowance; if you pass it two months in a row we call, and you choose what changes.",
-  annualNote: "Book and Track, Team and Review and Connect can be paid yearly: pay for 11 months and get 12. Answer is billed monthly. Options are billed monthly. One-time fees are never discounted.",
+  usage: "A minute is the whole call from answer to hang-up, rounded up per call. A text is one message of up to 320 characters, sent or received. Talk-in-browser minutes count inside your plan's minutes. Bookings, records, recordings, the weekly report, team alerts and logins are not metered. Beyond your allowance: $0.25 a minute and $0.05 a text, itemized on your next ReceptionAide invoice. One invoice, no separate carrier bill. Above 10,000 texts a month, texting is priced in your agreement at a stated per-text rate instead of the per-text overage. We tell you when a month passes 80 percent of your allowance; if you pass it two months in a row we call, and you choose what changes.",
+  annualNote: "Book and Track, Team and Review and Connect can be paid yearly: pay for 11 months and get 12. On Book and Track and Team and Review a yearly plan also waives the build fee. Answer is billed monthly. Options are billed monthly.",
   buildCovers: {
     shared: ["Your number, identity and texting verification", "Your information loaded into the receptionist", "Greeting, routing, urgent-call and transfer rules, in English and Spanish", "Test calls against our checklist", "Go-live on a written date"],
     note: "Email goes out from your own domain once you approve one DNS record; until then it sends from a ReceptionAide address. Texting is live within days on a toll-free line; a local texting number registers under your business in one to three weeks, started on day one."
   },
+  enterprise: { title: "Larger builds", text: "Centers and practices with more than one department or specialist receptionist behind a triage receptionist, outbound calling campaigns, a membership program, or more than 10,000 texts a month are quoted as an enterprise agreement after a scoping visit: builds from $9,997, priced line by line from a written scope; service from $1,997 a month on a twelve-month term. Medical builds add the HIPAA package, and its configuration at enterprise scope is a line on the quote. Each system is demonstrated live against a written acceptance checklist before go-live. Outbound calling campaigns are scoped per client and need consent captured at intake." },
   tiers: [
-    { id: 1, key: "answer", name: "Answer", tagline: "Your phone answered.", monthly: 297, build: 747, annualMonths: null, minutes: 400, texts: 300,
+    { id: 1, key: "answer", name: "Answer", tagline: "Your phone answered.", monthly: 297, build: 497, annualMonths: null, minutes: 500, texts: 300,
       who: "An office that mainly needs calls answered, sorted and passed on.",
       features: ["Answers and routes your calls, 24/7 or when your team cannot pick up", "Answers only from information you approve", "Urgent calls reach a person", "Each call summarized to your inbox"],
       more: ["Takes messages and texts callers your links (directions, forms, portal) instead of reading them out", "Transfers anyone who asks for a person; anything outside your information goes to a person", "A weekly summary email of what the receptionist handled", "Each call summarized to your inbox with a link to the recording in your account", "English and Spanish on one line", "Call monitoring is automatic: recordings, per-call summaries and the weekly report"],
       buildAdds: [], goLive: "Target go-live about two weeks after we receive your information, confirmed as a written date on your call." },
-    { id: 2, key: "book", name: "Book and Track", tagline: "Booked and on record.", monthly: 497, build: 1247, annualMonths: 11, minutes: 1000, texts: 1000, recommended: true, badge: "Recommended",
+    { id: 2, key: "book", name: "Book and Track", tagline: "Booked and on record.", monthly: 497, build: 1247, annualMonths: 11, buildWaivedOnAnnual: true, minutes: 1000, texts: 1000, recommended: true, badge: "Recommended",
       who: "An office that wants appointments booked and callers kept in one searchable record, without adding staff to do it.",
-      features: ["Books into your calendar and confirms by text", "Keeps callers in one searchable record", "Takes repair, quote or intake requests", "The same receptionist by text and on your website"],
-      more: ["Reschedule links in every confirmation", "Lists your team works from: who called, why, what happened, the recording", "Requests taken one item at a time and read back before filing", "A secure payment link or a document for e-signature by text, filled from the call, through your own payment account (card numbers are not taken by voice)", "Talk to it on your website in chat or by voice; talk-in-browser minutes count inside your plan's minutes"],
-      buildAdds: ["Calendars and booking rules", "The caller record and lists", "The text and website assistant", "Your request scripts, payment link and e-signature templates"], goLive: "Target go-live about three weeks after we receive your information, confirmed as a written date on your call." },
-    { id: 3, key: "team", name: "Team and Review", tagline: "Your crew texted, a person reviewing calls, your own login.", monthly: 747, build: 1997, annualMonths: 11, minutes: 2000, texts: 2000,
-      who: "An office with a crew in the field, more than one line, and a manager who wants to log in and have a person checking the calls.",
-      features: ["Texts your team when a caller confirms a request", "Texts callers back: reminders, missed-call text-back", "A person reviews calls each month and tunes it", "Your own login and dashboard"],
-      more: ["A second line on the same account (a location with its own staff, calendars and records is an additional location, priced under Advanced)", "Consent and quiet hours built into every text", "Human call review is about an hour a month against our checklist, with notes to you", "Your logins are set up to view and work the inbox, records, calendar and recordings; the receptionist itself stays managed by us", "A 30-minute walkthrough at go-live"],
-      buildAdds: ["Team-alert and text-back workflows with consent and quiet hours", "The second line", "Dashboard logins with a walkthrough", "The review checklist tuned to your line, and a first review"], goLive: "Target go-live about four weeks after we receive your information, with carrier verification running alongside." },
+      features: ["Books into your calendar and confirms by text", "Keeps callers in one record, with your own login", "Takes repair, quote or intake requests", "The same receptionist by text and on your website"],
+      more: ["Reschedule links in every confirmation", "Lists your team works from: who called, why, what happened, the recording", "Requests taken one item at a time and read back before filing", "A secure payment link or a document for e-signature by text, filled from the call, through your own payment account (card numbers are not taken by voice)", "Talk to it on your website in chat or by voice; talk-in-browser minutes count inside your plan's minutes", "Your own login: inbox, records, calendar, recordings and transcripts, with a 30-minute walkthrough at go-live"],
+      buildAdds: ["Calendars and booking rules", "The caller record and lists, with your logins and a walkthrough", "The text and website assistant", "Your request scripts, payment link and e-signature templates"], goLive: "Target go-live about three weeks after we receive your information, confirmed as a written date on your call." },
+    { id: 3, key: "team", name: "Team and Review", tagline: "Your crew texted, a person reviewing calls.", monthly: 747, build: 1997, annualMonths: 11, buildWaivedOnAnnual: true, minutes: 2000, texts: 2000,
+      who: "An office with a crew in the field, more than one line, and a manager who wants a person checking the calls.",
+      features: ["Texts your team when a caller confirms a request", "Texts callers back: reminders, missed-call text-back", "A person reviews calls each month and tunes it", "A second line on the same account"],
+      more: ["A second line on the same account (a location with its own staff, calendars and records is an additional location, priced under Advanced)", "Consent and quiet hours built into every text", "Human call review is about an hour a month against our checklist, with notes to you", "The receptionist itself stays managed by us"],
+      buildAdds: ["Team-alert and text-back workflows with consent and quiet hours", "The second line", "The review checklist tuned to your line, and a first review"], goLive: "Target go-live about four weeks after we receive your information, with carrier verification running alongside." },
     { id: 4, key: "connect", name: "Connect", tagline: "Built to work inside the software you already run.", monthly: 997, build: 4997, buildFrom: true, scoped: true, annualMonths: 11, minutes: 3000, texts: 3000,
       who: "An office that wants the receptionist working inside the software it already runs, with no per-minute worry on incoming calls and a named person on its account.",
-      features: ["A connection to your software, scoped and built per client", "High-volume inbound included: up to 3,000 minutes", "Custom voice included", "A named contact and a quarterly review"],
+      features: ["A connection to your software, scoped and built per client", "High-volume inbound included: up to 3,000 minutes", "A named contact for your account", "A quarterly review of what the receptionist handles"],
       more: ["What scoping produces: which system and which direction (for example a repair request becoming a work order, or live listings read during the call)", "What your software's plan allows: we check whether it lets outside tools connect and tell you before you sign", "The price of the connection, in writing, before you sign; any fee your software vendor charges for access is yours to approve first", "A live-call proof of the connection before go-live"],
       scopedNote: "The build is quoted after a scoping call, from $4,997, in writing before you sign. What the step buys: a scoping session with a written connection spec, a live-call proof before go-live, and a named contact for your account.",
       buildAdds: ["A scoping session and a written connection spec", "The connection, built and proven on a live call"], goLive: "Go-live date set at scoping." }
@@ -40,23 +41,22 @@ window.RA_PRICING = {
     { key: "reach", label: "Reach", addons: [
       { key: "outbound_texting", name: "Outbound text messaging", desc: "Texts we start without a caller asking: reminders, missed-call text-back, follow-ups and review requests, with consent and quiet hours built in. Adds 1,000 texts to your allowance. Not a marketing blast tool.", monthly: 67, oneTime: 0, minTier: 1, includedFrom: 3 },
       { key: "team_texting", name: "Text your team", desc: "Job details, repair requests or room issues texted and emailed to your own staff as soon as a caller confirms, with what they need to act. For medical clients the alert carries no patient details.", monthly: 47, oneTime: 0, minTier: 1, includedFrom: 3 },
-      { key: "whatsapp", name: "WhatsApp chat", desc: "Customers message your business number on WhatsApp and get the same receptionist. Includes 1,000 WhatsApp messages a month; beyond that, Meta's per-message fee is added at Meta's rate. You need a Meta Business account in your name; Meta's review can take several weeks and nothing else waits on it.", monthly: 47, oneTime: 0, minTier: 2, industries: ["property_management", "hotels", "other"] }
+      { key: "whatsapp", name: "WhatsApp chat", desc: "Customers message your business number on WhatsApp and get the same receptionist. Includes 1,000 service and reply messages a month; beyond that, and for any marketing template, Meta's per-message fee is added at Meta's rate. You need a Meta Business account in your name; Meta's review can take several weeks and nothing else waits on it.", monthly: 47, oneTime: 0, minTier: 2, industries: ["property_management", "hotels", "other"] }
     ]},
     { key: "insight", label: "Insight", addons: [
-      { key: "call_monitoring", name: "Human call review", desc: "A named person at ReceptionAide reviews the calls the receptionist marks plus a sample each month, about an hour against our checklist, tunes the receptionist and sends you the notes. Automatic call monitoring (recordings, summaries, the weekly report) is on every plan.", monthly: 197, oneTime: 0, minTier: 1, includedFrom: 3 },
-      { key: "client_backend", name: "Your own dashboard", desc: "A login for you and your team into your own account: inbox, records, calendar, call recordings and transcripts, the receptionist's dashboard and the weekly report, with a 30-minute walkthrough. The receptionist itself stays managed by us.", monthly: 97, oneTime: 0, minTier: 1, includedFrom: 3 }
+      { key: "call_monitoring", name: "Human call review", desc: "A named person at ReceptionAide reviews the calls the receptionist marks plus a sample each month, about an hour against our checklist, tunes the receptionist and sends you the notes. Automatic call monitoring (recordings, summaries, the weekly report) is on every plan.", monthly: 197, oneTime: 0, minTier: 1, includedFrom: 3 }
     ]},
     { key: "volume", label: "Volume", addons: [
-      { key: "high_volume_inbound", name: "High-volume inbound", desc: "No per-minute charge on incoming calls to your line, up to 3,000 minutes a month (about 1,000 calls). Above 3,000 minutes, $0.25 a minute, and we call to see whether a different plan fits better. For normal incoming calls from the public to one business location, no automated or bulk traffic.", monthly: 247, oneTime: 0, minTier: 1, includedFrom: 4 }
+      { key: "high_volume_inbound", name: "High-volume inbound", desc: "No per-minute charge on incoming calls to your line, up to 3,000 minutes a month (about 1,000 calls). Pays for itself above about 1,500 minutes a month on Answer and about 2,000 on Book and Track. Above 3,000 minutes, $0.25 a minute, and we call to see whether a different plan fits better. For normal incoming calls from the public to one business location, no automated or bulk traffic. Offered on Answer and Book and Track; Team and Review includes 2,000 minutes and Connect includes this option.", monthly: 247, oneTime: 0, minTier: 1, maxTier: 2, includedFrom: 4 }
     ]},
     { key: "compliance", label: "Compliance", addons: [
       { key: "hipaa", name: "HIPAA package", desc: "A business associate agreement with you, executed after our healthcare counsel review; encrypted handling of patient information; logging of recording access; two-step sign-in on every login; staff alerts that carry no patient details; a documented retention purge to the window you choose. 12-month term, because the platform agreement behind it cannot be cancelled once enabled.", monthly: 447, oneTime: 747, minTier: 1, industries: ["medical"], term: "12-month term" }
     ]},
     { key: "advanced", label: "Advanced", advanced: true, addons: [
-      { key: "custom_voice", name: "Custom voice", desc: "A voice recorded by a speaker you choose, or an imported professional voice, with the speaker's signed consent, tuned for your line. A voice from our standard library is included in every plan. The monthly keeps your voice on file and tuned; the setup covers the recording session and consent paperwork.", monthly: 47, oneTime: 497, minTier: 1, includedFrom: 4 },
+      { key: "custom_voice", name: "Custom voice", desc: "A voice recorded by a speaker you choose, or an imported professional voice, with the speaker's signed consent, tuned for your line. A voice from our standard library is included in every plan. No monthly charge. Included from Team and Review, where the recording session and consent paperwork are part of the build.", monthly: 0, oneTime: 497, minTier: 3, includedFrom: 3 },
       { key: "second_language", name: "Second language", desc: "English and Spanish are included on every plan on one line, switching mid-call. Any other language is a dedicated receptionist callers reach on the same number, built and tested with you on live calls. Per additional language.", monthly: 97, oneTime: 497, minTier: 1, qty: true, max: 4 },
       { key: "additional_line", name: "Additional line", desc: "Another number on the same account and team, with its own greeting, hours and routing: a second office line, a property line, a provider line or an after-hours line, sharing your plan's minutes and records. One additional line is included from Team and Review; more are priced here.", monthly: 47, oneTime: 197, minTier: 1, qty: true, max: 10, includedQtyFrom: 3, includedQty: 1 },
-      { key: "additional_location", name: "Additional location", desc: "A separate property, office or practice location with its own staff, calendars, number and records, built as a copy of your first setup. Half your plan's monthly price, with half its minutes and texts. Its calls are part of the same monthly review.", monthly: 0, monthlyByTier: { 1: 147, 2: 247, 3: 347, 4: 497 }, oneTime: 747, minTier: 1, qty: true, max: 10 },
+      { key: "additional_location", name: "Additional location", desc: "A separate property, office or practice location with its own staff, calendars, number and records, built as a copy of your first setup. Half your plan's monthly price, with half its minutes and texts. Its calls are part of the same monthly review.", monthly: 0, monthlyByTier: { 1: 147, 2: 247, 3: 377, 4: 497 }, oneTime: 747, minTier: 1, qty: true, max: 10 },
       { key: "web_widget", name: "Website chat and talk-in-browser voice", desc: "The same receptionist on your website as a chat window and a talk button, answering from the same information. Included from Book and Track; priced here only for Answer.", monthly: 47, oneTime: 0, minTier: 1, includedFrom: 2 }
     ]}
   ],
@@ -67,9 +67,9 @@ window.RA_PRICING = {
       requiredAddons: [],
       tierFeatures: {
         1: ["Answers resident, renter and owner calls around the clock", "Emergencies go to your on-call line first", "Answers only from your approved policies and listings", "Each call summarized to your inbox, links texted"],
-        2: ["Books tours or sends your showing link", "Files repair requests, read back before filing", "Residents, renters and owners in one record", "The same receptionist by text and on your website"],
-        3: ["Texts your maintenance crew when a resident confirms", "Texts missed callers back, sends tour reminders", "A person reviews calls each month and tunes it", "Your own login for office staff"],
-        4: ["Repair requests into your property management software (built to order after a scoping call)", "Listings read from your software (built to order; today we re-sync your listings page on a set schedule)", "High-volume inbound included: up to 3,000 minutes", "Custom voice, a named contact, a quarterly review"]
+        2: ["Books tours or sends your showing link", "Files repair requests, read back before filing", "Residents, renters and owners in one record, with your own login", "The same receptionist by text and on your website"],
+        3: ["Texts your maintenance crew when a resident confirms", "Texts missed callers back, sends tour reminders", "A person reviews calls each month and tunes it", "A second office line on the same account"],
+        4: ["Repair requests into your property management software (built to order after a scoping call)", "Listings read from your software (built to order; today we re-sync your listings page on a set schedule)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
         { q: "What should the receptionist do with a repair request or a tour inquiry?", answers: [
@@ -79,7 +79,7 @@ window.RA_PRICING = {
           { label: "All of that, and create the work order in my property management software", minTier: 3, note: "Connecting to your software is scoped on the call. Most offices start on Team and Review and add the connection once it is scoped." } ] },
         { q: "Roughly how many calls reach your office in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
           { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute. Book and Track covers it, or add High-volume inbound." },
+          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
           { label: "More than about 330, or I would rather not count minutes", minTier: 1, suggest: ["high_volume_inbound"] },
           { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
         { q: "Do your offices share one team and one set of records?", answers: [
@@ -88,9 +88,9 @@ window.RA_PRICING = {
           { label: "No, separate offices with their own staff", minTier: 1, note: "A second location is set up as its own account; we quote it on the call." } ] },
         { q: "Who needs to see what the receptionist handled?", answers: [
           { label: "Me, by email summary and the weekly report", minTier: 1 },
-          { label: "My office staff should log in and see calls, requests and tours", minTier: 1, addons: ["client_backend"] },
+          { label: "My office staff should log in and see calls, requests and tours", minTier: 2 },
           { label: "I want a person reviewing the calls and tuning it, not only a report", minTier: 1, addons: ["call_monitoring"] },
-          { label: "Both: a login for staff and a person reviewing calls", minTier: 1, addons: ["client_backend", "call_monitoring"] } ] }
+          { label: "Both: a login for staff and a person reviewing calls", minTier: 2, addons: ["call_monitoring"] } ] }
       ],
       integration: "Works alongside AppFolio, Buildium, Rent Manager, DoorLoop and others. Residents and renters are sent to your portals, listings and showing service today. We check whether your software lets outside tools connect (some plans allow it, some charge for it, some do not offer it) and tell you before you sign; every connection is scoped with you before it is promised.",
       compliance: "We supply the fair housing answer library and run a 40-call test set before go-live; your counsel reviews the library and you sign it off. Calls are recorded with a notice at the start of each call. Rent, fees and deposits are paid through your portal link; the receptionist does not take card or bank details and does not discuss balances, lease terms or who lives where. Resident texts respect quiet hours; staff alerts are exempt." },
@@ -100,9 +100,9 @@ window.RA_PRICING = {
       requiredAddons: [],
       tierFeatures: {
         1: ["Answers the reservations line when the desk cannot", "Quotes nightly rates from the rate card you approve", "Transfers to the desk when a caller asks", "Texts your booking link and directions, each call summarized"],
-        2: ["Sends guests to your own booking engine by text", "Books shuttle, spa or activity slots on a calendar", "Secure deposit links and photos by text", "Guest calls in one record, the same receptionist by text"],
-        3: ["Pre-arrival texts and post-stay review requests", "Room issues texted to housekeeping when a guest confirms", "A person reviews calls each month and tunes it", "Your own login for the owner or GM"],
-        4: ["Live availability from your reservation system (built to order per property after a scoping call)", "Reservations made or changed in your system (built to order)", "High-volume inbound included: up to 3,000 minutes", "Custom voice, a named contact, a quarterly review"]
+        2: ["Sends guests to your own booking engine by text", "Books shuttle, spa or activity slots on a calendar", "Secure deposit links and photos by text", "Guest calls in one record, with your own login"],
+        3: ["Pre-arrival texts and post-stay review requests", "Room issues texted to housekeeping when a guest confirms", "A person reviews calls each month and tunes it", "A second line on the same account"],
+        4: ["Live availability from your reservation system (built to order per property after a scoping call)", "Reservations made or changed in your system (built to order)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
         { q: "What should happen when a guest calls to book or to ask?", answers: [
@@ -112,7 +112,7 @@ window.RA_PRICING = {
           { label: "All of that, and read live availability from our reservation system or make the reservation there", minTier: 3, note: "Connecting to your reservation system is scoped on the call. Most properties start on Team and Review and add the connection once it is scoped." } ] },
         { q: "Roughly how many calls reach the desk in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
           { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute. Book and Track covers it, or add High-volume inbound." },
+          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
           { label: "More than about 330, or it swings with the season", minTier: 1, suggest: ["high_volume_inbound"] },
           { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
         { q: "Do your properties share one team and one set of records?", answers: [
@@ -121,22 +121,22 @@ window.RA_PRICING = {
           { label: "No, each with its own staff and system", minTier: 1, note: "A second property is set up as its own account; we quote it on the call." } ] },
         { q: "Who needs to see what the receptionist handled?", answers: [
           { label: "Me, by email summary and the weekly report", minTier: 1 },
-          { label: "The GM and front desk should log in and see calls, guests and bookings", minTier: 1, addons: ["client_backend"] },
+          { label: "The GM and front desk should log in and see calls, guests and bookings", minTier: 2 },
           { label: "I want a person reviewing the calls and tuning it, not only a report", minTier: 1, addons: ["call_monitoring"] },
-          { label: "Both: a login for the team and a person reviewing calls", minTier: 1, addons: ["client_backend", "call_monitoring"] } ] }
+          { label: "Both: a login for the team and a person reviewing calls", minTier: 2, addons: ["call_monitoring"] } ] }
       ],
       integration: "Works alongside Cloudbeds, Apaleo, OPERA Cloud and others. Guests complete reservations in your own booking engine today, so there is no second calendar. We check whether your reservation system lets outside tools connect and tell you before you sign; a connection is scoped per property before it is promised. Our hotel demo checks live room availability from reservation software in a test environment.",
       compliance: "Calls are recorded with a notice at the start of each call. Card numbers are not taken by voice; deposits go through a secure payment link by text or room charge. Rooms are booked in your own engine. Rates, policies and availability come from information you approve. Service animals are not pets and carry no fee. English and Spanish are verified on one line; other languages are added as a dedicated receptionist after a live test." },
-    { key: "medical", label: "Medical and telehealth", intro: "For practices and telehealth brands: patient calls answered with the HIPAA package in place, emergencies first, new patients booked and intake captured for your team to review, consent signed on the patient's phone. The HIPAA package is required and is added to your quote automatically.",
+    { key: "medical", label: "Medical and telehealth", minTier: 2, intro: "For practices and telehealth providers: patient calls answered with the HIPAA package in place, emergencies first, new patients booked and intake captured for your team to review, consent signed on the patient's phone. The HIPAA package is required and is added to your quote automatically.",
       demoLine: { label: "Hear the medical demo on your call.", number: null },
       recommendedReason: "for practices that book new patients and capture intake",
       requiredAddons: ["hipaa"],
       noEmailQuote: true,
       tierFeatures: {
         1: ["Answers patient calls on a recorded line, 24/7", "Emergencies first: 911, then your on-call line", "Answers from your approved information; symptoms go to staff", "Each call summarized inside your HIPAA-enabled account"],
-        2: ["Books new patients into a provider calendar", "Captures intake for your team to review", "Consent forms signed on the patient's phone", "The same intake assistant by text and on your website"],
-        3: ["Reminders and missed-call texts, with consent", "Minimal-detail alerts to your team for urgent calls", "A person reviews calls each month and tunes it", "Your own login with two-step sign-in for staff"],
-        4: ["Identity check before anything personal (built to order; until then the receptionist takes a message for anything personal)", "A connection to your practice system (built to order per practice; the agreements that cover your data must cover the connection and its hosting)", "High-volume inbound included: up to 3,000 minutes", "Custom voice, a named contact, a quarterly review"]
+        2: ["Books new patients into a provider calendar", "Captures intake for your team to review, with your own login", "Consent forms signed on the patient's phone", "The same intake assistant by text and on your website"],
+        3: ["Reminders and missed-call texts, with consent", "Minimal-detail alerts to your team for urgent calls", "A person reviews calls each month and tunes it", "A second line for a second location or provider"],
+        4: ["Identity check before anything personal (built to order; until then the receptionist takes a message for anything personal)", "A connection to your practice system (built to order per practice; the agreements that cover your data must cover the connection and its hosting)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
         { q: "What should happen when a patient calls?", answers: [
@@ -146,19 +146,20 @@ window.RA_PRICING = {
           { label: "All of that, and verify identity and read from or write to our practice system", minTier: 3, note: "Connecting to your practice system is scoped on the call, and the agreements that cover your data must cover the connection first." } ] },
         { q: "Roughly how many patient calls reach the practice in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
           { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute. Book and Track covers it, or add High-volume inbound." },
+          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
           { label: "More than about 330, or I would rather not count minutes", minTier: 1, suggest: ["high_volume_inbound"] },
           { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
         { q: "How many providers and locations?", answers: [
           { label: "One provider, one location", minTier: 1 },
           { label: "Several providers, one location", minTier: 2, note: "A calendar per provider." },
           { label: "More than one location sharing one team and records", minTier: 1, addons: ["additional_line"] },
-          { label: "Separate locations with their own staff", minTier: 1, note: "A second location is set up as its own account; we quote it on the call." } ] },
+          { label: "Separate locations with their own staff", minTier: 1, note: "A second location is set up as its own account; we quote it on the call." },
+          { label: "Several departments, a membership program, or outbound calls to members", minTier: 1, scoping: true, note: "That is a larger build. It is quoted after a scoping visit, line by line from a written scope." } ] },
         { q: "Who needs to see what the receptionist handled?", answers: [
           { label: "Me, by summary inside the HIPAA-enabled account and the weekly report", minTier: 1 },
-          { label: "My practice manager and staff should log in, with two-step sign-in", minTier: 1, addons: ["client_backend"] },
+          { label: "My practice manager and staff should log in, with two-step sign-in", minTier: 2 },
           { label: "I want a person reviewing the calls and tuning it", minTier: 1, addons: ["call_monitoring"] },
-          { label: "Both: a login with two-step sign-in and a person reviewing calls", minTier: 1, addons: ["client_backend", "call_monitoring"] } ] }
+          { label: "Both: a login with two-step sign-in and a person reviewing calls", minTier: 2, addons: ["call_monitoring"] } ] }
       ],
       integration: "Works alongside athenahealth, Tebra, DrChrono, Healthie and others. Today the receptionist books into its own calendar and sends your team structured intake for review; it does not read or write your chart. We check whether your practice system lets outside tools connect and tell you before you sign; a connection is scoped per practice, and the agreements that cover your data must cover the connection and its hosting before it is built.",
       compliance: "Before your first patient call, we sign a business associate agreement with you and confirm in writing that our platform's HIPAA coverage applies to your setup; medical builds are scheduled after that confirmation. The receptionist gives no medical advice, says it is an AI receptionist on a recorded line at the start of each call, and puts 911 first on emergency language. Staff alerts carry no patient details; recording access is logged; records are purged to the retention window you choose. Reminders and callbacks go out only with written consent captured at intake. WhatsApp is not offered for patient conversations. Demo lines do not take real patient calls." },
@@ -168,9 +169,9 @@ window.RA_PRICING = {
       requiredAddons: [],
       tierFeatures: {
         1: ["Answers your line while you work, 24/7", "Answers only from information you approve", "Urgent calls reach you at any hour", "Each call summarized to your inbox, links texted"],
-        2: ["Books jobs or appointments into your calendar", "Qualifies new callers: need, timeline, location", "Takes quote requests with photos by text", "The same receptionist by text and on your website"],
-        3: ["Texts your tech or crew the job details", "Texts missed callers back, reminders, review requests", "A person reviews calls each month and tunes it", "Your own login and dashboard"],
-        4: ["Jobs created in your scheduling software (built to order after a scoping call; we check your software's access first)", "Returning customers recognized and routed (built to order)", "High-volume inbound included: up to 3,000 minutes", "Custom voice, a named contact, a quarterly review"]
+        2: ["Books jobs or appointments into your calendar", "Qualifies new callers, in one record with your own login", "Takes quote requests with photos by text", "The same receptionist by text and on your website"],
+        3: ["Texts your tech or crew the job details", "Texts missed callers back, reminders, review requests", "A person reviews calls each month and tunes it", "A second line on the same account"],
+        4: ["Jobs created in your scheduling software (built to order after a scoping call; we check your software's access first)", "Returning customers recognized and routed (built to order)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
         { q: "What should happen when someone calls while you are working?", answers: [
@@ -180,7 +181,7 @@ window.RA_PRICING = {
           { label: "All of that, and create the job in the scheduling or field-service software I already use", minTier: 3, note: "Connecting to your software is scoped on the call. Most businesses start on Team and Review and add the connection once it is scoped." } ] },
         { q: "Roughly how many calls do you get in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
           { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute. Book and Track covers it, or add High-volume inbound." },
+          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
           { label: "More than about 330, or I would rather not count minutes", minTier: 1, suggest: ["high_volume_inbound"] },
           { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
         { q: "Do your locations share one team and one set of records?", answers: [
@@ -189,9 +190,9 @@ window.RA_PRICING = {
           { label: "No, separate locations with their own staff", minTier: 1, note: "A second location is set up as its own account; we quote it on the call." } ] },
         { q: "Who needs to see what the receptionist handled?", answers: [
           { label: "Me, by email summary and the weekly report", minTier: 1 },
-          { label: "My office or a partner should log in and see calls, leads and bookings", minTier: 1, addons: ["client_backend"] },
+          { label: "My office or a partner should log in and see calls, leads and bookings", minTier: 2 },
           { label: "I want a person reviewing the calls and tuning it, not only a report", minTier: 1, addons: ["call_monitoring"] },
-          { label: "Both: a login and a person reviewing calls", minTier: 1, addons: ["client_backend", "call_monitoring"] } ] }
+          { label: "Both: a login and a person reviewing calls", minTier: 2, addons: ["call_monitoring"] } ] }
       ],
       integration: "We check whether your scheduling or field-service software lets outside tools connect (some plans allow it, some charge for it, some do not offer it) and tell you before you sign; every connection is scoped with you before it is promised. Until then, bookings land in the calendar we set up and callers land in your record.",
       compliance: "Calls are recorded with a notice at the start of each call. Customer texts respect quiet hours; crew alerts are exempt. Review requests go once to everyone eligible after a completed job. Prices are quoted only from a flat-rate list you approve; licensing and insurance are stated only in the wording you verify. Deposits go through a payment link, not by voice." }
@@ -201,10 +202,10 @@ window.RA_PRICING = {
     { label: "Books into a calendar and keeps one record", tiers: [false, true, true, true] },
     { label: "Website chat and talk-in-browser voice", tiers: ["Add-on $47", true, true, true] },
     { label: "Texts your team and texts callers back", tiers: ["Add-on $114", "Add-on $114", true, true] },
-    { label: "Your own dashboard", tiers: ["Add-on $97", "Add-on $97", true, true] },
+    { label: "Your own dashboard", tiers: [false, true, true, true] },
     { label: "Call monitoring", tiers: ["Automatic", "Automatic", "Plus human review", "Plus human review"] },
     { label: "Connection to your software", tiers: [false, false, false, "Scoped per client"] },
-    { label: "Included minutes and texts a month", tiers: ["400 and 300", "1,000 and 1,000", "2,000 and 2,000", "3,000 and 3,000"] }
+    { label: "Included minutes and texts a month", tiers: ["500 and 300", "1,000 and 1,000", "2,000 and 2,000", "3,000 and 3,000"] }
   ],
   faq: [
     { q: "What does the build fee cover, and why charge one?", a: "The build fee pays for the work before the first call: your number and texting verification, your information loaded into the receptionist, the greeting and routing rules, test calls against our checklist, and go-live on a written date. Higher plans add calendars, records, workflows and logins to that list. It is paid once." },
@@ -214,6 +215,7 @@ window.RA_PRICING = {
     { q: "What happens when the receptionist cannot answer a caller?", a: "It transfers to a person when one is available, and otherwise takes a message, texts the caller the right link, and summarizes the call to your inbox. Anything outside the information you approved goes to a person rather than a guess." },
     { q: "Is it a person?", a: "No. It is an AI receptionist, and it says so at the start of every call, along with the recording notice." },
     { q: "Do you handle HIPAA?", a: "For medical and telehealth clients, yes, with the HIPAA package, which is required and added to every medical quote. Before your first patient call we sign a business associate agreement with you and confirm in writing that our platform's HIPAA coverage applies to your setup; the build is scheduled after that confirmation. The package runs on a 12-month term." },
+    { q: "Why would my quote be larger than the page?", a: "The plans cover one receptionist on one line with a stated allowance of minutes and texts. A center with several departments is built as several receptionists behind one triage receptionist, each with its own calendars, plus any outbound campaigns and the texting volume that goes with them, so the build is priced line by line from a written scope and the agreement prices the usage. That is the Larger builds line under the plans: builds from $9,997 and service from $1,997 a month." },
     { q: "Who sees the recordings and reports?", a: "You, through the weekly report and the summaries in your inbox, and your team through your own dashboard if your plan includes it or you add it. ReceptionAide staff review calls to tune the receptionist. The receptionist itself stays managed by us; your logins are set up to view and work with it." }
   ]
 };
