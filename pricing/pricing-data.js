@@ -128,7 +128,7 @@ window.RA_PRICING = {
       integration: "Works alongside Cloudbeds, Apaleo, OPERA Cloud and others. Guests complete reservations in your own booking engine today, so there is no second calendar. We check whether your reservation system lets outside tools connect and tell you before you sign; a connection is scoped per property before it is promised. Our hotel demo checks live room availability from reservation software in a test environment.",
       compliance: "Calls are recorded with a notice at the start of each call. Card numbers are not taken by voice; deposits go through a secure payment link by text or room charge. Rooms are booked in your own engine. Rates, policies and availability come from information you approve. Service animals are not pets and carry no fee. English and Spanish are verified on one line; other languages are added as a dedicated receptionist after a live test." },
     { key: "medical", label: "Medical and telehealth", minTier: 2, intro: "For practices and telehealth providers: patient calls answered with the HIPAA package in place, emergencies first, new patients booked and intake captured for your team to review, consent signed on the patient's phone. The HIPAA package is required and is added to your quote automatically.",
-      demoLine: { label: "Hear the medical demo on your call.", number: null },
+      demoLine: { label: "Hear it before you choose. Call the Meridian Health demo line (a fictional practice; it takes no real patient calls):", number: "(855) 842-2436" },
       recommendedReason: "for practices that book new patients and capture intake",
       requiredAddons: ["hipaa"],
       noEmailQuote: true,
