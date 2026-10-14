@@ -2,7 +2,7 @@
    Source of the structure: research/pricing/2026-10-13-pricing-design-final.md in the private ReceptionAide folder.
    The "-draft" suffix comes off the version when Jaron and Blake sign off. Prices are in US dollars and identical in every industry. */
 window.RA_PRICING = {
-  version: "2026-10-14-draft",
+  version: "2026-10-14",
   booking: "https://api.leadconnectorhq.com/widget/booking/zF5lnnLqKPt5QJeqKkJN",
   overagePerMinute: 0.25,
   overagePerText: 0.05,
