@@ -120,6 +120,8 @@
   .tier.sel .pick{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.5);color:var(--ok)}
   .tier .scope-note{margin-top:16px;font-size:.84rem;color:var(--silver);line-height:1.45}
   .tier .scope-btn{margin-top:10px;width:100%}
+  .opt-note{color:var(--muted);font-size:.95rem;margin:-14px 0 18px}
+  .opt-note:empty{display:none}
   .trust{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
   .tier.na{opacity:.75;cursor:default}.tier.na:hover{transform:none}
   .enterprise{margin-top:28px;background:var(--panel);border:1px dashed rgba(255,203,107,.4);border-radius:16px;padding:22px 24px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
@@ -353,6 +355,7 @@
         <h2>Add what you need. Each one is priced.</h2>
         <p>Options marked Included come with your plan. Options marked with a plan name unlock when you move up.</p>
       </div>
+      <p class="opt-note" id="optNote"></p>
       <div class="groups" id="groups"></div>
     </div>
   </section>
@@ -405,7 +408,7 @@
       </div>
       <div class="foot-links"><a href="/">All industries</a><a href="#plans">Plans</a><a href="#options">Options</a><a href="#faq">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="#" onclick="book();return false">Book a Call</a></div>
     </div>
-    <div class="copy">© 2026 ReceptionAide LLC · contact@receptionaide.com · Prices in US dollars as of <span id="priceDate"></span>, identical in every industry. We quote what this page shows.</div>
+    <div class="copy">© 2026 ReceptionAide LLC · contact@receptionaide.com · Prices in US dollars as of <span id="priceDate">October 15, 2026</span>, identical in every industry. We quote what this page shows.</div>
   </div>
 </footer>
 
@@ -422,7 +425,7 @@
     <div class="q-right">
       <button class="btn btn-ghost btn-sm" onclick="copyQuote()"><span class="l">Copy quote</span><span class="s">Copy</span></button>
       <button class="btn btn-ghost btn-sm" id="emailBtn" onclick="emailQuote()"><span class="l">Email myself this quote</span><span class="s">Email</span></button>
-      <button class="btn btn-primary btn-sm" onclick="book()"><span class="l">Book a 15-minute call</span><span class="s">Book a call</span></button>
+      <button class="btn btn-primary btn-sm book" onclick="book()"><span class="l">Book a 15-minute call</span><span class="s">Book a call</span></button>
     </div>
     <div class="q-detail" id="qDetail"></div>
   </div>
@@ -445,15 +448,18 @@
   const addonList=D.addonGroups.flatMap(g=>g.addons);
   const addon=k=>addonList.find(a=>a.key===k);
   const ind=()=>D.industries.find(i=>i.key===state.industry)||D.industries[0];
-  const tier=()=>D.tiers.find(t=>t.id===state.tier);
+  const tier=()=>D.tiers.find(t=>t.id===state.tier)||null;
+  const noPlan=()=>!tier();
   const tierById=id=>D.tiers.find(t=>t.id===id);
   const tierFeatures=t=>{const f=ind().tierFeatures;return (f&&f[t.id]&&f[t.id].length)?f[t.id]:t.features;};
-  const isIncluded=(a,tid)=>!!(a.includedFrom&&(tid||state.tier)>=a.includedFrom);
-  const includedQty=(a,tid)=>(a.includedQtyFrom&&(tid||state.tier)>=a.includedQtyFrom)?(a.includedQty||1):0;
-  const isLocked=(a,tid)=>{const t=tid||state.tier;return !!((a.minTier&&t<a.minTier)||(a.maxTier&&t>a.maxTier));};
+  const cur=()=>state.tier||0;
+  const isIncluded=(a,tid)=>!!(a.includedFrom&&(tid||cur())>=a.includedFrom);
+  const includedQty=(a,tid)=>(a.includedQtyFrom&&(tid||cur())>=a.includedQtyFrom)?(a.includedQty||1):0;
+  const isLocked=(a,tid)=>{const t=tid||state.tier;if(!t)return false;return !!((a.minTier&&t<a.minTier)||(a.maxTier&&t>a.maxTier));};
   const isRequired=a=>(ind().requiredAddons||[]).includes(a.key);
   const isForIndustry=a=>!a.industries||a.industries.includes(state.industry);
   const addonMonthly=(a,tid)=>a.monthlyByTier?(a.monthlyByTier[tid||state.tier]||a.monthly):a.monthly;
+  const addonYearly=a=>a.yearly||0;
   const reqAddons=()=>(ind().requiredAddons||[]).map(addon).filter(Boolean);
   const requiredMonthly=tid=>reqAddons().reduce((s,a)=>s+addonMonthly(a,tid),0);
   const requiredOnce=()=>reqAddons().reduce((s,a)=>s+a.oneTime,0);
@@ -463,12 +469,12 @@
   function readURL(){
     const p=new URLSearchParams(location.search);
     if(p.get('i')&&D.industries.some(i=>i.key===p.get('i')))state.industry=p.get('i');
-    if(p.get('t')&&selectable.some(t=>t.id===+p.get('t')))state.tier=+p.get('t');
-    if(state.tier<indMin())state.tier=indMin();
+    if(p.get('t')==='none')state.tier=null;else if(p.get('t')&&selectable.some(t=>t.id===+p.get('t')))state.tier=+p.get('t');
+    if(state.tier!==null&&state.tier<indMin())state.tier=indMin();
     if(p.get('a'))p.get('a').split(',').forEach(s=>{const [k,q]=s.split(':');if(addon(k))state.addons[k]=Math.max(1,+q||1);});
   }
   function writeURL(){
-    const p=new URLSearchParams();p.set('i',state.industry);p.set('t',state.tier);
+    const p=new URLSearchParams();p.set('i',state.industry);p.set('t',state.tier===null?'none':state.tier);
     const a=chosenAddons().map(({a,q})=>q>1?a.key+':'+q:a.key);
     if(a.length)p.set('a',a.join(','));
     try{history.replaceState(null,'',location.pathname+'?'+p.toString()+location.hash);}catch(e){}
@@ -486,7 +492,7 @@
   }
   window.setIndustry=function(k){
     state.industry=k;state.answers=[];
-    if(state.tier<indMin())state.tier=indMin();
+    if(state.tier!==null&&state.tier<indMin())state.tier=indMin();
     Object.keys(state.addons).forEach(key=>{const a=addon(key);if(!a||!isForIndustry(a))delete state.addons[key];});
     renderAll();
   };
@@ -509,7 +515,7 @@
         <div class="rec-why">${t.recommended&&ind().recommendedReason?'Recommended '+esc(ind().recommendedReason):''}</div>
         ${na?`<div class="price"><span class="amt" style="font-size:1.25rem">Not offered for ${esc(ind().label.toLowerCase())}</span></div><div class="price-note">Plans for ${esc(ind().label.toLowerCase())} start at ${esc(tierById(indMin()).name)}.</div><div class="annual-note"></div>`:`<div class="price"><span class="amt">${money(headline)}</span><span class="per">a month</span></div>
         <div class="price-note">${reqM?'includes the '+req.map(a=>esc(a.name)+', '+money(addonMonthly(a,t.id))+' a month').join(' and ')+'; plan '+money(t.monthly):''}</div>
-        <div class="annual-note">${t.annualMonths?'or '+money(t.monthly*t.annualMonths)+' a year for the plan: pay for '+t.annualMonths+' months, get 12'+(t.buildWaivedOnAnnual?', build fee waived':''):'billed monthly'}</div>
+        <div class="annual-note">${t.annualMonths?(D.annualLabel?esc(D.annualLabel)+': ':'')+'or '+money(t.monthly*t.annualMonths)+' a year for the plan, pay for '+t.annualMonths+' months, get 12'+(t.buildWaivedOnAnnual?', build fee waived':''):'billed monthly'}</div>
         <div class="build"><b>${t.buildFrom?'from ':''}${money(t.build)}</b> one-time build${buildSmall}${t.scoped?'<small>quoted after a scoping call, in writing before you sign</small>':'<small><a href="#build" onclick="event.stopPropagation()">What it covers</a></small>'}</div>
         <div class="usage"><b>${num(t.minutes)} minutes</b> and <b>${num(t.texts)} texts</b> a month, then ${'$'+D.overagePerMinute.toFixed(2)} a minute and ${'$'+D.overagePerText.toFixed(2)} a text</div>`}
         <div class="plus">${i===0?'Includes':'Everything in '+esc(D.tiers[i-1].name)+', plus'}</div>
@@ -558,7 +564,7 @@
     const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
     $('fitName').textContent=s.tier.name;
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
-    const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);return `${esc(a.name)}: ${m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
+    const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);const y=addonYearly(a);return `${esc(a.name)}: ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
     $('fitLists').innerHTML=(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
     $('fitApply').disabled=false;
   }
@@ -573,7 +579,7 @@
   function optRow(a){
     const inc=isIncluded(a),lock=isLocked(a),req=isRequired(a),incQ=includedQty(a),qty=state.addons[a.key]||0,on=qty>0;
     const checked=inc||req||(on&&!lock);
-    const disabled=inc||lock||req;
+    const disabled=inc||lock||req||noPlan();
     let st='';
     if(inc)st='<span class="state inc">Included</span>';
     else if(lock)st=(a.maxTier&&state.tier>a.maxTier)?`<span class="state">Up to ${esc(tierById(a.maxTier).name)}</span>`:`<span class="state">From ${esc(tierById(a.minTier).name)}</span>`;
@@ -583,12 +589,13 @@
     const q=Math.max(1,qty);const id='opt-'+a.key;
     const qtyUI=(a.qty&&checked&&!inc)?`<span class="qty"><button type="button" data-fk="qty:${a.key}:-1" aria-label="Fewer ${esc(a.name)}" onclick="qtyChange('${a.key}',-1)">−</button><span aria-live="polite">${q}</span><button type="button" data-fk="qty:${a.key}:1" aria-label="More ${esc(a.name)}" onclick="qtyChange('${a.key}',1)">+</button></span>`:'';
     const m=addonMonthly(a)*(a.qty?q:1),o=a.oneTime*(a.qty?q:1);
-    const oneTimeOnly=!m&&o>0;
-    const price=inc?'<span class="incl">Included</span>':oneTimeOnly?`${money(o)} one time`:`${money(m)} a month`;
+    const oneTimeOnly=!m&&o>0;const y=addonYearly(a);
+    const price=inc?'<span class="incl">Included</span>':y?`${money(y)} a year`:oneTimeOnly?`${money(o)} one time`:`${money(m)} a month`;
     const label=a.name+(incQ&&!inc?' (beyond the included one)':'');
     return `<div class="opt ${inc?'inc':''} ${lock?'off':''}"><input type="checkbox" id="${id}" data-fk="opt:${a.key}" ${checked?'checked':''} ${disabled?'disabled':''} onchange="toggleAddon('${a.key}',this.checked)"><label for="${id}"><span class="t">${esc(label)}${st}</span><span class="d">${esc(a.desc)}</span></label><span class="p">${price}${(!inc&&o&&!oneTimeOnly)?`<small>${money(o)} setup</small>`:''}${qtyUI}</span></div>`;
   }
   function renderOptions(){
+    $('optNote').textContent=noPlan()?'Pick a plan above to add options and see the total.':'';
     $('groups').innerHTML=D.addonGroups.map(g=>{
       const items=g.addons.filter(isForIndustry);if(!items.length)return '';
       const chosen=items.filter(a=>state.addons[a.key]&&!isIncluded(a)&&!isLocked(a)&&!isRequired(a)).length;
@@ -615,13 +622,13 @@
 
   // ---- totals ----
   function totals(){
-    const t=tier();let monthly=t.monthly,once=t.build;const lines=[];
+    const t=tier();if(!t)return {t:null,monthly:0,once:0,yearly:0,lines:[]};let monthly=t.monthly,once=t.build,yearly=0;const lines=[];
     reqAddons().forEach(a=>{monthly+=addonMonthly(a);once+=a.oneTime;lines.push({a,n:1,req:true});});
-    chosenAddons().forEach(({a,q})=>{const n=a.qty?q:1;monthly+=addonMonthly(a)*n;once+=a.oneTime*n;lines.push({a,n});});
-    return {t,monthly,once,lines};
+    chosenAddons().forEach(({a,q})=>{const n=a.qty?q:1;monthly+=addonMonthly(a)*n;once+=a.oneTime*n;yearly+=addonYearly(a)*n;lines.push({a,n});});
+    return {t,monthly,once,yearly,lines};
   }
   function nudge(){
-    const t=tier();const n=tierById(t.id+1);if(!n||n.scoped)return null;
+    const t=tier();if(!t)return null;const n=tierById(t.id+1);if(!n||n.scoped)return null;
     const chosen=chosenAddons();if(!chosen.length)return null;
     if(!chosen.every(({a,q})=>isIncluded(a,n.id)||(a.qty?includedQty(a,n.id)>=q:includedQty(a,n.id)>0)))return null;
     const cur=totals().monthly,next=n.monthly+requiredMonthly(n.id);
@@ -630,30 +637,35 @@
   }
   window.switchTo=function(id){pickTier(id);};
   function renderSummary(){
-    const {t,monthly,once,lines}=totals();
+    const {t,monthly,once,yearly,lines}=totals();
+    document.querySelectorAll('.q-right .btn:not(.book)').forEach(b=>{b.disabled=!t;b.style.opacity=t?'':'.5';});
+    if(!t){$('qTier').innerHTML=`Pick a plan<span class="ind"> · ${esc(ind().label)}</span>`;$('qMonthly').textContent='$0';$('qBuild').textContent='$0';$('qMeta').innerHTML='Choose a plan above and the total appears here.';$('qDetail').innerHTML=$('qMeta').innerHTML;$('nudge').innerHTML='';$('usageNote').textContent=D.usage||'';$('annualNote').textContent=D.annualNote||'';$('priceDate').textContent=longDate(D.version);fitBar();return;}
     $('qTier').innerHTML=`${esc(t.name)}<span class="ind"> · ${esc(ind().label)}</span>`;
     $('qMonthly').textContent=money(monthly);
     $('qBuild').textContent=money(once);
     const opts=lines.length?lines.map(({a,n,req})=>esc(a.name)+(n>1?' ×'+n:'')+(req?' (required)':'')).join(', '):'No options added';
-    const annual=t.annualMonths?`Or ${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
-    const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included. ${annual} ${opts}.`;
+    const annual=t.annualMonths?`${D.annualLabel?esc(D.annualLabel)+': ':''}${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
+    const yr=yearly?` Plus ${money(yearly)} a year for yearly options.`:'';
+    const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included. ${annual}${yr} ${opts}.`;
     $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
     const nd=nudge();
     $('nudge').innerHTML=nd?`${esc(nd.n.name)} includes everything you selected${nd.diff>0?' for '+money(nd.diff)+' more a month':nd.diff<0?' for '+money(-nd.diff)+' less a month':' at the same price'}. <button type="button" onclick="switchTo(${nd.n.id})">Switch</button>`:'';
     $('usageNote').textContent=D.usage||'';
     $('annualNote').textContent=D.annualNote||'';
-    $('priceDate').textContent=(D.version||'').replace(/-draft$/,'');
+    $('priceDate').textContent=longDate(D.version);
     fitBar();
   }
+  function longDate(v){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(v||'');if(!m)return (v||'').replace(/-draft$/,'');const d=new Date(+m[1],+m[2]-1,+m[3]);return d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}
   window.toggleDetail=function(){const d=$('qDetail');d.classList.toggle('open');$('qMore').setAttribute('aria-expanded',d.classList.contains('open'));fitBar();};
   function fitBar(){const h=$('quote').offsetHeight;document.body.style.paddingBottom=(h+20)+'px';$('toast').style.bottom=(h+24)+'px';}
   function quoteText(){
-    const {t,monthly,once,lines}=totals();
+    const {t,monthly,once,yearly,lines}=totals();
+    if(!t)return `ReceptionAide pricing (${ind().label}): ${location.href}`;
     return [`ReceptionAide quote (${ind().label})`,`Plan: ${t.name}, ${money(t.monthly)} a month, ${money(t.build)} one-time build`,
-      ...lines.map(({a,n,req})=>{const m=addonMonthly(a)*n;return `Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime*n)+' setup':''):money(a.oneTime*n)+' one time'}`;}),
-      `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,
+      ...lines.map(({a,n,req})=>{const m=addonMonthly(a)*n;const y=addonYearly(a)*n;return `Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime*n)+' setup':''):money(a.oneTime*n)+' one time'}`;}),
+      `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,...(yearly?[`Yearly options: ${money(yearly)} a year`]:[]),
       `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,
-      t.annualMonths?`Yearly option for the plan: ${money(t.monthly*t.annualMonths)} (pay for ${t.annualMonths} months, get 12${t.buildWaivedOnAnnual?', build fee waived':''})`:'Plan billed monthly',
+      t.annualMonths?`${D.annualLabel||'Yearly option'} for the plan: ${money(t.monthly*t.annualMonths)} a year (pay for ${t.annualMonths} months, get 12${t.buildWaivedOnAnnual?', build fee waived':''})`:'Plan billed monthly',
       `Prices as of ${(D.version||'').replace(/-draft$/,'')}, identical in every industry.`,`Link: ${location.href}`].join('\n');
   }
   function copyText(txt,cb,fail){
@@ -662,7 +674,7 @@
   function fallback(txt,cb,fail){const ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){(fail||cb)();}document.body.removeChild(ta);}
   window.copyQuote=function(){copyText(quoteText(),()=>toast('Quote copied'),()=>toast('Copy did not work here. The link in your address bar carries the same quote.'));};
   window.emailQuote=function(){
-    const {t}=totals();
+    const {t}=totals();if(!t)return;
     location.href='mailto:?subject='+encodeURIComponent(`ReceptionAide quote: ${t.name}, ${ind().label}`)+'&body='+encodeURIComponent(quoteText());
   };
   window.book=function(){
