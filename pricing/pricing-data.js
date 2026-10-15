@@ -51,6 +51,24 @@ window.RA_PRICING = {
     { key: "volume", label: "Volume", addons: [
       { key: "high_volume_inbound", name: "High-volume inbound", desc: "No per-minute charge on incoming calls to your line, up to 3,000 minutes a month (about 1,000 calls). Pays for itself above about 1,500 minutes a month on Answer and about 2,000 on Book and Track. Above 3,000 minutes, $0.25 a minute, and we call to see whether a different plan fits better. For normal incoming calls from the public to one business location, no automated or bulk traffic. Offered on Answer and Book and Track; Team and Review includes 2,000 minutes and Connect includes this option.", monthly: 247, oneTime: 0, minTier: 1, maxTier: 2, includedFrom: 4 }
     ]},
+    {
+       "key": "compliance",
+       "label": "Compliance",
+       "addons": [
+        {
+         "key": "hipaa",
+         "name": "HIPAA package",
+         "desc": "Encrypted handling of patient information, logging of recording access, two-step sign-in on every login, staff alerts that carry no patient details, and a documented retention purge to the window you choose. HIPAA compliance requires review by a HIPAA attorney. Every business associate agreement is reviewed and signed off by a HIPAA attorney before the first patient call, at an additional cost, estimated at $2,500 to $7,500. 12-month term.",
+         "monthly": 447,
+         "oneTime": 747,
+         "minTier": 1,
+         "industries": [
+          "medical"
+         ],
+         "term": "12-month term"
+        }
+       ]
+      },
     { key: "advanced", label: "Advanced", advanced: true, addons: [
       { key: "custom_voice", name: "Custom voice", desc: "A voice recorded by a speaker you choose, or an imported professional voice, with the speaker's signed consent, tuned for your line. A voice from our standard library is included in every plan. The one-time fee covers the recording session and consent paperwork; the monthly fee keeps the voice licensed for your line. Available on every plan.", monthly: 27, oneTime: 497, minTier: 1 },
       { key: "second_language", name: "Other languages", desc: "The receptionist is multilingual. English and Spanish are included on every plan on one line, switching mid-call. Each other language is added as a dedicated receptionist callers reach on the same number, built and tested with you on live calls before it goes live. Per additional language.", monthly: 97, oneTime: 497, minTier: 1, qty: true, max: 4 },
@@ -126,6 +144,160 @@ window.RA_PRICING = {
       ],
       integration: "Works alongside Cloudbeds, Apaleo, OPERA Cloud and others. Guests complete reservations in your own booking engine today, so there is no second calendar. We check whether your reservation system lets outside tools connect and tell you before you sign; a connection is scoped per property before it is promised. Our hotel demo checks live room availability from reservation software in a test environment.",
       compliance: "Calls are recorded with a notice at the start of each call. Card numbers are not taken by voice; deposits go through a secure payment link by text or room charge. Rooms are booked in your own engine. Rates, policies and availability come from information you approve. Service animals are not pets and carry no fee. English and Spanish are verified on one line; other languages are added as a dedicated receptionist after a live test." },
+    {
+       "key": "medical",
+       "label": "Medical and telehealth",
+       "minTier": 2,
+       "intro": "For practices and telehealth providers: patient calls answered with the HIPAA package in place, emergencies first, new patients booked and intake captured for your team to review, consent signed on the patient's phone. The HIPAA package is required and is added to your quote automatically.",
+       "demoLine": {
+        "label": "Hear it before you choose. Call the Meridian Health demo line (a fictional practice; it takes no real patient calls):",
+        "number": "(855) 842-2436"
+       },
+       "recommendedReason": "for practices that book new patients and capture intake",
+       "requiredAddons": [
+        "hipaa"
+       ],
+       "noEmailQuote": true,
+       "tierFeatures": {
+        "1": [
+         "Answers patient calls on a recorded line, 24/7",
+         "Emergencies first: 911, then your on-call line",
+         "Answers from your approved information; symptoms go to staff",
+         "Each call summarized inside your HIPAA-enabled account"
+        ],
+        "2": [
+         "Books new patients into a provider calendar",
+         "Captures intake for your team to review, with your own login",
+         "Consent forms signed on the patient's phone",
+         "The same intake assistant by text and on your website"
+        ],
+        "3": [
+         "Reminders and missed-call texts, with consent",
+         "Minimal-detail alerts to your team for urgent calls",
+         "A person reviews calls each month and tunes it",
+         "A second line for a second location or provider"
+        ],
+        "4": [
+         "Identity check before anything personal (built to order; until then the receptionist takes a message for anything personal)",
+         "A connection to your practice system (built to order per practice; the agreements that cover your data must cover the connection and its hosting)",
+         "High-volume inbound included: up to 3,000 minutes",
+         "A named contact and a quarterly review"
+        ]
+       },
+       "questions": [
+        {
+         "q": "What should happen when a patient calls?",
+         "answers": [
+          {
+           "label": "Answer from our approved information, handle emergencies first, take a message, send clinical questions to staff",
+           "minTier": 1
+          },
+          {
+           "label": "Book new patients into a provider calendar, capture intake for our review, send consent forms for e-signature",
+           "minTier": 2
+          },
+          {
+           "label": "All of that, and send reminders and missed-call texts with consent, alert our team",
+           "minTier": 3
+          },
+          {
+           "label": "All of that, and verify identity and read from or write to our practice system",
+           "minTier": 3,
+           "note": "Connecting to your practice system is scoped on the call, and the agreements that cover your data must cover the connection first."
+          }
+         ]
+        },
+        {
+         "q": "Roughly how many patient calls reach the practice in a month?",
+         "hint": "A suggestion only; volume never changes the plan.",
+         "answers": [
+          {
+           "label": "Under about 130",
+           "minTier": 1,
+           "note": "Inside every plan."
+          },
+          {
+           "label": "About 130 to 330",
+           "minTier": 1,
+           "note": "Answer would run over at $0.25 a minute; Book and Track covers it."
+          },
+          {
+           "label": "More than about 330, or I would rather not count minutes",
+           "minTier": 1,
+           "suggest": [
+            "high_volume_inbound"
+           ]
+          },
+          {
+           "label": "I do not know",
+           "minTier": 1,
+           "note": "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes."
+          }
+         ]
+        },
+        {
+         "q": "How many providers and locations?",
+         "answers": [
+          {
+           "label": "One provider, one location",
+           "minTier": 1
+          },
+          {
+           "label": "Several providers, one location",
+           "minTier": 2,
+           "note": "A calendar per provider."
+          },
+          {
+           "label": "More than one location sharing one team and records",
+           "minTier": 1,
+           "addons": [
+            "additional_line"
+           ]
+          },
+          {
+           "label": "Separate locations with their own staff",
+           "minTier": 1,
+           "note": "A second location is set up as its own account; we quote it on the call."
+          },
+          {
+           "label": "Several departments, a membership program, or outbound calls to members",
+           "minTier": 1,
+           "scoping": true,
+           "note": "That is a larger build. It is quoted after a scoping visit, line by line from a written scope."
+          }
+         ]
+        },
+        {
+         "q": "Who needs to see what the receptionist handled?",
+         "answers": [
+          {
+           "label": "Me, by summary inside the HIPAA-enabled account and the weekly report",
+           "minTier": 1
+          },
+          {
+           "label": "My practice manager and staff should log in, with two-step sign-in",
+           "minTier": 2
+          },
+          {
+           "label": "I want a person reviewing the calls and tuning it",
+           "minTier": 1,
+           "addons": [
+            "call_monitoring"
+           ]
+          },
+          {
+           "label": "Both: a login with two-step sign-in and a person reviewing calls",
+           "minTier": 2,
+           "addons": [
+            "call_monitoring"
+           ]
+          }
+         ]
+        }
+       ],
+       "integration": "Works alongside athenahealth, Tebra, DrChrono, Healthie and others. Today the receptionist books into its own calendar and sends your team structured intake for review; it does not read or write your chart. We check whether your practice system lets outside tools connect and tell you before you sign; a connection is scoped per practice, and the agreements that cover your data must cover the connection and its hosting before it is built.",
+       "compliance": "HIPAA compliance requires review by a HIPAA attorney. Every business associate agreement is reviewed and signed off by a HIPAA attorney before the first patient call, at an additional cost, estimated at $2,500 to $7,500. The receptionist gives no medical advice, says it is an AI receptionist on a recorded line at the start of each call, and puts 911 first on emergency language. Staff alerts carry no patient details. Reminders and callbacks go out only with written consent captured at intake. WhatsApp is not offered for patient conversations. Demo lines do not take real patient calls."
+      },
     { key: "other", label: "Other small business", intro: "For contractors, home services, salons, shops and professional offices: your line answered while you work, jobs and appointments booked, new callers qualified, your crew texted the details.",
       demoLine: { label: "Hear it before you choose. The demo answers as a property management office; your build answers as your business:", number: "(855) 825-0564" },
       recommendedReason: "for businesses that book jobs and want every lead on record",
@@ -179,6 +351,7 @@ window.RA_PRICING = {
     { q: "Is it a person?", a: "No. It is an AI receptionist, and it says so at the start of every call, along with the recording notice." },
     { q: "What if I want something changed?", a: "Small changes are included on every plan: wording, hours, routing, a new team member, a new listing. Anything over about an hour is quoted first, at $125 an hour or as a fixed mini build, and nothing starts until you say yes." },
     { q: "Why would my quote be larger than the page?", a: "The plans cover one receptionist on one line with a stated allowance of minutes and texts. A center with several departments is built as several receptionists behind one triage receptionist, each with its own calendars, plus any outbound campaigns and the texting volume that goes with them, so the build is priced line by line from a written scope and the agreement prices the usage. That is the Larger builds line under the plans: builds from $9,997 and service from $1,997 a month." },
+    {"q":"Do you handle HIPAA?","a":"Yes, for medical and telehealth clients, with the HIPAA package, which is required on every medical quote. HIPAA compliance requires review by a HIPAA attorney. Every business associate agreement is reviewed and signed off by a HIPAA attorney before the first patient call, at an additional cost, estimated at $2,500 to $7,500."},
     { q: "Who sees the recordings and reports?", a: "You, through the weekly report and the summaries in your inbox, and your team through your own dashboard if your plan includes it or you add it. ReceptionAide staff review calls to tune the receptionist. The receptionist itself stays managed by us; your logins are set up to view and work with it." }
   ]
 };
