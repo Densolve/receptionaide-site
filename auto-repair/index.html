@@ -276,7 +276,7 @@
       <img class="logo-img" src="/img/receptionaide-logo.png" alt="ReceptionAide">
     </a>
     <nav class="nav-links">
-      <a href="/">All industries</a><a href="#problem">The problem</a><a href="#what">What you get</a><a href="#calc">Calculator</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="/pricing/">Pricing</a>
+      <a href="/">All industries</a><a href="#problem">The problem</a><a href="#what">What you get</a><a href="#calc">Calculator</a><a href="#how">How it works</a><a href="#faq">FAQ</a><a href="#demos">Demos</a><a href="/pricing/">Pricing</a>
     </nav>
     <button class="btn btn-primary" onclick="book()">Book a Demo</button>
   </div>
@@ -493,6 +493,32 @@
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">What does it cost?<span class="plus">+</span></div><div class="faq-a"><p>Plans and build fees are on the <a href="/pricing/">pricing page</a>, identical in every industry, and we quote what it shows. No long contracts.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">How long until it's live?<span class="plus">+</span></div><div class="faq-a"><p>Days, not months. We do the building, you approve it and go.</p></div></div>
       <div class="faq-item" onclick="fq(this)"><div class="faq-q">Can it really handle car questions?<span class="plus">+</span></div><div class="faq-a"><p>It handles the front-counter side: symptoms, drop-off times, hours, towing questions, year-make-model intake. Diagnosis stays with your techs, and anything it can't answer becomes a clean message with a call-back number.</p></div></div>
+    </div>
+  </section>
+
+    <section class="demos" id="demos">
+    <style>
+  .demos{padding:80px 0;border-top:1px solid var(--line-soft)}
+  .demos .grid3{gap:18px}
+  .demo-card{background:var(--panel);border:1px solid var(--line-soft);border-radius:16px;padding:26px 24px;display:flex;flex-direction:column;gap:10px}
+  .demo-card .k{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+  .demo-card h3{font-family:"Sora",sans-serif;font-size:1.15rem;font-weight:600}
+  .demo-card p{color:var(--muted);font-size:.95rem;flex:1}
+  .demo-card .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .demo-card .tel{font-family:"IBM Plex Mono",monospace;color:var(--cyan);font-weight:600}
+  .demos .fine{color:var(--muted);font-size:.85rem;margin-top:18px}
+</style>
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Live demos</span><h2>Try it on a working business.</h2><p>Three demo businesses run on ReceptionAide right now. Open the site, talk to it in your browser, or call the number.</p></div>
+      <div class="grid3">
+        <div class="demo-card"><span class="k">Property management</span><h3>Tallowood Property Management</h3><p>Emergency repairs routed, tours booked, repair requests filed and texted to the crew.</p>
+          <div class="acts"><a class="btn btn-ghost" href="/property/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18558250564">(855) 825-0564</a></div></div>
+        <div class="demo-card"><span class="k">Hotels and inns</span><h3>The Windrose, Wailea</h3><p>Rates and policies answered, guests sent to the booking engine, room issues sent to housekeeping.</p>
+          <div class="acts"><a class="btn btn-ghost" href="/hotel/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18556964712">(855) 696-4712</a></div></div>
+        <div class="demo-card"><span class="k">Medical and telehealth</span><h3>Meridian Health</h3><p>New patients booked, intake captured, consent signed on the patient's phone.</p>
+          <div class="acts"><a class="btn btn-ghost" href="/medical/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18558422436">(855) 842-2436</a></div></div>
+      </div>
+      <p class="fine">The demo businesses are fictional. The demo lines take no real customer or patient calls.</p>
     </div>
   </section>
 

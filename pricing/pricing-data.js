@@ -79,7 +79,7 @@ window.RA_PRICING = {
   ],
   industries: [
     { key: "property_management", label: "Property management", intro: "Built first for property managers: emergencies routed, tours booked, repair requests filed and texted to your crew, resident, renter and owner calls in one record. Fair housing rules are built into every answer library and tested before go-live.",
-      demoLine: { label: "Hear it before you choose. Call the property management demo line:", number: "(855) 825-0564" },
+      demoLine: { label: "Hear it before you choose. Call the property management demo line:", number: "(855) 825-0564", site: "/property/" },
       recommendedReason: "for offices that book tours and file repair requests",
       requiredAddons: [],
       tierFeatures: {
@@ -112,7 +112,7 @@ window.RA_PRICING = {
       integration: "Works alongside AppFolio, Buildium, Rent Manager, DoorLoop and others. Residents and renters are sent to your portals, listings and showing service today. We check whether your software lets outside tools connect (some plans allow it, some charge for it, some do not offer it) and tell you before you sign; every connection is scoped with you before it is promised.",
       compliance: "We supply the fair housing answer library and run a 40-call test set before go-live; your counsel reviews the library and you sign it off. Calls are recorded with a notice at the start of each call. Rent, fees and deposits are paid through your portal link; the receptionist does not take card or bank details and does not discuss balances, lease terms or who lives where. Resident texts respect quiet hours; staff alerts are exempt." },
     { key: "hotels", label: "Hotels and inns", intro: "For hotels, inns and small resorts: rates and policies answered when the desk is closed or busy, guests sent to your own booking engine by text, room issues to housekeeping as soon as they are reported, English and Spanish on one line.",
-      demoLine: { label: "Hear it before you choose. Call the hotel demo line:", number: "(855) 696-4712" },
+      demoLine: { label: "Hear it before you choose. Call the hotel demo line:", number: "(855) 696-4712", site: "/hotel/" },
       recommendedReason: "for properties that send booking links and take shuttle or spa bookings",
       requiredAddons: [],
       tierFeatures: {
@@ -151,7 +151,8 @@ window.RA_PRICING = {
        "intro": "For practices and telehealth providers: patient calls answered with the HIPAA package in place, emergencies first, new patients booked and intake captured for your team to review, consent signed on the patient's phone. The HIPAA package is required and is added to your quote automatically.",
        "demoLine": {
         "label": "Hear it before you choose. Call the Meridian Health demo line (a fictional practice; it takes no real patient calls):",
-        "number": "(855) 842-2436"
+        "number": "(855) 842-2436",
+        "site": "/medical/"
        },
        "recommendedReason": "for practices that book new patients and capture intake",
        "requiredAddons": [
@@ -299,7 +300,7 @@ window.RA_PRICING = {
        "compliance": "HIPAA compliance requires review by a HIPAA attorney. Every business associate agreement is reviewed and signed off by a HIPAA attorney before the first patient call, at an additional cost, estimated at $2,500 to $7,500. The receptionist gives no medical advice, says it is an AI receptionist on a recorded line at the start of each call, and puts 911 first on emergency language. Staff alerts carry no patient details. Reminders and callbacks go out only with written consent captured at intake. WhatsApp is not offered for patient conversations. Demo lines do not take real patient calls."
       },
     { key: "other", label: "Other small business", intro: "For contractors, home services, salons, shops and professional offices: your line answered while you work, jobs and appointments booked, new callers qualified, your crew texted the details.",
-      demoLine: { label: "Hear it before you choose. The demo answers as a property management office; your build answers as your business:", number: "(855) 825-0564" },
+      demoLine: { label: "Hear it before you choose. The demo answers as a property management office; your build answers as your business:", number: "(855) 825-0564", site: "/property/" },
       recommendedReason: "for businesses that book jobs and want every lead on record",
       requiredAddons: [],
       tierFeatures: {

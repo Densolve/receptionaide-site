@@ -485,7 +485,7 @@
     $('industrySeg').innerHTML=D.industries.map(i=>`<button type="button" data-fk="ind:${i.key}" aria-pressed="${i.key===state.industry}" onclick="setIndustry('${i.key}')">${esc(i.label)}</button>`).join('');
     $('indIntro').textContent=ind().intro||'';
     const dl=ind().demoLine;
-    $('demoLine').innerHTML=dl?`<span class="dot" aria-hidden="true"></span><span>${esc(dl.label)}${dl.number?' <a href="tel:+1'+dl.number.replace(/\D/g,'')+'">'+esc(dl.number)+'</a>':''}</span>`:'';
+    $('demoLine').innerHTML=dl?`<span class="dot" aria-hidden="true"></span><span>${esc(dl.label)}${dl.number?' <a href="tel:+1'+dl.number.replace(/\D/g,'')+'">'+esc(dl.number)+'</a>':''}${dl.site?' or <a href="'+dl.site+'" target="_blank" rel="noopener">visit the demo site</a>':''}</span>`:'';
     $('complianceNote').textContent=ind().compliance||'';
     $('integrationNote').textContent=ind().integration||'';
     $('emailBtn').style.display=ind().noEmailQuote?'none':'';
