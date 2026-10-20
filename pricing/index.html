@@ -290,6 +290,7 @@
     .q-tier small,.q-tier .ind,.q-num .ann{display:none}
     .quote .wrap{flex-direction:column;align-items:stretch;gap:8px;min-height:0;padding-top:10px;padding-bottom:10px}
     .q-left{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:10px}
+    #qEstWrap{grid-column:1 / -1;display:flex;gap:8px;align-items:baseline}#qEstWrap[hidden]{display:none}
     .q-tier{font-size:.98rem}
     .q-num .v{font-size:1.08rem}
     .q-right{flex-wrap:nowrap}
@@ -431,6 +432,7 @@
       <div class="q-tier"><small>Your quote</small><span id="qTier">Pick a plan</span></div>
       <div class="q-num"><span class="v grad" id="qMonthly">$0</span><small>a month</small></div>
       <div class="q-num"><span class="v" id="qBuild">$0</span><small>one time</small></div>
+      <div class="q-num" id="qEstWrap" hidden><span class="v" id="qEst">$0</span><small>at your volume</small></div>
       <button class="btn-link q-more" id="qMore" onclick="toggleDetail()" aria-expanded="false" aria-controls="qDetail">Details</button>
       <div class="q-meta" id="qMeta"></div>
       <div class="nudge" id="nudge"></div>
@@ -691,7 +693,7 @@
   function renderSummary(){
     const {t,monthly,once,yearly,lines}=totals();
     document.querySelectorAll('.q-right .btn:not(.book)').forEach(b=>{b.disabled=!t;b.style.opacity=t?'':'.5';});
-    if(!t){$('qTier').innerHTML=`Pick a plan<span class="ind"> · ${esc(ind().label)}</span>`;$('qMonthly').textContent='$0';$('qBuild').textContent='$0';$('qMeta').innerHTML='Choose a plan and the total appears here.';$('qDetail').innerHTML=$('qMeta').innerHTML;$('nudge').innerHTML='';$('usageNote').textContent=D.usage||'';$('annualNote').textContent=D.annualNote||'';$('priceDate').textContent=longDate(D.version);fitBar();return;}
+    if(!t){$('qEstWrap').hidden=true;$('qTier').innerHTML=`Pick a plan<span class="ind"> · ${esc(ind().label)}</span>`;$('qMonthly').textContent='$0';$('qBuild').textContent='$0';$('qMeta').innerHTML='Choose a plan and the total appears here.';$('qDetail').innerHTML=$('qMeta').innerHTML;$('nudge').innerHTML='';$('usageNote').textContent=D.usage||'';$('annualNote').textContent=D.annualNote||'';$('priceDate').textContent=longDate(D.version);fitBar();return;}
     $('qTier').innerHTML=`${esc(t.name)}<span class="ind"> · ${esc(ind().label)}</span>`;
     $('qMonthly').textContent=money(monthly);
     $('qBuild').textContent=money(once);
@@ -699,7 +701,8 @@
     const annual=t.annualMonths?`${D.annualLabel?esc(D.annualLabel)+': ':''}${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
     const yr=yearly?` Plus ${money(yearly)} a year for yearly options.`:'';
     const vc=state.usageTouched?volCost(t,!!state.addons.high_volume_inbound&&!isIncluded(addon('high_volume_inbound'))):null;
-    const est=vc?(vc.over?` At your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) expect about ${money(vc.over)} a month of overage.`:` Your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) fits inside the plan.`):'';
+    const est=vc?(vc.over?` At your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) expect about ${money(vc.over)} a month of overage, about ${money(monthly+vc.over)} in all.`:` Your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) fits inside the plan.`):'';
+    $('qEstWrap').hidden=!(vc&&vc.over);if(vc&&vc.over)$('qEst').textContent='about '+money(monthly+vc.over);
     const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included.${est} ${annual}${yr} ${opts}.`;
     $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
     const nd=nudge();
