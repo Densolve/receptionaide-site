@@ -622,8 +622,8 @@
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
     const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);const y=addonYearly(a);return `${esc(a.name)}: ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
     const vc=volCost(s.tier,false);
-    const vcHV=s.addons.includes('high_volume_inbound')?volCost(s.tier,true):null;const shown=vcHV||vc;
-    $('fitLists').innerHTML=(s.volNote?`<h4>Your volume</h4><ul><li>${esc(s.volNote)}</li></ul>`:'')+(shown.over?`<h4>At your volume</h4><ul><li>About ${money(shown.total)} a month, including ${money(shown.over)} of overage</li></ul>`:'')+(s.addons.length?`<h4>Added to your quote</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
+    const vcHV=s.addons.includes('high_volume_inbound')?volCost(s.tier,true):null;const shown=vcHV||vc;const quoteTotal=totals().monthly+shown.over;
+    $('fitLists').innerHTML=(s.volNote?`<h4>Your volume</h4><ul><li>${esc(s.volNote)}</li></ul>`:'')+(shown.over?`<h4>At your volume</h4><ul><li>About ${money(quoteTotal)} a month for this quote, including ${money(shown.over)} of overage</li></ul>`:'')+(s.addons.length?`<h4>Added to your quote</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
     $('fitWhy').textContent+=' It is selected below, and the quote bar shows the total.';
   }
   $('fitApply').addEventListener('click',()=>{book();});
