@@ -29,7 +29,7 @@ window.RA_PRICING = {
       buildAdds: ["Calendars and booking rules", "The caller record and lists, with your logins and a walkthrough", "The text and website assistant", "Your request scripts, payment link and e-signature templates"], goLive: "Target go-live about three weeks after we receive your information, confirmed as a written date on your call." },
     { id: 3, key: "team", name: "Team and Review", tagline: "Your crew texted, a person reviewing calls.", monthly: 747, build: 1997, annualMonths: 11, buildWaivedOnAnnual: true, minutes: 2000, texts: 2000,
       who: "An office with a crew in the field, more than one line, and a manager who wants a person checking the calls.",
-      features: ["Texts your team when a caller confirms a request", "Texts callers back: reminders, missed-call text-back", "A person reviews calls each month and tunes it", "A second line on the same account"],
+      features: ["Alerts your team by text, email or Slack when a caller confirms a request", "Texts callers back: reminders, missed-call text-back", "A person reviews calls each month and tunes it", "A second line on the same account"],
       more: ["A second line on the same account (a location with its own staff, calendars and records is an additional location, priced under Advanced)", "Consent and quiet hours built into every text", "Human call review is about an hour a month against our checklist, with notes to you", "The receptionist itself stays managed by us"],
       buildAdds: ["Team-alert and text-back workflows with consent and quiet hours", "The second line", "The review checklist tuned to your line, and a first review"], goLive: "Target go-live about four weeks after we receive your information, with carrier verification running alongside." },
     { id: 4, key: "connect", name: "Connect", tagline: "Built to work inside the software you already run.", monthly: 997, build: 4997, buildFrom: true, scoped: true, annualMonths: 11, minutes: 3000, texts: 3000,
@@ -42,7 +42,7 @@ window.RA_PRICING = {
   addonGroups: [
     { key: "reach", label: "Reach", addons: [
       { key: "outbound_texting", name: "Outbound text messaging", desc: "Texts we start without a caller asking: reminders, missed-call text-back, follow-ups and review requests, with consent and quiet hours built in. Adds 1,000 texts to your allowance. Not a marketing blast tool.", monthly: 67, oneTime: 0, minTier: 1, includedFrom: 3 },
-      { key: "team_texting", name: "Text your team", desc: "Job details, repair requests or room issues texted and emailed to your own staff as soon as a caller confirms, with what they need to act.", monthly: 47, oneTime: 0, minTier: 1, includedFrom: 3 },
+      { key: "team_texting", name: "Alert your team", desc: "Job details, repair requests or room issues sent to your own staff as soon as a caller confirms, with what they need to act. By text, email, Slack or WhatsApp, and into Microsoft Teams or Google Chat by webhook. Pick the channel per alert.", monthly: 47, oneTime: 0, minTier: 1, includedFrom: 3 },
       { key: "whatsapp", name: "WhatsApp chat", desc: "Customers message your business number on WhatsApp and get the same receptionist. Includes 1,000 service and reply messages a month; beyond that, and for any marketing template, Meta's per-message fee is added at Meta's rate. You need a Meta Business account in your name; Meta's review can take several weeks and nothing else waits on it.", monthly: 47, oneTime: 0, minTier: 2, industries: ["property_management", "hotels", "other"] }
     ]},
     { key: "insight", label: "Insight", addons: [
@@ -86,7 +86,7 @@ window.RA_PRICING = {
       tierFeatures: {
         1: ["Answers resident, renter and owner calls around the clock", "Emergencies go to your on-call line first", "Answers only from your approved policies and listings", "Each call summarized to your inbox, links texted"],
         2: ["Books tours or sends your showing link", "Files repair requests, read back before filing", "Residents, renters and owners in one record, with your own login", "The same receptionist by text and on your website"],
-        3: ["Texts your maintenance crew when a resident confirms", "Texts missed callers back, sends tour reminders", "A person reviews calls each month and tunes it", "A second office line on the same account"],
+        3: ["Alerts your maintenance crew by text or Slack when a resident confirms", "Texts missed callers back, sends tour reminders", "A person reviews calls each month and tunes it", "A second office line on the same account"],
         4: ["Repair requests into your property management software (built to order after a scoping call)", "Listings read from your software (built to order; today we re-sync your listings page on a set schedule)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
@@ -115,7 +115,7 @@ window.RA_PRICING = {
       tierFeatures: {
         1: ["Answers the reservations line when the desk cannot", "Quotes nightly rates from the rate card you approve", "Transfers to the desk when a caller asks", "Texts your booking link and directions, each call summarized"],
         2: ["Sends guests to your own booking engine by text", "Books shuttle, spa or activity slots on a calendar", "Secure deposit links and photos by text", "Guest calls in one record, with your own login"],
-        3: ["Pre-arrival texts and post-stay review requests", "Room issues texted to housekeeping when a guest confirms", "A person reviews calls each month and tunes it", "A second line on the same account"],
+        3: ["Pre-arrival texts and post-stay review requests", "Room issues sent to housekeeping by text or Slack when a guest confirms", "A person reviews calls each month and tunes it", "A second line on the same account"],
         4: ["Live availability from your reservation system (built to order per property after a scoping call)", "Reservations made or changed in your system (built to order)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
@@ -272,7 +272,7 @@ window.RA_PRICING = {
       tierFeatures: {
         1: ["Answers your line while you work, 24/7", "Answers only from information you approve", "Urgent calls reach you at any hour", "Each call summarized to your inbox, links texted"],
         2: ["Books jobs or appointments into your calendar", "Qualifies new callers, in one record with your own login", "Takes quote requests with photos by text", "The same receptionist by text and on your website"],
-        3: ["Texts your tech or crew the job details", "Texts missed callers back, reminders, review requests", "A person reviews calls each month and tunes it", "A second line on the same account"],
+        3: ["Sends your tech or crew the job details by text or Slack", "Texts missed callers back, reminders, review requests", "A person reviews calls each month and tunes it", "A second line on the same account"],
         4: ["Jobs created in your scheduling software (built to order after a scoping call; we check your software's access first)", "Returning customers recognized and routed (built to order)", "High-volume inbound included: up to 3,000 minutes", "A named contact and a quarterly review"]
       },
       questions: [
@@ -299,7 +299,7 @@ window.RA_PRICING = {
     { label: "Answers and routes calls, 24/7", tiers: [true, true, true, true] },
     { label: "Books into a calendar and keeps one record", tiers: [false, true, true, true] },
     { label: "Website chat and talk-in-browser voice", tiers: ["Add-on $47", true, true, true] },
-    { label: "Texts your team and texts callers back", tiers: ["Add-on $114", "Add-on $114", true, true] },
+    { label: "Alerts your team (text, email, Slack) and texts callers back", tiers: ["Add-on $114", "Add-on $114", true, true] },
     { label: "Your own dashboard", tiers: [false, true, true, true] },
     { label: "Call monitoring", tiers: ["Automatic", "Automatic", "Plus human review", "Plus human review"] },
     { label: "Connection to your software", tiers: [false, false, false, "Scoped per client"] },
@@ -312,6 +312,7 @@ window.RA_PRICING = {
     { q: "How long until it is live?", a: "Answer about two weeks after we receive your information, Book and Track about three, Team and Review about four, each confirmed as a written date on your call. Connect is scheduled at scoping. Texting is live within days on a toll-free line; a local texting number registers under your business in one to three weeks, started on day one." },
     { q: "What happens when the receptionist cannot answer a caller?", a: "It transfers to a person when one is available, and otherwise takes a message, texts the caller the right link, and summarizes the call to your inbox. Anything outside the information you approved goes to a person rather than a guess." },
     { q: "Is it a person?", a: "No. It is an AI receptionist, and it says so at the start of every call, along with the recording notice." },
+    { q: "Can I keep my phone system?", a: "Yes. RingCentral, Dialpad, Vonage, Zoom Phone, Google Voice or a plain landline: your system forwards to us when your team cannot pick up, or after hours, and your numbers do not change. We set the forwarding and caller ID pass-through during the build. If you would rather have one system, we move your number to us instead." },
     { q: "What if I want something changed?", a: "Small changes are included on every plan: wording, hours, routing, a new team member, a new listing. Anything over about an hour is quoted first, at $125 an hour or as a fixed mini build, and nothing starts until you say yes." },
     { q: "Why would my quote be larger than the page?", a: "The plans cover one receptionist on one line with a stated allowance of minutes and texts. A center with several departments is built as several receptionists behind one triage receptionist, each with its own calendars, plus any outbound campaigns and the texting volume that goes with them, so the build is priced line by line from a written scope and the agreement prices the usage. That is the Larger builds line under the plans: builds from $9,997 and service from $1,997 a month." },
     {"q":"Do you handle HIPAA?","a":"Yes, for medical and telehealth clients, with the HIPAA package, which is required on every medical quote. HIPAA compliance requires review by a HIPAA attorney. Every business associate agreement is reviewed and signed off by a HIPAA attorney before the first patient call, at an additional cost, estimated at $2,500 to $7,500."},
