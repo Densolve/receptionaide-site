@@ -5,6 +5,7 @@ window.RA_PRICING = {
   version: "2026-10-15",
   booking: "https://api.leadconnectorhq.com/widget/booking/zF5lnnLqKPt5QJeqKkJN",
   annualLabel: "Founding client offer, first five clients",
+  minutesPerCall: 3,
   overagePerMinute: 0.25,
   overagePerText: 0.05,
   trustLine: "It says it is an AI receptionist on every call, and every call starts with a recording notice.",
@@ -94,11 +95,7 @@ window.RA_PRICING = {
           { label: "Book the tour on a calendar, file the repair request properly, and keep callers in one record", minTier: 2 },
           { label: "All of that, and text my maintenance crew or leasing agent as soon as the caller confirms", minTier: 3 },
           { label: "All of that, and create the work order in my property management software", minTier: 3, note: "Connecting to your software is scoped on the call. Most offices start on Team and Review and add the connection once it is scoped." } ] },
-        { q: "Roughly how many calls reach your office in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
-          { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
-          { label: "More than about 330, or I would rather not count minutes", minTier: 1, suggest: ["high_volume_inbound"] },
-          { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
+        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
         { q: "Do your offices share one team and one set of records?", answers: [
           { label: "One office", minTier: 1 },
           { label: "Yes, more than one line on the same team and records", minTier: 1, addons: ["additional_line"] },
@@ -127,11 +124,7 @@ window.RA_PRICING = {
           { label: "Text the guest our booking link to finish in our own engine, book shuttle or spa slots, send photos and payment links", minTier: 2 },
           { label: "All of that, and let guests text the same number, with room issues sent to housekeeping", minTier: 3, suggest: ["whatsapp"], note: "Add WhatsApp if you host international guests." },
           { label: "All of that, and read live availability from our reservation system or make the reservation there", minTier: 3, note: "Connecting to your reservation system is scoped on the call. Most properties start on Team and Review and add the connection once it is scoped." } ] },
-        { q: "Roughly how many calls reach the desk in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
-          { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
-          { label: "More than about 330, or it swings with the season", minTier: 1, suggest: ["high_volume_inbound"] },
-          { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
+        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
         { q: "Do your properties share one team and one set of records?", answers: [
           { label: "One property", minTier: 1 },
           { label: "Yes, two or three run by one team", minTier: 1, addons: ["additional_line"] },
@@ -208,34 +201,7 @@ window.RA_PRICING = {
           }
          ]
         },
-        {
-         "q": "Roughly how many patient calls reach the practice in a month?",
-         "hint": "A suggestion only; volume never changes the plan.",
-         "answers": [
-          {
-           "label": "Under about 130",
-           "minTier": 1,
-           "note": "Inside every plan."
-          },
-          {
-           "label": "About 130 to 330",
-           "minTier": 1,
-           "note": "Answer would run over at $0.25 a minute; Book and Track covers it."
-          },
-          {
-           "label": "More than about 330, or I would rather not count minutes",
-           "minTier": 1,
-           "suggest": [
-            "high_volume_inbound"
-           ]
-          },
-          {
-           "label": "I do not know",
-           "minTier": 1,
-           "note": "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes."
-          }
-         ]
-        },
+        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
         {
          "q": "How many providers and locations?",
          "answers": [
@@ -315,11 +281,7 @@ window.RA_PRICING = {
           { label: "Book the job or appointment, qualify the lead, keep callers in one record", minTier: 2 },
           { label: "All of that, and text me or my crew the job details, text missed callers back, send reminders and review requests", minTier: 3 },
           { label: "All of that, and create the job in the scheduling or field-service software I already use", minTier: 3, note: "Connecting to your software is scoped on the call. Most businesses start on Team and Review and add the connection once it is scoped." } ] },
-        { q: "Roughly how many calls do you get in a month?", hint: "A suggestion only; volume never changes the plan.", answers: [
-          { label: "Under about 130", minTier: 1, note: "Inside every plan." },
-          { label: "About 130 to 330", minTier: 1, note: "Answer would run over at $0.25 a minute; Book and Track covers it." },
-          { label: "More than about 330, or I would rather not count minutes", minTier: 1, suggest: ["high_volume_inbound"] },
-          { label: "I do not know", minTier: 1, note: "We tell you when a month passes 80 percent of your allowance, and nothing changes without your yes." } ] },
+        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
         { q: "Do your locations share one team and one set of records?", answers: [
           { label: "One location", minTier: 1 },
           { label: "Yes, two or three, same team", minTier: 1, addons: ["additional_line"] },

@@ -149,6 +149,22 @@
   .chip:hover{border-color:var(--cyan);color:var(--white)}
   .chip[aria-pressed=true]{background:rgba(42,143,255,.16);border-color:var(--cyan);color:var(--white)}
   .q .ans-note{margin-top:8px;font-size:.86rem;color:var(--gold)}
+  .sliders{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin:6px 0 10px}
+  .sliders label{display:block}
+  .sliders label span{display:flex;justify-content:space-between;font-size:.9rem;color:var(--silver);margin-bottom:8px}
+  .sliders label b{font-family:"IBM Plex Mono",monospace;color:var(--cyan)}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:5px;background:rgba(91,200,255,.16);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:var(--grad);cursor:pointer;box-shadow:0 0 12px rgba(91,200,255,.7);border:2px solid #08111f}
+  input[type=range]::-moz-range-thumb{width:24px;height:24px;border:2px solid #08111f;border-radius:50%;background:#3da0ff;cursor:pointer}
+  input[type=range]:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+  table.vol{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+  table.vol th,table.vol td{padding:8px 10px;border-top:1px solid var(--line-soft);text-align:left;vertical-align:top}
+  table.vol thead th{border-top:none;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  table.vol td{font-family:"IBM Plex Mono",monospace;color:var(--white)}
+  table.vol td small{display:block;font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--muted);font-size:.78rem}
+  table.vol tr.lowest th,table.vol tr.lowest td{background:rgba(42,143,255,.1)}
+  table.vol tr.lowest th::after{content:" lowest";font-family:"IBM Plex Mono",monospace;font-size:.64rem;color:var(--ok);letter-spacing:.1em;text-transform:uppercase;margin-left:6px}
+  @media(max-width:560px){.sliders{grid-template-columns:1fr}}
   .fit-out{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;position:sticky;top:92px}
   .fit-out .pre{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .fit-out .name{font-family:"Sora",sans-serif;font-weight:800;font-size:1.8rem;margin:8px 0 4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -442,7 +458,8 @@
   const num=n=>n.toLocaleString('en-US');
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
   const selectable=D.tiers.filter(t=>!t.scoped);
-  const state={industry:D.industries[0].key,tier:(selectable.find(t=>t.recommended)||selectable[1]||selectable[0]).id,addons:{},answers:[]};
+  const state={industry:D.industries[0].key,tier:(selectable.find(t=>t.recommended)||selectable[1]||selectable[0]).id,addons:{},answers:[],usage:{calls:120,texts:200}};
+  const MPC=D.minutesPerCall||3;
   const indMin=()=>(ind().minTier||1);
   const belowMin=t=>t.id<indMin();
   const addonList=D.addonGroups.flatMap(g=>g.addons);
@@ -471,12 +488,16 @@
     if(p.get('i')&&D.industries.some(i=>i.key===p.get('i')))state.industry=p.get('i');
     if(p.get('t')==='none')state.tier=null;else if(p.get('t')&&selectable.some(t=>t.id===+p.get('t')))state.tier=+p.get('t');
     if(state.tier!==null&&state.tier<indMin())state.tier=indMin();
+    if(p.get('c')||p.get('x'))state.usageTouched=true;
+    if(p.get('c'))state.usage.calls=Math.max(0,Math.min(2000,+p.get('c')||0));
+    if(p.get('x'))state.usage.texts=Math.max(0,Math.min(6000,+p.get('x')||0));
     if(p.get('a'))p.get('a').split(',').forEach(s=>{const [k,q]=s.split(':');if(addon(k))state.addons[k]=Math.max(1,+q||1);});
   }
   function writeURL(){
     const p=new URLSearchParams();p.set('i',state.industry);p.set('t',state.tier===null?'none':state.tier);
     const a=chosenAddons().map(({a,q})=>q>1?a.key+':'+q:a.key);
     if(a.length)p.set('a',a.join(','));
+    if(state.usageTouched){p.set('c',state.usage.calls);p.set('x',state.usage.texts);}
     try{history.replaceState(null,'',location.pathname+'?'+p.toString()+location.hash);}catch(e){}
   }
 
@@ -535,25 +556,55 @@
     state.tier=id;renderAll();
   };
 
+  // ---- usage estimate ----
+  function volCost(t,withHV){
+    const mins=state.usage.calls*MPC,tx=state.usage.texts;
+    const allowM=withHV?3000:t.minutes;
+    const base=t.monthly+requiredMonthly(t.id)+(withHV?247:0);
+    const over=Math.max(0,mins-allowM)*D.overagePerMinute+Math.max(0,tx-t.texts)*D.overagePerText;
+    return {total:base+over,over,mins,tx,base};
+  }
+  function volTable(){
+    return selectable.filter(t=>!belowMin(t)).map(t=>{const a=volCost(t,false);const hv=addon('high_volume_inbound');const canHV=hv&&isForIndustry(hv)&&!(hv.maxTier&&t.id>hv.maxTier)&&!isIncluded(hv,t.id);const b=canHV?volCost(t,true):null;return {t,plain:a,hv:b};});
+  }
+  function volLowest(){
+    const rows=volTable();let lowest=null;
+    rows.forEach(r=>{[['plain',r.plain],['hv',r.hv]].forEach(([k,v])=>{if(v&&(!lowest||v.total<lowest.total-0.5))lowest={t:r.t,mode:k,total:v.total,over:v.over};});});
+    return lowest;
+  }
+  window.setUsage=function(k,v){state.usage[k]=+v;state.usageTouched=true;renderUsage();renderFit();renderSummary();writeURL();};
+  function renderUsage(){
+    const el=$('usageBox');if(!el)return;
+    const mins=state.usage.calls*MPC;
+    $('uCalls').textContent=num(state.usage.calls);$('uTexts').textContent=num(state.usage.texts);$('uMins').textContent=num(mins);
+    const lowest=volLowest();
+    $('uTable').innerHTML=volTable().map(r=>{const isBest=lowest&&lowest.t.id===r.t.id;const cell=v=>v?`${money(v.total)}${v.over?' <small>('+money(v.base)+' plan + '+money(v.over)+' overage)</small>':' <small>inside the plan</small>'}`:'';
+      return `<tr class="${isBest?'lowest':''}"><th scope="row">${esc(r.t.name)}</th><td>${cell(r.plain)}</td><td>${r.hv?cell(r.hv):'<span class="muted">not offered</span>'}</td></tr>`;}).join('');
+  }
   // ---- fit helper ----
   function renderQuestions(){
     const qs=ind().questions||[];
-    $('questions').innerHTML=qs.map((q,qi)=>{const sel=state.answers[qi];const a=sel!==undefined?q.answers[sel]:null;
+    $('questions').innerHTML=qs.map((q,qi)=>{if(q.type==='usage')return `<div class="q usage-q" id="usageBox"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="sliders"><label><span>Calls a month <b id="uCalls"></b></span><input type="range" min="0" max="2000" step="10" value="${state.usage.calls}" data-fk="u:calls" oninput="setUsage('calls',this.value)" aria-label="Calls a month"></label><label><span>Texts a month <b id="uTexts"></b></span><input type="range" min="0" max="6000" step="25" value="${state.usage.texts}" data-fk="u:texts" oninput="setUsage('texts',this.value)" aria-label="Texts a month"></label></div><div class="hint">About <b id="uMins"></b> minutes at ${MPC} minutes a call. What each plan would bill a month at this volume:</div><table class="vol"><thead><tr><th scope="col">Plan</th><th scope="col">As is</th><th scope="col">With High-volume inbound</th></tr></thead><tbody id="uTable"></tbody></table></div>`;const sel=state.answers[qi];const a=sel!==undefined?q.answers[sel]:null;
       return `<div class="q" role="group" aria-labelledby="q${qi}"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="chips">${q.answers.map((x,ai)=>`<button type="button" class="chip" data-fk="q:${qi}:${ai}" aria-pressed="${sel===ai}" onclick="answer(${qi},${ai})">${esc(x.label)}</button>`).join('')}</div>${a&&a.note?`<div class="ans-note">${esc(a.note)}</div>`:''}</div>`;}).join('');
-    renderFit();
+    renderUsage();renderFit();
   }
   window.answer=function(qi,ai){state.answers[qi]=ai;renderQuestions();restoreFocus();};
   function suggestion(){
     const qs=ind().questions||[];
-    if(!qs.length||qs.some((q,i)=>state.answers[i]===undefined))return null;
+    if(!qs.length||qs.some((q,i)=>q.type!=='usage'&&state.answers[i]===undefined))return null;
     let minTier=indMin(),scoping=false;const adds=new Set(),sugs=new Set();
-    qs.forEach((q,i)=>{const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);if(a.scoping)scoping=true;(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
+    qs.forEach((q,i)=>{if(q.type==='usage')return;const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);if(a.scoping)scoping=true;(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
     if(scoping)return {scoping:true};
+    const lowest=volLowest();let volNote='';const base=tierById(minTier);
+    if(lowest&&base){const mine=volCost(base,false);const hv=addon('high_volume_inbound');const canHV=hv&&isForIndustry(hv)&&!(hv.maxTier&&base.id>hv.maxTier)&&!isIncluded(hv,base.id);const mineHV=canHV?volCost(base,true):null;
+      if(mineHV&&mineHV.total<mine.total-0.5){sugs.add('high_volume_inbound');volNote=`At ${num(state.usage.calls)} calls a month, ${base.name} plus High-volume inbound (${money(mineHV.total)}) costs less than ${base.name} with overage (${money(mine.total)}). You keep the plan you want.`;}
+      else if(lowest.t.id>base.id&&lowest.total<mine.total-0.5){volNote=`At ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month, ${base.name} would bill about ${money(mine.total)} with overage; ${lowest.t.name} would bill about ${money(lowest.total)} and includes more. Either works; the table shows both.`;}
+      else if(mine.over){volNote=`At this volume ${base.name} bills about ${money(mine.total)} a month, ${money(mine.over)} of it overage.`;}}
     const t=tierById(minTier);
     const covered=(a,tid)=>isIncluded(a,tid)||includedQty(a,tid)>0;
     const addKeys=[...adds].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!isRequired(a);});
     const sugKeys=[...sugs].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!adds.has(k);});
-    return {tier:t,addons:addKeys,suggest:sugKeys};
+    return {tier:t,addons:addKeys,suggest:sugKeys,volNote};
   }
   function renderFit(){
     const s=suggestion(),out=$('fitOut');
@@ -565,7 +616,8 @@
     $('fitName').textContent=s.tier.name;
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
     const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);const y=addonYearly(a);return `${esc(a.name)}: ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
-    $('fitLists').innerHTML=(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
+    const vc=volCost(s.tier,false);
+    $('fitLists').innerHTML=(s.volNote?`<h4>Your volume</h4><ul><li>${esc(s.volNote)}</li></ul>`:'')+(vc.over?`<h4>At your volume</h4><ul><li>About ${money(vc.total)} a month on ${esc(s.tier.name)}, including ${money(vc.over)} of overage</li></ul>`:'')+(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
     $('fitApply').disabled=false;
   }
   $('fitApply').addEventListener('click',()=>{
@@ -646,7 +698,9 @@
     const opts=lines.length?lines.map(({a,n,req})=>esc(a.name)+(n>1?' ×'+n:'')+(req?' (required)':'')).join(', '):'No options added';
     const annual=t.annualMonths?`${D.annualLabel?esc(D.annualLabel)+': ':''}${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
     const yr=yearly?` Plus ${money(yearly)} a year for yearly options.`:'';
-    const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included. ${annual}${yr} ${opts}.`;
+    const vc=state.usageTouched?volCost(t,!!state.addons.high_volume_inbound&&!isIncluded(addon('high_volume_inbound'))):null;
+    const est=vc?(vc.over?` At your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) expect about ${money(vc.over)} a month of overage.`:` Your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) fits inside the plan.`):'';
+    const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included.${est} ${annual}${yr} ${opts}.`;
     $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
     const nd=nudge();
     $('nudge').innerHTML=nd?`${esc(nd.n.name)} includes everything you selected${nd.diff>0?' for '+money(nd.diff)+' more a month':nd.diff<0?' for '+money(-nd.diff)+' less a month':' at the same price'}. <button type="button" onclick="switchTo(${nd.n.id})">Switch</button>`:'';
@@ -664,7 +718,7 @@
     return [`ReceptionAide quote (${ind().label})`,`Plan: ${t.name}, ${money(t.monthly)} a month, ${money(t.build)} one-time build`,
       ...lines.map(({a,n,req})=>{const m=addonMonthly(a)*n;const y=addonYearly(a)*n;return `Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime*n)+' setup':''):money(a.oneTime*n)+' one time'}`;}),
       `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,...(yearly?[`Yearly options: ${money(yearly)} a year`]:[]),
-      `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,
+      `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,...(state.usageTouched?[`Your estimate: ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month, about ${money(volCost(t,false).over)} of overage`]:[]),
       t.annualMonths?`${D.annualLabel||'Yearly option'} for the plan: ${money(t.monthly*t.annualMonths)} a year (pay for ${t.annualMonths} months, get 12${t.buildWaivedOnAnnual?', build fee waived':''})`:'Plan billed monthly',
       `Prices as of ${(D.version||'').replace(/-draft$/,'')}, identical in every industry.`,`Link: ${location.href}`].join('\n');
   }
