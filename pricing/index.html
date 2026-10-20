@@ -458,7 +458,7 @@
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
   const selectable=D.tiers.filter(t=>!t.scoped);
   const state={industry:D.industries[0].key,tier:(selectable.find(t=>t.recommended)||selectable[1]||selectable[0]).id,addons:{},answers:[],usage:{calls:120,texts:200}};
-  const MPC=D.minutesPerCall||3;
+  const MPC=D.minutesPerCall||3;const DPM=D.daysPerMonth||22;const daily=m=>Math.round(m/DPM);
   const indMin=()=>(ind().minTier||1);
   const belowMin=t=>t.id<indMin();
   const addonList=D.addonGroups.flatMap(g=>g.addons);
@@ -574,7 +574,7 @@
   function renderUsage(){
     const el=$('usageBox');if(!el)return;
     const mins=state.usage.calls*MPC;
-    $('uCalls').textContent=num(state.usage.calls);$('uTexts').textContent=num(state.usage.texts);$('uMins').textContent=num(mins);
+    $('uCalls').textContent=num(daily(state.usage.calls));$('uTexts').textContent=num(daily(state.usage.texts));$('uMonthly').textContent=`${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts`;$('uMins').textContent=num(mins);
     const lowest=volLowest();
     $('uTable').innerHTML=volTable().map(r=>{const cell=(v,mode)=>v?`${money(v.total)}${lowest&&lowest.t.id===r.t.id&&lowest.mode===mode?' <span class="low">lowest</span>':''}${v.over?' <small>('+money(v.base)+' plan + '+money(v.over)+' overage)</small>':' <small>inside the plan</small>'}`:'';
       return `<tr><th scope="row">${esc(r.t.name)}</th><td>${cell(r.plain,'plain')}</td><td>${r.hv?cell(r.hv,'hv'):'<span class="muted">not offered</span>'}</td></tr>`;}).join('');
@@ -582,7 +582,7 @@
   // ---- fit helper ----
   function renderQuestions(){
     const qs=ind().questions||[];
-    $('questions').innerHTML=qs.map((q,qi)=>{if(q.type==='usage')return `<div class="q usage-q" id="usageBox"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="sliders"><label><span>Calls a month <b id="uCalls"></b></span><input type="range" min="0" max="2000" step="10" value="${state.usage.calls}" data-fk="u:calls" oninput="setUsage('calls',this.value)" aria-label="Calls a month"></label><label><span>Texts a month <b id="uTexts"></b></span><input type="range" min="0" max="6000" step="25" value="${state.usage.texts}" data-fk="u:texts" oninput="setUsage('texts',this.value)" aria-label="Texts a month"></label></div><div class="hint">About <b id="uMins"></b> minutes at ${MPC} minutes a call. What each plan would bill a month at this volume:</div><table class="vol"><thead><tr><th scope="col">Plan</th><th scope="col">As is</th><th scope="col">With High-volume inbound</th></tr></thead><tbody id="uTable"></tbody></table></div>`;const sel=state.answers[qi];const a=sel!==undefined?q.answers[sel]:null;
+    $('questions').innerHTML=qs.map((q,qi)=>{if(q.type==='usage')return `<div class="q usage-q" id="usageBox"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="sliders"><label><span>Calls on a typical day <b id="uCalls"></b></span><input type="range" min="0" max="100" step="1" value="${daily(state.usage.calls)}" data-fk="u:calls" oninput="setUsage('calls',this.value*${DPM})" aria-label="Calls on a typical day"></label><label><span>Texts on a typical day <b id="uTexts"></b></span><input type="range" min="0" max="300" step="1" value="${daily(state.usage.texts)}" data-fk="u:texts" oninput="setUsage('texts',this.value*${DPM})" aria-label="Texts on a typical day"></label></div><div class="hint">That is about <b id="uMonthly"></b> a month over ${DPM} working days, or <b id="uMins"></b> minutes at ${MPC} minutes a call. What each plan would bill a month at this volume:</div><table class="vol"><thead><tr><th scope="col">Plan</th><th scope="col">As is</th><th scope="col">With High-volume inbound</th></tr></thead><tbody id="uTable"></tbody></table></div>`;const sel=state.answers[qi];const a=sel!==undefined?q.answers[sel]:null;
       return `<div class="q" role="group" aria-labelledby="q${qi}"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="chips">${q.answers.map((x,ai)=>`<button type="button" class="chip" data-fk="q:${qi}:${ai}" aria-pressed="${sel===ai}" onclick="answer(${qi},${ai})">${esc(x.label)}</button>`).join('')}</div>${a&&a.note?`<div class="ans-note">${esc(a.note)}</div>`:''}</div>`;}).join('');
     renderUsage();renderFit();
   }
@@ -599,13 +599,12 @@
     let minTier=indMin(),scoping=false;const adds=new Set(),sugs=new Set();
     qs.forEach((q,i)=>{if(q.type==='usage')return;const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);if(a.scoping)scoping=true;(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
     if(scoping)return {scoping:true};
-    const mins=state.usage.calls*MPC;
-    if(mins>3000||state.usage.texts>10000)return {scoping:true,volume:true};
     const lowest=volLowest();let volNote='';const base=tierById(minTier);
     if(lowest&&base){const mine=volCost(base,false);const hv=addon('high_volume_inbound');const canHV=hv&&isForIndustry(hv)&&!(hv.maxTier&&base.id>hv.maxTier)&&!isIncluded(hv,base.id);const mineHV=canHV?volCost(base,true):null;
-      if(mineHV&&mineHV.total<mine.total-0.5){adds.add('high_volume_inbound');volNote=`At ${num(state.usage.calls)} calls a month, ${base.name} plus High-volume inbound (${money(mineHV.total)}) costs less than ${base.name} with overage (${money(mine.total)}), so it is added. You keep the plan you want.`;}
+      if(mineHV&&mineHV.total<mine.total-0.5){adds.add('high_volume_inbound');volNote=`At about ${num(daily(state.usage.calls))} calls a day (${num(state.usage.calls)} a month), ${base.name} plus High-volume inbound (${money(mineHV.total)}) costs less than ${base.name} with overage (${money(mine.total)}), so it is added. You keep the plan you want.`;}
       else if(lowest.t.id>base.id&&lowest.total<mine.total-0.5){volNote=`At ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month, ${base.name} would bill about ${money(mine.total)} with overage; ${lowest.t.name} would bill about ${money(lowest.total)} and includes more. Either works; the table shows both.`;}
-      else if(mine.over){volNote=`At this volume ${base.name} bills about ${money(mine.total)} a month, ${money(mine.over)} of it overage.`;}}
+      else if(mine.over){volNote=`At this volume ${base.name} bills about ${money(mine.total)} a month, ${money(mine.over)} of it overage.`;}
+      const totalMins=state.usage.calls*MPC;if(totalMins>3000||state.usage.texts>10000)volNote+=` That is a lot for one line. The quote stands as shown, and a scoping call may find a better price for a build this size.`;}
     const t=tierById(minTier);
     const covered=(a,tid)=>isIncluded(a,tid)||includedQty(a,tid)>0;
     const addKeys=[...adds].filter(k=>{const a=addon(k);return a&&isForIndustry(a)&&!covered(a,minTier)&&!isRequired(a);});
@@ -617,7 +616,7 @@
     $('fitApply').hidden=true;
     if(!s){out.classList.add('empty');$('fitName').textContent='Answer the questions and your plan appears here.';$('fitWhy').textContent='';$('fitLists').innerHTML='';return;}
     out.classList.remove('empty');
-    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent=(s.volume?`At ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month you are past what any plan covers (3,000 minutes with High-volume inbound, 10,000 texts). `:'')+'Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').hidden=false;return;}
+    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').hidden=false;return;}
     const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
     $('fitName').textContent=s.tier.name;
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
@@ -701,7 +700,7 @@
     const annual=t.annualMonths?`${D.annualLabel?esc(D.annualLabel)+': ':''}${money(t.monthly*t.annualMonths)} a year for the plan${t.buildWaivedOnAnnual?', build fee waived':''}.`:'Plan billed monthly.';
     const yr=yearly?` Plus ${money(yearly)} a year for yearly options.`:'';
     const vc=state.usageTouched?volCost(t,!!state.addons.high_volume_inbound&&!isIncluded(addon('high_volume_inbound'))):null;
-    const est=vc?(vc.over?` At your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) expect about ${money(vc.over)} a month of overage, about ${money(monthly+vc.over)} in all.`:` Your estimate (${num(state.usage.calls)} calls, ${num(state.usage.texts)} texts) fits inside the plan.`):'';
+    const est=vc?(vc.over?` At your estimate (about ${num(daily(state.usage.calls))} calls and ${num(daily(state.usage.texts))} texts a day) expect about ${money(vc.over)} a month of overage, about ${money(monthly+vc.over)} in all.`:` Your estimate (about ${num(daily(state.usage.calls))} calls and ${num(daily(state.usage.texts))} texts a day) fits inside the plan.`):'';
     $('qEstWrap').hidden=!(vc&&vc.over);if(vc&&vc.over)$('qEst').textContent='about '+money(monthly+vc.over);
     const meta=`<b>${num(t.minutes)} minutes, ${num(t.texts)} texts</b> a month included.${est} ${annual}${yr} ${opts}.`;
     $('qMeta').innerHTML=meta;$('qDetail').innerHTML=meta;
@@ -721,7 +720,7 @@
     return [`ReceptionAide quote (${ind().label})`,`Plan: ${t.name}, ${money(t.monthly)} a month, ${money(t.build)} one-time build`,
       ...lines.map(({a,n,req})=>{const m=addonMonthly(a)*n;const y=addonYearly(a)*n;return `Option: ${a.name}${n>1?' x'+n:''}${req?' (required)':''}, ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime*n)+' setup':''):money(a.oneTime*n)+' one time'}`;}),
       `Monthly total: ${money(monthly)}`,`One-time total: ${money(once)}`,...(yearly?[`Yearly options: ${money(yearly)} a year`]:[]),
-      `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,...(state.usageTouched?[`Your estimate: ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month, about ${money(volCost(t,false).over)} of overage`]:[]),
+      `Included: ${num(t.minutes)} minutes and ${num(t.texts)} texts a month, then $${D.overagePerMinute.toFixed(2)} a minute and $${D.overagePerText.toFixed(2)} a text`,...(state.usageTouched?[`Your estimate: about ${num(daily(state.usage.calls))} calls and ${num(daily(state.usage.texts))} texts a day (${num(state.usage.calls)} and ${num(state.usage.texts)} a month), about ${money(volCost(t,false).over)} of overage`]:[]),
       t.annualMonths?`${D.annualLabel||'Yearly option'} for the plan: ${money(t.monthly*t.annualMonths)} a year (pay for ${t.annualMonths} months, get 12${t.buildWaivedOnAnnual?', build fee waived':''})`:'Plan billed monthly',
       `Prices as of ${(D.version||'').replace(/-draft$/,'')}, identical in every industry.`,`Link: ${location.href}`].join('\n');
   }

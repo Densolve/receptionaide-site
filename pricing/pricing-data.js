@@ -6,6 +6,7 @@ window.RA_PRICING = {
   booking: "https://api.leadconnectorhq.com/widget/booking/zF5lnnLqKPt5QJeqKkJN",
   annualLabel: "Founding client offer, first five clients",
   minutesPerCall: 3,
+  daysPerMonth: 22,
   overagePerMinute: 0.25,
   overagePerText: 0.05,
   usage: "A minute is the whole call from answer to hang-up, rounded up per call. A text is one message of up to 320 characters, sent or received. Talk-in-browser minutes count inside your plan's minutes. Bookings, records, recordings, the weekly report, team alerts and logins are not metered. Beyond your allowance: $0.25 a minute and $0.05 a text, itemized on your next ReceptionAide invoice. One invoice, no separate carrier bill. Above 10,000 texts a month, texting is priced in your agreement at a stated per-text rate instead of the per-text overage. We tell you when a month passes 80 percent of your allowance; if you pass it two months in a row we call, and you choose what changes.",
@@ -94,7 +95,7 @@ window.RA_PRICING = {
           { label: "Book the tour on a calendar, file the repair request properly, and keep callers in one record", minTier: 2 },
           { label: "All of that, and text my maintenance crew or leasing agent as soon as the caller confirms", minTier: 3 },
           { label: "All of that, and create the work order in my property management software", minTier: 3, note: "Connecting to your software is scoped on the call. Most offices start on Team and Review and add the connection once it is scoped." } ] },
-        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
+        { type: "usage", q: "Roughly how many calls and texts on a typical day?", hint: "Drag the sliders. The estimate counts three minutes a call and 22 working days a month, and shows what each plan would bill at that volume, overage included." },
         { q: "Do your offices share one team and one set of records?", answers: [
           { label: "One office", minTier: 1 },
           { label: "Yes, more than one line on the same team and records", minTier: 1, addons: ["additional_line"] },
@@ -123,7 +124,7 @@ window.RA_PRICING = {
           { label: "Text the guest our booking link to finish in our own engine, book shuttle or spa slots, send photos and payment links", minTier: 2 },
           { label: "All of that, and let guests text the same number, with room issues sent to housekeeping", minTier: 3, suggest: ["whatsapp"], note: "Add WhatsApp if you host international guests." },
           { label: "All of that, and read live availability from our reservation system or make the reservation there", minTier: 3, note: "Connecting to your reservation system is scoped on the call. Most properties start on Team and Review and add the connection once it is scoped." } ] },
-        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
+        { type: "usage", q: "Roughly how many calls and texts on a typical day?", hint: "Drag the sliders. The estimate counts three minutes a call and 22 working days a month, and shows what each plan would bill at that volume, overage included." },
         { q: "Do your properties share one team and one set of records?", answers: [
           { label: "One property", minTier: 1 },
           { label: "Yes, two or three run by one team", minTier: 1, addons: ["additional_line"] },
@@ -200,7 +201,7 @@ window.RA_PRICING = {
           }
          ]
         },
-        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
+        { type: "usage", q: "Roughly how many calls and texts on a typical day?", hint: "Drag the sliders. The estimate counts three minutes a call and 22 working days a month, and shows what each plan would bill at that volume, overage included." },
         {
          "q": "How many providers and locations?",
          "answers": [
@@ -280,7 +281,7 @@ window.RA_PRICING = {
           { label: "Book the job or appointment, qualify the lead, keep callers in one record", minTier: 2 },
           { label: "All of that, and text me or my crew the job details, text missed callers back, send reminders and review requests", minTier: 3 },
           { label: "All of that, and create the job in the scheduling or field-service software I already use", minTier: 3, note: "Connecting to your software is scoped on the call. Most businesses start on Team and Review and add the connection once it is scoped." } ] },
-        { type: "usage", q: "Roughly how many calls and texts a month?", hint: "Drag the sliders. The estimate counts three minutes a call and shows what each plan would bill at that volume, overage included." },
+        { type: "usage", q: "Roughly how many calls and texts on a typical day?", hint: "Drag the sliders. The estimate counts three minutes a call and 22 working days a month, and shows what each plan would bill at that volume, overage included." },
         { q: "Do your locations share one team and one set of records?", answers: [
           { label: "One location", minTier: 1 },
           { label: "Yes, two or three, same team", minTier: 1, addons: ["additional_line"] },
