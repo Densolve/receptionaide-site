@@ -8,7 +8,6 @@ window.RA_PRICING = {
   minutesPerCall: 3,
   overagePerMinute: 0.25,
   overagePerText: 0.05,
-  trustLine: "It says it is an AI receptionist on every call, and every call starts with a recording notice.",
   usage: "A minute is the whole call from answer to hang-up, rounded up per call. A text is one message of up to 320 characters, sent or received. Talk-in-browser minutes count inside your plan's minutes. Bookings, records, recordings, the weekly report, team alerts and logins are not metered. Beyond your allowance: $0.25 a minute and $0.05 a text, itemized on your next ReceptionAide invoice. One invoice, no separate carrier bill. Above 10,000 texts a month, texting is priced in your agreement at a stated per-text rate instead of the per-text overage. We tell you when a month passes 80 percent of your allowance; if you pass it two months in a row we call, and you choose what changes.",
   annualNote: "The Founding client offer, for our first five clients, who keep it for as long as they stay: Book and Track, Team and Review and Connect can be paid yearly, pay for 11 months and get 12, and on Book and Track and Team and Review the yearly plan also waives the build fee. Answer is billed monthly. Options are billed monthly, except the annual fair housing review.",
   buildCovers: {

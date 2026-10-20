@@ -162,8 +162,7 @@
   table.vol thead th{border-top:none;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
   table.vol td{font-family:"IBM Plex Mono",monospace;color:var(--white)}
   table.vol td small{display:block;font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--muted);font-size:.78rem}
-  table.vol tr.lowest th,table.vol tr.lowest td{background:rgba(42,143,255,.1)}
-  table.vol tr.lowest th::after{content:" lowest";font-family:"IBM Plex Mono",monospace;font-size:.64rem;color:var(--ok);letter-spacing:.1em;text-transform:uppercase;margin-left:6px}
+  table.vol .low{font-family:"IBM Plex Mono",monospace;font-size:.62rem;color:var(--ok);letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(52,211,153,.4);border-radius:999px;padding:2px 7px;margin-left:6px;vertical-align:middle}
   @media(max-width:560px){.sliders{grid-template-columns:1fr}}
   .fit-out{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;position:sticky;top:92px}
   .fit-out .pre{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -176,7 +175,6 @@
   .fit-out li::before{content:"+ ";color:var(--cyan);font-weight:700}
   .fit-out li.sug::before{content:"? ";color:var(--gold)}
   .fit-out .btn{width:100%;margin-top:16px}
-  .fit-out .btn:disabled{background:rgba(255,255,255,.06);color:var(--muted);box-shadow:none;cursor:default;transform:none}
 
   /* options */
   .groups{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -344,7 +342,7 @@
             <div class="name" id="fitName">Answer the four questions to see a suggestion.</div>
             <div class="why" id="fitWhy"></div>
             <div id="fitLists"></div>
-            <button class="btn btn-primary" id="fitApply" disabled>Use this plan</button>
+            <button class="btn btn-primary" id="fitApply" hidden>Book a scoping call</button>
           </aside>
         </div>
       </details>
@@ -359,7 +357,6 @@
         <p>Monthly covers the AI receptionist, the phone system and our management. The build fee is paid once and covers setup, your information, test calls and go-live on a written date.</p>
       </div>
       <div class="tiers" id="tierGrid"></div>
-      <p class="trust" id="trustLine"></p>
       <div class="enterprise" id="enterprise"></div>
     </div>
   </section>
@@ -546,7 +543,6 @@
         <div class="spacer"></div>
         ${t.scoped?`<div class="scope-note">${esc(t.scopedNote||'')}</div><button type="button" class="btn btn-primary btn-sm scope-btn" data-fk="tier:${t.id}" onclick="book()">Book a scoping call</button>`:na?`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" onclick="event.stopPropagation();pickTier(${indMin()})">See ${esc(tierById(indMin()).name)}</button>`:`<button type="button" class="btn btn-ghost pick" data-fk="tier:${t.id}" aria-pressed="${sel}" onclick="event.stopPropagation();pickTier(${t.id})">${sel?'Selected':'Select '+esc(t.name)}</button>`}
       </article>`;}).join('');
-    $('trustLine').textContent=D.trustLine||'';
     const E=D.enterprise;$('enterprise').innerHTML=E?`<div class="ent-title">${esc(E.title)}</div><p>${esc(E.text)}</p><button type="button" class="btn btn-ghost btn-sm" onclick="book()">Book a scoping call</button>`:'';
   }
   window.pickTier=function(id){
@@ -572,14 +568,14 @@
     rows.forEach(r=>{[['plain',r.plain],['hv',r.hv]].forEach(([k,v])=>{if(v&&(!lowest||v.total<lowest.total-0.5))lowest={t:r.t,mode:k,total:v.total,over:v.over};});});
     return lowest;
   }
-  window.setUsage=function(k,v){state.usage[k]=+v;state.usageTouched=true;renderUsage();renderFit();renderSummary();writeURL();};
+  window.setUsage=function(k,v){state.usage[k]=+v;state.usageTouched=true;if(suggestion()&&applySuggestion()){renderTiers();renderOptions();renderCompare();}renderUsage();renderFit();renderSummary();writeURL();};
   function renderUsage(){
     const el=$('usageBox');if(!el)return;
     const mins=state.usage.calls*MPC;
     $('uCalls').textContent=num(state.usage.calls);$('uTexts').textContent=num(state.usage.texts);$('uMins').textContent=num(mins);
     const lowest=volLowest();
-    $('uTable').innerHTML=volTable().map(r=>{const isBest=lowest&&lowest.t.id===r.t.id;const cell=v=>v?`${money(v.total)}${v.over?' <small>('+money(v.base)+' plan + '+money(v.over)+' overage)</small>':' <small>inside the plan</small>'}`:'';
-      return `<tr class="${isBest?'lowest':''}"><th scope="row">${esc(r.t.name)}</th><td>${cell(r.plain)}</td><td>${r.hv?cell(r.hv):'<span class="muted">not offered</span>'}</td></tr>`;}).join('');
+    $('uTable').innerHTML=volTable().map(r=>{const cell=(v,mode)=>v?`${money(v.total)}${lowest&&lowest.t.id===r.t.id&&lowest.mode===mode?' <span class="low">lowest</span>':''}${v.over?' <small>('+money(v.base)+' plan + '+money(v.over)+' overage)</small>':' <small>inside the plan</small>'}`:'';
+      return `<tr><th scope="row">${esc(r.t.name)}</th><td>${cell(r.plain,'plain')}</td><td>${r.hv?cell(r.hv,'hv'):'<span class="muted">not offered</span>'}</td></tr>`;}).join('');
   }
   // ---- fit helper ----
   function renderQuestions(){
@@ -588,16 +584,24 @@
       return `<div class="q" role="group" aria-labelledby="q${qi}"><h3 id="q${qi}"><span class="n">0${qi+1}</span>${esc(q.q)}</h3>${q.hint?`<div class="hint">${esc(q.hint)}</div>`:''}<div class="chips">${q.answers.map((x,ai)=>`<button type="button" class="chip" data-fk="q:${qi}:${ai}" aria-pressed="${sel===ai}" onclick="answer(${qi},${ai})">${esc(x.label)}</button>`).join('')}</div>${a&&a.note?`<div class="ans-note">${esc(a.note)}</div>`:''}</div>`;}).join('');
     renderUsage();renderFit();
   }
-  window.answer=function(qi,ai){state.answers[qi]=ai;renderQuestions();restoreFocus();};
+  function applySuggestion(){
+    const s=suggestion();if(!s||s.scoping)return false;
+    const keep={};addonList.forEach(a=>{if(a.key==='high_volume_inbound')return;const fromAnswers=(ind().questions||[]).some(q=>q.answers&&q.answers.some(x=>(x.addons||[]).includes(a.key)));if(!fromAnswers&&state.addons[a.key])keep[a.key]=state.addons[a.key];});
+    state.tier=s.tier.id;state.addons=keep;s.addons.forEach(k=>{state.addons[k]=1;});
+    return true;
+  }
+  window.answer=function(qi,ai){state.answers[qi]=ai;if(applySuggestion())renderAll();else renderQuestions();restoreFocus();};
   function suggestion(){
     const qs=ind().questions||[];
     if(!qs.length||qs.some((q,i)=>q.type!=='usage'&&state.answers[i]===undefined))return null;
     let minTier=indMin(),scoping=false;const adds=new Set(),sugs=new Set();
     qs.forEach((q,i)=>{if(q.type==='usage')return;const a=q.answers[state.answers[i]];minTier=Math.max(minTier,a.minTier||1);if(a.scoping)scoping=true;(a.addons||[]).forEach(x=>adds.add(x));(a.suggest||[]).forEach(x=>sugs.add(x));});
     if(scoping)return {scoping:true};
+    const mins=state.usage.calls*MPC;
+    if(mins>3000||state.usage.texts>10000)return {scoping:true,volume:true};
     const lowest=volLowest();let volNote='';const base=tierById(minTier);
     if(lowest&&base){const mine=volCost(base,false);const hv=addon('high_volume_inbound');const canHV=hv&&isForIndustry(hv)&&!(hv.maxTier&&base.id>hv.maxTier)&&!isIncluded(hv,base.id);const mineHV=canHV?volCost(base,true):null;
-      if(mineHV&&mineHV.total<mine.total-0.5){sugs.add('high_volume_inbound');volNote=`At ${num(state.usage.calls)} calls a month, ${base.name} plus High-volume inbound (${money(mineHV.total)}) costs less than ${base.name} with overage (${money(mine.total)}). You keep the plan you want.`;}
+      if(mineHV&&mineHV.total<mine.total-0.5){adds.add('high_volume_inbound');volNote=`At ${num(state.usage.calls)} calls a month, ${base.name} plus High-volume inbound (${money(mineHV.total)}) costs less than ${base.name} with overage (${money(mine.total)}), so it is added. You keep the plan you want.`;}
       else if(lowest.t.id>base.id&&lowest.total<mine.total-0.5){volNote=`At ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month, ${base.name} would bill about ${money(mine.total)} with overage; ${lowest.t.name} would bill about ${money(lowest.total)} and includes more. Either works; the table shows both.`;}
       else if(mine.over){volNote=`At this volume ${base.name} bills about ${money(mine.total)} a month, ${money(mine.over)} of it overage.`;}}
     const t=tierById(minTier);
@@ -608,24 +612,20 @@
   }
   function renderFit(){
     const s=suggestion(),out=$('fitOut');
-    if(!s){out.classList.add('empty');$('fitName').textContent='Answer the questions and your plan appears here.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
+    $('fitApply').hidden=true;
+    if(!s){out.classList.add('empty');$('fitName').textContent='Answer the questions and your plan appears here.';$('fitWhy').textContent='';$('fitLists').innerHTML='';return;}
     out.classList.remove('empty');
-    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').disabled=false;$('fitApply').textContent='Book a scoping call';$('fitApply').dataset.mode='scoping';return;}
-    $('fitApply').textContent='Use this plan';$('fitApply').dataset.mode='';
+    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent=(s.volume?`At ${num(state.usage.calls)} calls and ${num(state.usage.texts)} texts a month you are past what any plan covers (3,000 minutes with High-volume inbound, 10,000 texts). `:'')+'Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').hidden=false;return;}
     const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
     $('fitName').textContent=s.tier.name;
     $('fitWhy').textContent=`${money(s.tier.monthly+reqM)} a month${reqM?' including the required '+reqAddons().map(a=>a.name).join(', '):''}, plus ${money(s.tier.build+reqO)} one time${reqO?' (build plus setup)':' for the build'}. ${s.tier.who||''}`;
     const line=k=>{const a=addon(k);const m=addonMonthly(a,s.tier.id);const y=addonYearly(a);return `${esc(a.name)}: ${y?money(y)+' a year':m?money(m)+' a month'+(a.oneTime?', '+money(a.oneTime)+' setup':''):money(a.oneTime)+' one time'}`;};
     const vc=volCost(s.tier,false);
-    $('fitLists').innerHTML=(s.volNote?`<h4>Your volume</h4><ul><li>${esc(s.volNote)}</li></ul>`:'')+(vc.over?`<h4>At your volume</h4><ul><li>About ${money(vc.total)} a month on ${esc(s.tier.name)}, including ${money(vc.over)} of overage</li></ul>`:'')+(s.addons.length?`<h4>Added with this plan</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
-    $('fitApply').disabled=false;
+    const vcHV=s.addons.includes('high_volume_inbound')?volCost(s.tier,true):null;const shown=vcHV||vc;
+    $('fitLists').innerHTML=(s.volNote?`<h4>Your volume</h4><ul><li>${esc(s.volNote)}</li></ul>`:'')+(shown.over?`<h4>At your volume</h4><ul><li>About ${money(shown.total)} a month, including ${money(shown.over)} of overage</li></ul>`:'')+(s.addons.length?`<h4>Added to your quote</h4><ul>${s.addons.map(k=>`<li>${line(k)}</li>`).join('')}</ul>`:'')+(s.suggest.length?`<h4>Worth considering, not added</h4><ul>${s.suggest.map(k=>`<li class="sug">${line(k)}</li>`).join('')}</ul>`:'');
+    $('fitWhy').textContent+=' It is selected below, and the quote bar shows the total.';
   }
-  $('fitApply').addEventListener('click',()=>{
-    const s=suggestion();if(!s)return;
-    if(s.scoping){book();return;}
-    state.tier=s.tier.id;s.addons.forEach(k=>{state.addons[k]=state.addons[k]||1;});
-    renderAll();$('plans').scrollIntoView({behavior:'smooth',block:'start'});
-  });
+  $('fitApply').addEventListener('click',()=>{book();});
 
   // ---- options ----
   function optRow(a){
