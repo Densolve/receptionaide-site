@@ -311,7 +311,7 @@
   <div class="wrap nav">
     <a class="brand" href="/"><img class="logo-img" src="/img/receptionaide-logo.png" alt="ReceptionAide"></a>
     <nav class="nav-links" aria-label="Page sections">
-      <a href="/">All industries</a><a href="#plans">Plans</a><a href="#fit">Which plan</a><a href="#options">Options</a><a href="#compare">Compare</a><a href="#faq">FAQ</a>
+      <a href="/">All industries</a><a href="#fit">Which plan</a><a href="#plans">Plans</a><a href="#options">Options</a><a href="#compare">Compare</a><a href="#faq">FAQ</a>
     </nav>
     <button class="btn btn-primary" onclick="book()">Book a Call</button>
   </div>
@@ -332,24 +332,11 @@
     </div>
   </section>
 
-  <section class="section" id="plans">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Plans</span>
-        <h2>Each plan includes everything in the plan before it.</h2>
-        <p>Monthly covers the AI receptionist, the phone system and our management. The build fee is paid once and covers setup, your information, test calls and go-live on a written date.</p>
-      </div>
-      <div class="tiers" id="tierGrid"></div>
-      <p class="trust" id="trustLine"></p>
-      <div class="enterprise" id="enterprise"></div>
-    </div>
-  </section>
-
   <section class="section fit" id="fit">
     <div class="wrap">
       <details class="fit-wrap" id="fitWrap" open>
         <summary><h2><span class="eyebrow">Not sure which plan?</span>Four short questions.</h2><span class="mark" aria-hidden="true">+</span></summary>
-        <p class="fit-lead">Your answers point at a plan and the options worth adding. The plans above stay open; nothing is hidden behind the questions.</p>
+        <p class="fit-lead">Your answers point at a plan and the options worth adding. The four plans are right below, and nothing is hidden behind the questions.</p>
         <div class="fit-grid">
           <div id="questions"></div>
           <aside class="fit-out empty" id="fitOut" aria-live="polite">
@@ -361,6 +348,19 @@
           </aside>
         </div>
       </details>
+    </div>
+  </section>
+
+  <section class="section" id="plans">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Plans</span>
+        <h2>Each plan includes everything in the plan before it.</h2>
+        <p>Monthly covers the AI receptionist, the phone system and our management. The build fee is paid once and covers setup, your information, test calls and go-live on a written date.</p>
+      </div>
+      <div class="tiers" id="tierGrid"></div>
+      <p class="trust" id="trustLine"></p>
+      <div class="enterprise" id="enterprise"></div>
     </div>
   </section>
 
@@ -610,7 +610,7 @@
     const s=suggestion(),out=$('fitOut');
     if(!s){out.classList.add('empty');$('fitName').textContent='Answer the four questions to see a suggestion.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
     out.classList.remove('empty');
-    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans above cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').disabled=false;$('fitApply').textContent='Book a scoping call';$('fitApply').dataset.mode='scoping';return;}
+    if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').disabled=false;$('fitApply').textContent='Book a scoping call';$('fitApply').dataset.mode='scoping';return;}
     $('fitApply').textContent='Use this plan';$('fitApply').dataset.mode='';
     const reqM=requiredMonthly(s.tier.id),reqO=requiredOnce();
     $('fitName').textContent=s.tier.name;
@@ -647,7 +647,7 @@
     return `<div class="opt ${inc?'inc':''} ${lock?'off':''}"><input type="checkbox" id="${id}" data-fk="opt:${a.key}" ${checked?'checked':''} ${disabled?'disabled':''} onchange="toggleAddon('${a.key}',this.checked)"><label for="${id}"><span class="t">${esc(label)}${st}</span><span class="d">${esc(a.desc)}</span></label><span class="p">${price}${(!inc&&o&&!oneTimeOnly)?`<small>${money(o)} setup</small>`:''}${qtyUI}</span></div>`;
   }
   function renderOptions(){
-    $('optNote').textContent=noPlan()?'Pick a plan above to add options and see the total.':'';
+    $('optNote').textContent=noPlan()?'Pick a plan to add options and see the total.':'';
     $('groups').innerHTML=D.addonGroups.map(g=>{
       const items=g.addons.filter(isForIndustry);if(!items.length)return '';
       const chosen=items.filter(a=>state.addons[a.key]&&!isIncluded(a)&&!isLocked(a)&&!isRequired(a)).length;
@@ -691,7 +691,7 @@
   function renderSummary(){
     const {t,monthly,once,yearly,lines}=totals();
     document.querySelectorAll('.q-right .btn:not(.book)').forEach(b=>{b.disabled=!t;b.style.opacity=t?'':'.5';});
-    if(!t){$('qTier').innerHTML=`Pick a plan<span class="ind"> · ${esc(ind().label)}</span>`;$('qMonthly').textContent='$0';$('qBuild').textContent='$0';$('qMeta').innerHTML='Choose a plan above and the total appears here.';$('qDetail').innerHTML=$('qMeta').innerHTML;$('nudge').innerHTML='';$('usageNote').textContent=D.usage||'';$('annualNote').textContent=D.annualNote||'';$('priceDate').textContent=longDate(D.version);fitBar();return;}
+    if(!t){$('qTier').innerHTML=`Pick a plan<span class="ind"> · ${esc(ind().label)}</span>`;$('qMonthly').textContent='$0';$('qBuild').textContent='$0';$('qMeta').innerHTML='Choose a plan and the total appears here.';$('qDetail').innerHTML=$('qMeta').innerHTML;$('nudge').innerHTML='';$('usageNote').textContent=D.usage||'';$('annualNote').textContent=D.annualNote||'';$('priceDate').textContent=longDate(D.version);fitBar();return;}
     $('qTier').innerHTML=`${esc(t.name)}<span class="ind"> · ${esc(ind().label)}</span>`;
     $('qMonthly').textContent=money(monthly);
     $('qBuild').textContent=money(once);
@@ -748,7 +748,6 @@
 
   function renderAll(){renderIndustry();renderTiers();renderQuestions();renderOptions();renderCompare();renderSummary();writeURL();restoreFocus();}
   readURL();renderFaq();renderBuild();renderAll();
-  if(window.innerWidth<=860)$('fitWrap').removeAttribute('open');
   window.addEventListener('resize',fitBar);
 
   const hdr=$('hdr');function onScroll(){hdr.classList.toggle('scrolled',document.documentElement.scrollTop>20);}
