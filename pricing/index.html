@@ -176,6 +176,7 @@
   .fit-out li::before{content:"+ ";color:var(--cyan);font-weight:700}
   .fit-out li.sug::before{content:"? ";color:var(--gold)}
   .fit-out .btn{width:100%;margin-top:16px}
+  .fit-out .btn:disabled{background:rgba(255,255,255,.06);color:var(--muted);box-shadow:none;cursor:default;transform:none}
 
   /* options */
   .groups{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -335,7 +336,7 @@
   <section class="section fit" id="fit">
     <div class="wrap">
       <details class="fit-wrap" id="fitWrap" open>
-        <summary><h2><span class="eyebrow">Which plan</span>Four short questions.</h2><span class="mark" aria-hidden="true">+</span></summary>
+        <summary><h2><span class="eyebrow">Which plan</span>Four short questions.</h2></summary>
         <div class="fit-grid">
           <div id="questions"></div>
           <aside class="fit-out empty" id="fitOut" aria-live="polite">
@@ -607,7 +608,7 @@
   }
   function renderFit(){
     const s=suggestion(),out=$('fitOut');
-    if(!s){out.classList.add('empty');$('fitName').textContent='Answer the four questions to see a suggestion.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
+    if(!s){out.classList.add('empty');$('fitName').textContent='Answer the questions and your plan appears here.';$('fitWhy').textContent='';$('fitLists').innerHTML='';$('fitApply').disabled=true;return;}
     out.classList.remove('empty');
     if(s.scoping){$('fitName').textContent=(D.enterprise||{}).title||'A larger build';$('fitWhy').textContent='Quoted after a scoping visit, line by line from a written scope: builds from $9,997 and service from $1,997 a month. The plans below cover one receptionist on one line.';$('fitLists').innerHTML='';$('fitApply').disabled=false;$('fitApply').textContent='Book a scoping call';$('fitApply').dataset.mode='scoping';return;}
     $('fitApply').textContent='Use this plan';$('fitApply').dataset.mode='';
