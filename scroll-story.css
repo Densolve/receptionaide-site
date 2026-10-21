@@ -1,0 +1,91 @@
+/* scroll-story.css  v1 (2026-10-20), synced 2026-10-20. Densolv scroll motion: reveal, pinned scrub, chapter nav.
+   Master: Densolve HQ/templates/scroll-story/scroll-story.css. A property's copy keeps this header and adds "synced <date>".
+   Pairs with scroll-story.js. Without JavaScript nothing is hidden and nothing pins. */
+
+:root {
+  --ss-reveal-y: 20px;          /* how far a revealed element rises, 16 to 24px */
+  --ss-reveal-dur: .6s;         /* 0.5 to 0.7s */
+  --ss-reveal-ease: cubic-bezier(.2, .7, .2, 1);
+  --ss-stagger: .1s;            /* delay between siblings inside .ss-stagger */
+  --ss-scrub-height: 250vh;     /* how long the pinned scene holds, 200 to 300vh */
+  --ss-copy-fade: .25;          /* the copy layer is gone by this fraction of the scrub */
+  --ss-chapter-color: rgba(255, 255, 255, .45);
+  --ss-chapter-active: #fff;
+  --ss-chapter-left: 28px;
+}
+
+/* ---------- A. Reveal ---------- */
+.ss-js .ss-reveal {
+  opacity: 0;
+  transform: translateY(var(--ss-reveal-y));
+  transition: opacity var(--ss-reveal-dur) var(--ss-reveal-ease), transform var(--ss-reveal-dur) var(--ss-reveal-ease);
+}
+.ss-js .ss-reveal.is-in { opacity: 1; transform: none; }
+.ss-stagger > .ss-reveal:nth-child(2) { transition-delay: calc(var(--ss-stagger) * 1); }
+.ss-stagger > .ss-reveal:nth-child(3) { transition-delay: calc(var(--ss-stagger) * 2); }
+.ss-stagger > .ss-reveal:nth-child(4) { transition-delay: calc(var(--ss-stagger) * 3); }
+.ss-stagger > .ss-reveal:nth-child(5) { transition-delay: calc(var(--ss-stagger) * 4); }
+.ss-stagger > .ss-reveal:nth-child(6) { transition-delay: calc(var(--ss-stagger) * 5); }
+.ss-stagger > .ss-reveal:nth-child(7) { transition-delay: calc(var(--ss-stagger) * 6); }
+.ss-stagger > .ss-reveal:nth-child(8) { transition-delay: calc(var(--ss-stagger) * 7); }
+.ss-stagger > .ss-reveal:nth-child(n+9) { transition-delay: calc(var(--ss-stagger) * 8); }
+
+/* ---------- B. Pinned scrub ----------
+   Static layout first (no JavaScript, reduced motion): a picture with the copy under it. */
+.ss-scrub { position: relative; }
+.ss-scrub-pin { position: relative; background: #000; }
+.ss-scrub-poster { display: block; width: 100%; height: auto; }
+.ss-scrub-copy { position: relative; padding: 24px 6vw 40px; }
+.ss-scrub-media { display: none; }
+
+/* Pinned layout once the script runs and motion is allowed. */
+.ss-js .ss-scrub:not(.is-static) { height: var(--ss-scrub-height); }
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-pin {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+}
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-poster,
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-media {
+  display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-poster { transition: opacity .3s ease-out; }
+.ss-js .ss-scrub.is-ready:not(.is-static) .ss-scrub-poster { opacity: 0; }
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-copy {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 6vw 12vh; pointer-events: none;
+  opacity: calc(1 - min(1, var(--ss-p, 0) / var(--ss-copy-fade)));
+  transform: translateY(calc(var(--ss-p, 0) * -40px));
+}
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-copy a,
+.ss-js .ss-scrub:not(.is-static) .ss-scrub-copy button { pointer-events: auto; }
+/* data-ss-copy="end": the copy arrives in the last quarter instead of leaving in the first. */
+.ss-js .ss-scrub[data-ss-copy="end"]:not(.is-static) .ss-scrub-copy {
+  opacity: calc(max(0, (var(--ss-p, 0) - 0.75) / 0.25));
+  transform: translateY(calc((1 - var(--ss-p, 0)) * 40px));
+}
+
+/* ---------- C. Chapter nav ---------- */
+.ss-chapters {
+  position: fixed; left: var(--ss-chapter-left); top: 50%; transform: translateY(-50%);
+  z-index: 40; display: none;
+}
+@media (min-width: 900px) { .ss-js .ss-chapters { display: block; } }
+.ss-chapters ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.ss-chapters a {
+  display: flex; align-items: center; gap: 10px; min-height: 24px;
+  color: var(--ss-chapter-color); text-decoration: none;
+  font: 500 12px/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+}
+.ss-chapters .ss-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; transition: transform .3s; }
+.ss-chapters .ss-label { opacity: 0; transform: translateX(-4px); transition: opacity .3s, transform .3s; }
+.ss-chapters a.is-active { color: var(--ss-chapter-active); }
+.ss-chapters a.is-active .ss-dot { transform: scale(1.5); }
+.ss-chapters a.is-active .ss-label,
+.ss-chapters a:hover .ss-label,
+.ss-chapters a:focus .ss-label { opacity: 1; transform: none; }
+.ss-chapters a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
+
+/* ---------- Reduced motion: the static page ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ss-js .ss-reveal { opacity: 1; transform: none; transition: none; }
+  .ss-chapters .ss-dot, .ss-chapters .ss-label { transition: none; }
+}

@@ -15,6 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/scroll-story.css">
+<script src="/scroll-story.js" defer></script>
 <style>
   :root{
     --ink:#05080F;--navy:#0A1628;--panel:#0D1E36;--panel-2:#102A49;
@@ -201,13 +203,15 @@
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   .card.guarantee{border-color:rgba(91,200,255,.4);border-style:dashed}
 
-  /* scroll reveal */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
-  .grid3 .card:nth-child(2),.grid4 .card:nth-child(2){transition-delay:.05s}
-  .grid3 .card:nth-child(3),.grid4 .card:nth-child(3){transition-delay:.1s}
-  .grid3 .card:nth-child(4),.grid4 .card:nth-child(4){transition-delay:.15s}
-  .grid3 .card:nth-child(5){transition-delay:.2s}.grid3 .card:nth-child(6){transition-delay:.25s}
+  /* scroll motion: /scroll-story (shared pair at /scroll-story.css and /scroll-story.js); theme only, no overrides of the pair */
+  :root{--ss-chapter-color:rgba(213,223,234,.45);--ss-chapter-active:var(--cyan);--ss-chapter-left:20px}
+  @media(max-width:1359px){.ss-chapters{display:none!important}}
+  .ss-js .card.ss-reveal.is-in:hover{transform:translateY(-4px)}
+  .scene .ss-scrub-pin{background:var(--ink)}
+  .scene .ss-scrub-copy .wrap{width:100%}
+  .scene .ss-scrub-copy .eyebrow{margin-bottom:14px}
+  .scene .ss-scrub-copy h2{font-size:clamp(1.9rem,4.6vw,3.4rem);font-weight:800;max-width:16ch;text-shadow:0 2px 28px rgba(0,0,0,.7)}
+  .scene .ss-scrub-copy p{color:var(--silver);font-size:clamp(1rem,1.8vw,1.2rem);max-width:52ch;margin-top:16px;text-shadow:0 1px 14px rgba(0,0,0,.8)}
 
   @media(max-width:860px){
     .nav-links{display:none}
@@ -224,7 +228,7 @@
     .founding-box{grid-template-columns:1fr;text-align:center;padding:40px 28px}
     .calc-box{padding:32px 24px;gap:34px}.section{padding:72px 0}
   }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}.msg,.reveal{opacity:1!important;transform:none!important}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}.msg,.ss-reveal{opacity:1!important;transform:none!important}}
 
   /* ---- IMAGE INTEGRATION (test build) ---- */
   /* hero photographic backdrop — figure sits in the gap between copy and the phone card */
@@ -284,7 +288,7 @@
 
 <main id="top">
 
-  <section class="hero">
+  <section class="hero" id="start" data-ss-chapter="Start">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-photo" style="background-image:url('/img/property-manager-apartment-lobby-phone-call.jpg');background-size:cover;background-position:68% 30%"></div>
       <div class="hero-scrim"></div>
@@ -318,59 +322,73 @@
     </div>
   </section>
 
+  <!-- Pinned scrub scene: brief in ../campaigns/content/02-brief/scroll-property-management-call-path.md. Assets from make-scrub-assets.sh. -->
+  <section class="ss-scrub scene" id="call-path" data-ss-chapter="The call" data-ss-base="/media/scenes/call-path" data-ss-frames="72" data-ss-mode="auto" data-ss-copy="end">
+    <div class="ss-scrub-pin">
+      <img class="ss-scrub-poster" src="/media/scenes/call-path/poster.jpg" alt="Glowing cyan and blue threads on a near-black field, the opening frame of a camera move that ends on a phone lit by an incoming call." width="1920" height="1080" loading="lazy" decoding="async">
+      <div class="ss-scrub-copy">
+        <div class="wrap">
+          <span class="eyebrow">AI receptionist</span>
+          <h2>Be the manager who picks up.</h2>
+          <p>It tells callers up front they're speaking with an AI assistant and that the call may be recorded.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="stats">
-    <div class="wrap"><div class="stat-row">
-      <div class="stat"><div class="v">24/7/365</div><div class="l">Always on: nights, weekends, holidays</div></div>
-      <div class="stat"><div class="v">Instant</div><div class="l">Text-back on any call that slips by</div></div>
-      <div class="stat"><div class="v">Seconds</div><div class="l">To answer: no rings, no voicemail</div></div>
-      <div class="stat"><div class="v">Multilingual</div><div class="l">Answers your customers in their language</div></div>
+    <div class="wrap"><div class="stat-row ss-stagger">
+      <div class="stat ss-reveal"><div class="v">24/7/365</div><div class="l">Always on: nights, weekends, holidays</div></div>
+      <div class="stat ss-reveal"><div class="v">Instant</div><div class="l">Text-back on any call that slips by</div></div>
+      <div class="stat ss-reveal"><div class="v">Seconds</div><div class="l">To answer: no rings, no voicemail</div></div>
+      <div class="stat ss-reveal"><div class="v">Multilingual</div><div class="l">Answers your customers in their language</div></div>
     </div></div>
   </section>
 
-  <section class="section problem split" id="problem">
+  <section class="section problem split" id="problem" data-ss-chapter="The problem">
     <div class="wrap">
-      <div class="split-copy">
+      <div class="split-copy ss-reveal">
         <span class="eyebrow">The leak in your business</span>
         <h2>Every missed call is either a flooded unit or an empty one.</h2>
         <p class="lead-line">At 2 AM it's a burst pipe nobody caught in time. At 2 PM it's a leasing call that hit voicemail while you were at a walkthrough, and that prospect toured somewhere else. That's not a missed call. It's either damage you'll pay for or a vacancy that runs another month.</p>
       </div>
-      <figure class="split-media">
+      <figure class="split-media ss-reveal">
         <img src="/img/apartment-lobby-desk-phone-ringing-night.jpg" alt="An empty apartment building lobby desk at night with a phone glowing with an incoming call.">
       </figure>
     </div>
   </section>
 
-  <section class="section features" id="what">
+  <section class="section features" id="what" data-ss-chapter="What you get">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head ss-reveal">
         <span class="eyebrow">Not a robot. Conversational AI.</span>
         <h2>Everything a great receptionist does.<br>Around the clock. Without the desk.</h2>
       </div>
-      <div class="grid3">
-        <div class="card"><div class="ico">📞</div><h3>Answers the phone, 24/7</h3><p>Tenants, prospects, vendors. A real conversation in your caller's language, at 2 PM or 2 AM.</p></div>
-        <div class="card"><div class="ico">🚦</div><h3>Triages emergencies by your rules</h3><p>Flood, no heat, lockout: you define what's urgent and who gets woken up. Everything else waits for morning, logged.</p></div>
-        <div class="card"><div class="ico">📅</div><h3>Books showings for vacancies</h3><p>Leasing calls get answered at speed and showings land on your calendar before the prospect tours elsewhere.</p></div>
-        <div class="card"><div class="ico">🗒️</div><h3>Logs every request</h3><p>Each call becomes a clean, time-stamped summary. No more he-said-she-said with tenants or vendors.</p></div>
-        <div class="card"><div class="ico">💬</div><h3>Texts back missed calls instantly</h3><p>If a call slips by, the caller gets a text in seconds, so prospects and tenants both know they were heard.</p></div>
-        <div class="card"><div class="ico">🌐</div><h3>Comes with your website</h3><p>The one you're looking at. Hosted, handled, done. Part of the package, not an extra bill.</p></div>
+      <div class="grid3 ss-stagger">
+        <div class="card ss-reveal"><div class="ico">📞</div><h3>Answers the phone, 24/7</h3><p>Tenants, prospects, vendors. A real conversation in your caller's language, at 2 PM or 2 AM.</p></div>
+        <div class="card ss-reveal"><div class="ico">🚦</div><h3>Triages emergencies by your rules</h3><p>Flood, no heat, lockout: you define what's urgent and who gets woken up. Everything else waits for morning, logged.</p></div>
+        <div class="card ss-reveal"><div class="ico">📅</div><h3>Books showings for vacancies</h3><p>Leasing calls get answered at speed and showings land on your calendar before the prospect tours elsewhere.</p></div>
+        <div class="card ss-reveal"><div class="ico">🗒️</div><h3>Logs every request</h3><p>Each call becomes a clean, time-stamped summary. No more he-said-she-said with tenants or vendors.</p></div>
+        <div class="card ss-reveal"><div class="ico">💬</div><h3>Texts back missed calls instantly</h3><p>If a call slips by, the caller gets a text in seconds, so prospects and tenants both know they were heard.</p></div>
+        <div class="card ss-reveal"><div class="ico">🌐</div><h3>Comes with your website</h3><p>The one you're looking at. Hosted, handled, done. Part of the package, not an extra bill.</p></div>
       </div>
     </div>
   </section>
 
-  <figure class="band reveal">
+  <figure class="band ss-reveal">
     <img src="/img/hands-smartphone-glowing-incoming-call-waveform.jpg" alt="Two hands holding a phone in the dark, the screen glowing with a cyan-blue voice waveform.">
     <div class="band-cap"><div class="wrap"><h3>Answered in a real voice. In seconds.</h3></div></div>
   </figure>
 
   <!-- CALCULATOR -->
-  <section class="section" id="calc">
+  <section class="section" id="calc" data-ss-chapter="Calculator">
     <div class="wrap">
-      <div class="section-head" style="max-width:780px">
+      <div class="section-head ss-reveal" style="max-width:780px">
         <span class="eyebrow">The easiest math you'll do today</span>
         <h2>See what missed calls are costing you.</h2>
       </div>
-      <p class="calc-frame">ReceptionAide is built to catch <b>the leasing calls you're missing between walkthroughs</b>. Drag the sliders to your portfolio's real numbers. Even at a conservative close rate, watch what you'd recover.</p>
-      <div class="calc-box">
+      <p class="calc-frame ss-reveal">ReceptionAide is built to catch <b>the leasing calls you're missing between walkthroughs</b>. Drag the sliders to your portfolio's real numbers. Even at a conservative close rate, watch what you'd recover.</p>
+      <div class="calc-box ss-reveal">
         <div class="calc-controls">
           <div class="slider-group">
             <div class="slider-top"><label for="avg">Average first-year lease value</label><span class="val" id="avgV">$21,600</span></div>
@@ -402,40 +420,40 @@
   <!-- TRUST / DONE-FOR-YOU -->
   <section class="section trust split">
     <div class="wrap">
-      <figure class="split-media">
+      <figure class="split-media ss-reveal">
         <img src="/img/property-manager-hallway-tablet-calm.jpg" alt="A property manager walks an apartment hallway with a tablet, calm and unhurried.">
       </figure>
-      <div class="split-copy">
+      <div class="split-copy ss-reveal">
         <span class="eyebrow">Done for you, start to finish</span>
         <h2>You won't set up a single thing.</h2>
         <p>We're not a login and a help doc. We build the whole front office for you, and you talk to a real person, not a ticket queue.</p>
-        <ul class="trust-list">
-          <li><span class="ck">✓</span><span>We build your Conversational AI, write your call scripts, and wire up your calendar.</span></li>
-          <li><span class="ck">✓</span><span>We stand up your website and connect your existing phone number.</span></li>
-          <li><span class="ck">✓</span><span>We tune it to how <em>your</em> portfolio runs, not a generic template.</span></li>
-          <li><span class="ck">✓</span><span>Real humans on the other end when you need us. No portals, no runaround.</span></li>
+        <ul class="trust-list ss-stagger">
+          <li class="ss-reveal"><span class="ck">✓</span><span>We build your Conversational AI, write your call scripts, and wire up your calendar.</span></li>
+          <li class="ss-reveal"><span class="ck">✓</span><span>We stand up your website and connect your existing phone number.</span></li>
+          <li class="ss-reveal"><span class="ck">✓</span><span>We tune it to how <em>your</em> portfolio runs, not a generic template.</span></li>
+          <li class="ss-reveal"><span class="ck">✓</span><span>Real humans on the other end when you need us. No portals, no runaround.</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="section" id="how">
+  <section class="section" id="how" data-ss-chapter="How it works">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head ss-reveal">
         <span class="eyebrow">Dead simple</span>
         <h2>You keep doing the work.<br>We handle everything around the call.</h2>
       </div>
-      <div class="steps">
-        <div class="step"><div class="n">01</div><div class="bar"></div><h3>We build it for you</h3><p>We set up your Conversational AI, your calendar, your call scripts, and your website. White-glove. You don't touch a thing.</p></div>
-        <div class="step"><div class="n">02</div><div class="bar"></div><h3>It answers and books</h3><p>Calls and texts, 24/7. It sounds great, captures the lead, qualifies the job, and books it.</p></div>
-        <div class="step"><div class="n">03</div><div class="bar"></div><h3>You run the portfolio</h3><p>Requests get logged and showings get booked while you handle the property in front of you. The rest is handled.</p></div>
+      <div class="steps ss-stagger">
+        <div class="step ss-reveal"><div class="n">01</div><div class="bar"></div><h3>We build it for you</h3><p>We set up your Conversational AI, your calendar, your call scripts, and your website. White-glove. You don't touch a thing.</p></div>
+        <div class="step ss-reveal"><div class="n">02</div><div class="bar"></div><h3>It answers and books</h3><p>Calls and texts, 24/7. It sounds great, captures the lead, qualifies the job, and books it.</p></div>
+        <div class="step ss-reveal"><div class="n">03</div><div class="bar"></div><h3>You run the portfolio</h3><p>Requests get logged and showings get booked while you handle the property in front of you. The rest is handled.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="section audio split" id="audio">
+  <section class="section audio split" id="audio" data-ss-chapter="Hear it">
     <div class="wrap">
-      <div class="split-copy">
+      <div class="split-copy ss-reveal">
         <span class="eyebrow">Hear for yourself</span>
         <h2>This is what your callers will hear.</h2>
         <p>A full demo call, start to finish. No hold music, no "press 1 for service."</p>
@@ -445,7 +463,7 @@
         <p class="audio-note">Answered, qualified, booked, and confirmed by ReceptionAide's Conversational AI. It tells callers up front they're speaking with an AI assistant and that the call may be recorded. This recording is from our HVAC demo line. Yours is trained on your portfolio: your buildings, your vendors, your escalation rules.</p>
         <a class="btn btn-ghost" href="#" onclick="book();return false" style="margin-top:20px">Make it answer my phone →</a>
       </div>
-      <figure class="split-media">
+      <figure class="split-media ss-reveal">
         <img src="/img/tenant-relieved-phone-apartment-evening.jpg" alt="A tenant in her apartment smiles with relief on the phone as her request gets logged.">
       </figure>
     </div>
@@ -453,22 +471,22 @@
 
   <section class="section" id="why">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head ss-reveal">
         <span class="eyebrow">Why it's a no-brainer</span>
         <h2>All upside. We took the risk out.</h2>
       </div>
-      <div class="grid4">
-        <div class="card"><div class="ico">📝</div><h3>No long contracts</h3><p>Month to month. Stay because it's making you money, not because you're locked in.</p></div>
-        <div class="card"><div class="ico">🛠️</div><h3>We do 100% of setup</h3><p>White-glove from day one. You don't build, configure, or babysit a thing.</p></div>
-        <div class="card"><div class="ico">🔒</div><h3>It's all yours</h3><p>Your phone number, your customers, your data: always yours, never locked away.</p></div>
-        <div class="card"><div class="ico">✅</div><h3>You approve it first</h3><p>Nothing answers your line until you've heard it and signed off. You stay in control of what your callers experience.</p></div>
+      <div class="grid4 ss-stagger">
+        <div class="card ss-reveal"><div class="ico">📝</div><h3>No long contracts</h3><p>Month to month. Stay because it's making you money, not because you're locked in.</p></div>
+        <div class="card ss-reveal"><div class="ico">🛠️</div><h3>We do 100% of setup</h3><p>White-glove from day one. You don't build, configure, or babysit a thing.</p></div>
+        <div class="card ss-reveal"><div class="ico">🔒</div><h3>It's all yours</h3><p>Your phone number, your customers, your data: always yours, never locked away.</p></div>
+        <div class="card ss-reveal"><div class="ico">✅</div><h3>You approve it first</h3><p>Nothing answers your line until you've heard it and signed off. You stay in control of what your callers experience.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section" id="founding">
     <div class="wrap">
-      <div class="founding-box">
+      <div class="founding-box ss-reveal">
         <div>
           <span class="eyebrow">Founding management partners</span>
           <h2>We're hand-picking a few property managers to launch with.</h2>
@@ -482,21 +500,21 @@
     </div>
   </section>
 
-  <section class="section" id="faq">
+  <section class="section" id="faq" data-ss-chapter="FAQ">
     <div class="wrap" style="max-width:820px">
-      <div class="section-head"><span class="eyebrow">Straight answers</span><h2>Questions property managers ask us.</h2></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">Does it sound like a robot?<span class="plus">+</span></div><div class="faq-a"><p>No. Callers hear a natural, friendly voice and have a real back-and-forth. It introduces itself as an AI assistant up front, then simply takes care of the caller: answers their questions, books the appointment, confirms the details.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">Can it handle customers who don't speak English?<span class="plus">+</span></div><div class="faq-a"><p>Yes. It's multilingual. It answers in English, Spanish, and other languages, so a language barrier doesn't cost you the job.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">What if it can't answer something?<span class="plus">+</span></div><div class="faq-a"><p>It takes a detailed message or routes the call to you, and texts you a full summary either way. Nothing gets buried in a voicemail box.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">Do I have to change my phone number?<span class="plus">+</span></div><div class="faq-a"><p>No. We forward your existing number, so your customers call the same number they always have. Nothing changes on your trucks or your signs.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">What if it gets something wrong?<span class="plus">+</span></div><div class="faq-a"><p>It works from your playbook only: your services, your prices, your rules. Anything outside the playbook becomes a message or a transfer to you, never a guess. And nothing answers your line until you've heard it and signed off.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">What does it cost?<span class="plus">+</span></div><div class="faq-a"><p>Plans and build fees are on the <a href="/pricing/">pricing page</a>, identical in every industry, and we quote what it shows. No long contracts.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">How long until it's live?<span class="plus">+</span></div><div class="faq-a"><p>Days, not months. We do the building, you approve it and go.</p></div></div>
-      <div class="faq-item" onclick="fq(this)"><div class="faq-q">What happens on a real emergency?<span class="plus">+</span></div><div class="faq-a"><p>Your escalation rules decide: a flooded unit can ring straight through to your on-call number, while a squeaky door becomes a logged request for the morning. You set the lines, it holds them.</p></div></div>
+      <div class="section-head ss-reveal"><span class="eyebrow">Straight answers</span><h2>Questions property managers ask us.</h2></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">Does it sound like a robot?<span class="plus">+</span></div><div class="faq-a"><p>No. Callers hear a natural, friendly voice and have a real back-and-forth. It introduces itself as an AI assistant up front, then simply takes care of the caller: answers their questions, books the appointment, confirms the details.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">Can it handle customers who don't speak English?<span class="plus">+</span></div><div class="faq-a"><p>Yes. It's multilingual. It answers in English, Spanish, and other languages, so a language barrier doesn't cost you the job.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">What if it can't answer something?<span class="plus">+</span></div><div class="faq-a"><p>It takes a detailed message or routes the call to you, and texts you a full summary either way. Nothing gets buried in a voicemail box.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">Do I have to change my phone number?<span class="plus">+</span></div><div class="faq-a"><p>No. We forward your existing number, so your customers call the same number they always have. Nothing changes on your trucks or your signs.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">What if it gets something wrong?<span class="plus">+</span></div><div class="faq-a"><p>It works from your playbook only: your services, your prices, your rules. Anything outside the playbook becomes a message or a transfer to you, never a guess. And nothing answers your line until you've heard it and signed off.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">What does it cost?<span class="plus">+</span></div><div class="faq-a"><p>Plans and build fees are on the <a href="/pricing/">pricing page</a>, identical in every industry, and we quote what it shows. No long contracts.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">How long until it's live?<span class="plus">+</span></div><div class="faq-a"><p>Days, not months. We do the building, you approve it and go.</p></div></div>
+      <div class="faq-item ss-reveal" onclick="fq(this)"><div class="faq-q">What happens on a real emergency?<span class="plus">+</span></div><div class="faq-a"><p>Your escalation rules decide: a flooded unit can ring straight through to your on-call number, while a squeaky door becomes a logged request for the morning. You set the lines, it holds them.</p></div></div>
     </div>
   </section>
 
-    <section class="demos" id="demos">
+    <section class="demos" id="demos" data-ss-chapter="Demos">
     <style>
   .demos{padding:80px 0;border-top:1px solid var(--line-soft)}
   .demos .grid3{gap:18px}
@@ -509,13 +527,13 @@
   .demos .fine{color:var(--muted);font-size:.85rem;margin-top:18px}
 </style>
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow">Live demos</span><h2>Try it on a working business.</h2><p>Three demo businesses run on ReceptionAide right now. Open the site, talk to it in your browser, or call the number.</p></div>
-      <div class="grid3">
-        <div class="demo-card"><span class="k">Property management</span><h3>Tallowood Property Management</h3><p>Emergency repairs routed, tours booked, repair requests filed and texted to the crew.</p>
+      <div class="section-head ss-reveal"><span class="eyebrow">Live demos</span><h2>Try it on a working business.</h2><p>Three demo businesses run on ReceptionAide right now. Open the site, talk to it in your browser, or call the number.</p></div>
+      <div class="grid3 ss-stagger">
+        <div class="demo-card ss-reveal"><span class="k">Property management</span><h3>Tallowood Property Management</h3><p>Emergency repairs routed, tours booked, repair requests filed and texted to the crew.</p>
           <div class="acts"><a class="btn btn-ghost" href="/property/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18558250564">(855) 825-0564</a></div></div>
-        <div class="demo-card"><span class="k">Hotels and inns</span><h3>The Windrose, Wailea</h3><p>Rates and policies answered, guests sent to the booking engine, room issues sent to housekeeping.</p>
+        <div class="demo-card ss-reveal"><span class="k">Hotels and inns</span><h3>The Windrose, Wailea</h3><p>Rates and policies answered, guests sent to the booking engine, room issues sent to housekeeping.</p>
           <div class="acts"><a class="btn btn-ghost" href="/hotel/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18556964712">(855) 696-4712</a></div></div>
-        <div class="demo-card"><span class="k">Medical and telehealth</span><h3>Meridian Health</h3><p>New patients booked, intake captured, consent signed on the patient's phone.</p>
+        <div class="demo-card ss-reveal"><span class="k">Medical and telehealth</span><h3>Meridian Health</h3><p>New patients booked, intake captured, consent signed on the patient's phone.</p>
           <div class="acts"><a class="btn btn-ghost" href="/medical/" target="_blank" rel="noopener">Visit the demo site</a><a class="tel" href="tel:+18558422436">(855) 842-2436</a></div></div>
       </div>
       <p class="fine">The demo businesses are fictional. The demo lines take no real customer or patient calls.</p>
@@ -524,9 +542,9 @@
 
   <section class="final">
     <div class="wrap">
-      <span class="eyebrow">The power behind the powerhouse</span>
-      <h2>Be the manager who picks up.</h2>
-      <p>Book a 30-minute demo. We'll play you a live call and show you exactly how it would sound answering for your portfolio.</p>
+      <span class="eyebrow ss-reveal">The power behind the powerhouse</span>
+      <h2 class="ss-reveal">Be the manager who picks up.</h2>
+      <p class="ss-reveal">Book a 30-minute demo. We'll play you a live call and show you exactly how it would sound answering for your portfolio.</p>
       <button class="btn btn-primary btn-lg" onclick="book()">Book My 30-Minute Demo</button>
       <div class="cta-note">Prices are on the pricing page. Ask about founding-client terms on your call.</div>
       <p class="ps-line">P.S. The demo is a live call and your real numbers, not a slideshow.</p>
@@ -585,16 +603,6 @@
     document.getElementById('jobsMo').textContent=Math.round(jobsMo);
   }
   [avg,calls,close].forEach(s=>s.addEventListener('input',calc));calc();
-</script>
-<script>
-  (function(){
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    const sel='.section-head,.card,.step,.player,.calc-box,.calc-frame,.trust-list li,.founding-box,.close-line,.band,.split-copy,.split-media';
-    const els=document.querySelectorAll(sel);
-    els.forEach(e=>e.classList.add('reveal'));
-    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
-    els.forEach(e=>io.observe(e));
-  })();
 </script>
 </body>
 </html>

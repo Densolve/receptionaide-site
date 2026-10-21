@@ -1,0 +1,16 @@
+{
+  "generated": "2026-10-20",
+  "source": "placeholder-gradient.mp4",
+  "portrait_source": "crop",
+  "duration_s": 8.000000,
+  "fps": 9.0,
+  "frames": 72,
+  "bytes": {
+    "scrub-large.mp4": 73359,
+    "scrub-medium.mp4": 41158,
+    "scrub-small.mp4": 23556,
+    "frames-large": 454656,
+    "frames-small": 294912,
+    "largest_frame": 4394
+  }
+}
