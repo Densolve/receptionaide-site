@@ -208,12 +208,31 @@
   @media(max-width:1359px){.ss-chapters{display:none!important}}
   .ss-js .card.ss-reveal.is-in:hover{transform:translateY(-4px)}
   .scene .ss-scrub-pin{background:var(--ink)}
-  /* the clip ends on a phone at the bottom center; the copy sits above it */
-  .ss-js .scene.ss-scrub:not(.is-static) .ss-scrub-copy{padding-bottom:30vh}
   .scene .ss-scrub-copy .wrap{width:100%}
   .scene .ss-scrub-copy .eyebrow{margin-bottom:14px}
-  .scene .ss-scrub-copy h2{font-size:clamp(1.9rem,4.6vw,3.4rem);font-weight:800;max-width:16ch;text-shadow:0 2px 28px rgba(0,0,0,.7)}
-  .scene .ss-scrub-copy p{color:var(--silver);font-size:clamp(1rem,1.8vw,1.2rem);max-width:52ch;margin-top:16px;text-shadow:0 1px 14px rgba(0,0,0,.8)}
+  .scene .ss-scrub-copy h1{font-size:clamp(2.2rem,5.6vw,4.2rem);font-weight:800;margin:0 0 20px;max-width:15ch}
+  .scene .ss-scrub-copy h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .scene .ss-scrub-copy p.sub{color:var(--silver);font-size:clamp(1rem,1.9vw,1.25rem);max-width:56ch;margin:0 0 28px;text-shadow:0 1px 14px rgba(0,0,0,.8)}
+  .scene .ss-scrub-copy .cta-note{margin-top:14px}
+  /* opener: the copy sits mid-screen at the start and fades as the clip plays; faded buttons stop taking clicks */
+  .ss-js .scene.ss-scrub:not(.is-static) .ss-scrub-copy{justify-content:center;padding-bottom:0}
+  .scene.copy-gone .ss-scrub-copy a,.scene.copy-gone .ss-scrub-copy button{pointer-events:none}
+  .ss-js .scene .ss-scrub-copy{z-index:2}
+  /* scrim behind the opener copy so it reads over the bright network; it fades with the copy */
+  .ss-js .scene:not(.is-static) .ss-scrub-copy{background:linear-gradient(90deg,rgba(5,8,15,.9) 0%,rgba(5,8,15,.7) 38%,rgba(5,8,15,0) 70%)}
+  @media(max-width:767px){.ss-js .scene:not(.is-static) .ss-scrub-copy{background:rgba(5,8,15,.72)}}
+  /* knowledge-base labels: tags on the network that pull toward the center and fade as the camera pulls back */
+  .ss-labels{display:none}
+  .ss-js .scene:not(.is-static) .ss-labels{display:block;position:absolute;inset:0;z-index:1;pointer-events:none;
+    opacity:calc(1 - min(1, var(--ss-p, 0) / .3))}
+  .ss-labels span{position:absolute;left:calc(50% + (var(--x) - 50%) * (1 - min(1, var(--ss-p, 0) / .3) * .7));top:calc(50% + (var(--y) - 50%) * (1 - min(1, var(--ss-p, 0) / .3) * .7));
+    transform:translate(-50%,-50%) scale(calc(1 - min(1, var(--ss-p, 0) / .3) * .5));
+    font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
+    background:rgba(5,8,15,.55);border:1px solid rgba(91,200,255,.45);border-radius:6px;padding:6px 10px;white-space:nowrap;
+    box-shadow:0 0 18px rgba(91,200,255,.35);backdrop-filter:blur(4px)}
+  .ss-labels span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);margin-right:8px;vertical-align:1px}
+  @media(max-width:767px){.ss-js .scene:not(.is-static) .ss-labels{display:none}}
+  .hero h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:700;margin:8px 0 18px}
 
   @media(max-width:860px){
     .nav-links{display:none}
@@ -290,24 +309,46 @@
 
 <main id="top">
 
-  <section class="hero" id="start" data-ss-chapter="Start">
+  <!-- Pinned scrub scene, the page opener: brief in ../campaigns/content/02-brief/scroll-property-management-call-path.md. Assets from make-scrub-assets.sh. -->
+  <section class="ss-scrub scene" id="start" data-ss-chapter="Start" data-ss-base="/media/scenes/call-path" data-ss-frames="72" data-ss-mode="auto">
+    <div class="ss-scrub-pin">
+      <img class="ss-scrub-poster" src="/media/scenes/call-path/poster.jpg" alt="A glowing network of connected nodes in cyan and blue on near-black, the opening frame of a camera move that pulls back to a phone ringing on a dark floor." width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
+      <div class="ss-labels" aria-hidden="true">
+        <span style="--x:58%;--y:22%">Hours</span>
+        <span style="--x:80%;--y:30%">Directory</span>
+        <span style="--x:66%;--y:46%">AI answering</span>
+        <span style="--x:88%;--y:56%">Clients</span>
+        <span style="--x:60%;--y:70%">Customers</span>
+        <span style="--x:80%;--y:80%">CRM</span>
+      </div>
+      <div class="ss-scrub-copy">
+        <div class="wrap">
+          <span class="eyebrow">The power behind the powerhouse</span>
+          <h1>While you're across town,<br>we're answering <span class="hl">the whole portfolio.</span></h1>
+          <p class="sub">ReceptionAide is your 24/7 Conversational AI front office. It answers tenant calls day and night, triages emergencies by your rules, logs routine requests with a clean paper trail, and turns leasing inquiries into scheduled showings.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary btn-lg" onclick="book()">Book a Demo</button>
+            <a class="btn btn-ghost btn-lg" href="#audio">Hear it handle a call →</a>
+          </div>
+          <div class="cta-note">30 minutes · You'll hear a live call · No contracts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero" id="demo-call" data-ss-chapter="The call">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-photo" style="background-image:url('/img/property-manager-apartment-lobby-phone-call.jpg');background-size:cover;background-position:68% 30%"></div>
       <div class="hero-scrim"></div>
       <div class="hero-grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="streak s1"></div><div class="streak s2"></div>
     </div>
     <div class="wrap hero-inner">
-      <div class="hero-copy">
-        <span class="eyebrow">The power behind the powerhouse</span>
-        <h1>While you're across town,<br>we're answering <span class="hl">the whole portfolio.</span></h1>
-        <p class="sub">ReceptionAide is your 24/7 Conversational AI front office. It answers tenant calls day and night, triages emergencies by your rules, logs routine requests with a clean paper trail, and turns leasing inquiries into scheduled showings.</p>
-        <div class="hero-cta">
-          <button class="btn btn-primary btn-lg" onclick="book()">Book a Demo</button>
-          <a class="btn btn-ghost btn-lg" href="#audio">Hear it handle a call →</a>
-        </div>
-        <div class="cta-note">30 minutes · You'll hear a live call · No contracts</div>
+      <div class="hero-copy ss-reveal">
+        <span class="eyebrow">AI receptionist</span>
+        <h2>Be the business that always picks up.</h2>
+        <p class="sub">It tells callers up front they're speaking with an AI assistant and that the call may be recorded.</p>
       </div>
-      <div class="hero-visual">
+      <div class="hero-visual ss-reveal">
         <div class="phone">
           <div class="phone-top"><span class="pdot"></span>ReceptionAide · instant reply</div>
           <div class="thread">
@@ -319,20 +360,6 @@
             <div class="msg out" style="--d:4.3s">Sent ✅ If anything changes overnight, call back any time.</div>
           </div>
           <div class="phone-badge">2 AM call → triaged and logged</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pinned scrub scene: brief in ../campaigns/content/02-brief/scroll-property-management-call-path.md. Assets from make-scrub-assets.sh. -->
-  <section class="ss-scrub scene" id="call-path" data-ss-chapter="The call" data-ss-base="/media/scenes/call-path" data-ss-frames="72" data-ss-mode="auto" data-ss-copy="end">
-    <div class="ss-scrub-pin">
-      <img class="ss-scrub-poster" src="/media/scenes/call-path/poster.jpg" alt="Glowing cyan and blue threads on a near-black field, the opening frame of a camera move that ends on a phone lit by an incoming call." width="1920" height="1080" loading="lazy" decoding="async">
-      <div class="ss-scrub-copy">
-        <div class="wrap">
-          <span class="eyebrow">AI receptionist</span>
-          <h2>Be the manager who picks up.</h2>
-          <p>It tells callers up front they're speaking with an AI assistant and that the call may be recorded.</p>
         </div>
       </div>
     </div>
@@ -545,7 +572,7 @@
   <section class="final">
     <div class="wrap">
       <span class="eyebrow ss-reveal">The power behind the powerhouse</span>
-      <h2 class="ss-reveal">Be the manager who picks up.</h2>
+      <h2 class="ss-reveal">Be the business that always picks up.</h2>
       <p class="ss-reveal">Book a 30-minute demo. We'll play you a live call and show you exactly how it would sound answering for your portfolio.</p>
       <button class="btn btn-primary btn-lg" onclick="book()">Book My 30-Minute Demo</button>
       <div class="cta-note">Prices are on the pricing page. Ask about founding-client terms on your call.</div>
@@ -569,8 +596,8 @@
 </footer>
 
 <script>
-  const power=document.getElementById('power'),hdr=document.getElementById('hdr');
-  function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);power.style.width=(p*100)+'%';hdr.classList.toggle('scrolled',h.scrollTop>20);}
+  const power=document.getElementById('power'),hdr=document.getElementById('hdr'),scene=document.querySelector('.scene');
+  function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);power.style.width=(p*100)+'%';hdr.classList.toggle('scrolled',h.scrollTop>20);if(scene){const r=scene.getBoundingClientRect(),q=-r.top/Math.max(1,scene.offsetHeight-innerHeight);scene.classList.toggle('copy-gone',q>.2);}}
   document.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
   // demo call player
