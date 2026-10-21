@@ -1,16 +1,16 @@
 {
   "generated": "2026-10-20",
-  "source": "placeholder-gradient.mp4",
+  "source": "call-path-cinema-studio-3-0.mp4",
   "portrait_source": "crop",
-  "duration_s": 8.000000,
-  "fps": 9.0,
+  "duration_s": 8.041667,
+  "fps": 8.9534,
   "frames": 72,
   "bytes": {
-    "scrub-large.mp4": 73359,
-    "scrub-medium.mp4": 41158,
-    "scrub-small.mp4": 23556,
-    "frames-large": 454656,
-    "frames-small": 294912,
-    "largest_frame": 4394
+    "scrub-large.mp4": 1403413,
+    "scrub-medium.mp4": 714419,
+    "scrub-small.mp4": 314130,
+    "frames-large": 1826816,
+    "frames-small": 1576960,
+    "largest_frame": 73800
   }
 }

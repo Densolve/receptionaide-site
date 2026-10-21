@@ -208,6 +208,8 @@
   @media(max-width:1359px){.ss-chapters{display:none!important}}
   .ss-js .card.ss-reveal.is-in:hover{transform:translateY(-4px)}
   .scene .ss-scrub-pin{background:var(--ink)}
+  /* the clip ends on a phone at the bottom center; the copy sits above it */
+  .ss-js .scene.ss-scrub:not(.is-static) .ss-scrub-copy{padding-bottom:30vh}
   .scene .ss-scrub-copy .wrap{width:100%}
   .scene .ss-scrub-copy .eyebrow{margin-bottom:14px}
   .scene .ss-scrub-copy h2{font-size:clamp(1.9rem,4.6vw,3.4rem);font-weight:800;max-width:16ch;text-shadow:0 2px 28px rgba(0,0,0,.7)}
