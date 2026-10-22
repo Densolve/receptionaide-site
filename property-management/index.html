@@ -207,6 +207,8 @@
   :root{--ss-chapter-color:rgba(213,223,234,.45);--ss-chapter-active:var(--cyan);--ss-chapter-left:20px}
   @media(max-width:1359px){.ss-chapters{display:none!important}}
   .ss-js .card.ss-reveal.is-in:hover{transform:translateY(-4px)}
+  /* the clip runs 104 frames (ends on the logo), so the scene holds longer and the copy timing is scaled to keep pace */
+  .scene{--ss-scrub-height:300vh;--ss-copy-fade:.2}
   .scene .ss-scrub-pin{background:var(--ink)}
   .scene .ss-scrub-copy .wrap{width:100%}
   .scene .ss-scrub-copy .eyebrow{margin-bottom:14px}
@@ -224,9 +226,9 @@
   /* knowledge-base labels: tags on the network that pull toward the center and fade as the camera pulls back */
   .ss-labels{display:none}
   .ss-js .scene:not(.is-static) .ss-labels{display:block;position:absolute;inset:0;z-index:1;pointer-events:none;
-    opacity:calc(1 - min(1, var(--ss-p, 0) / .3))}
-  .ss-labels span{position:absolute;left:calc(50% + (var(--x) - 50%) * (1 - min(1, var(--ss-p, 0) / .3) * .7));top:calc(50% + (var(--y) - 50%) * (1 - min(1, var(--ss-p, 0) / .3) * .7));
-    transform:translate(-50%,-50%) scale(calc(1 - min(1, var(--ss-p, 0) / .3) * .5));
+    opacity:calc(1 - min(1, var(--ss-p, 0) / .23))}
+  .ss-labels span{position:absolute;left:calc(50% + (var(--x) - 50%) * (1 - min(1, var(--ss-p, 0) / .23) * .7));top:calc(50% + (var(--y) - 50%) * (1 - min(1, var(--ss-p, 0) / .23) * .7));
+    transform:translate(-50%,-50%) scale(calc(1 - min(1, var(--ss-p, 0) / .23) * .5));
     font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
     background:rgba(5,8,15,.55);border:1px solid rgba(91,200,255,.45);border-radius:6px;padding:6px 10px;white-space:nowrap;
     box-shadow:0 0 18px rgba(91,200,255,.35);backdrop-filter:blur(4px)}
@@ -310,9 +312,9 @@
 <main id="top">
 
   <!-- Pinned scrub scene, the page opener: brief in ../campaigns/content/02-brief/scroll-property-management-call-path.md. Assets from make-scrub-assets.sh. -->
-  <section class="ss-scrub scene" id="start" data-ss-chapter="Start" data-ss-base="/media/scenes/call-path" data-ss-frames="80" data-ss-mode="auto">
+  <section class="ss-scrub scene" id="start" data-ss-chapter="Start" data-ss-base="/media/scenes/call-path" data-ss-frames="104" data-ss-mode="auto">
     <div class="ss-scrub-pin">
-      <img class="ss-scrub-poster" src="/media/scenes/call-path/poster.jpg" alt="A glowing network of connected nodes in cyan and blue on near-black, the opening frame of a camera move that pulls back through a tunnel of light to a phone showing an incoming ReceptionAide call, ringing on a dark floor." width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
+      <img class="ss-scrub-poster" src="/media/scenes/call-path/poster.jpg" alt="A glowing network of connected nodes in cyan and blue on near-black, the opening frame of a camera move that pulls back through a tunnel of light to a phone showing an incoming ReceptionAide call on a dark floor, which collapses into a streak of light and opens into the ReceptionAide logo." width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
       <div class="ss-labels" aria-hidden="true">
         <span style="--x:58%;--y:22%">Hours</span>
         <span style="--x:80%;--y:30%">Directory</span>
@@ -597,7 +599,7 @@
 
 <script>
   const power=document.getElementById('power'),hdr=document.getElementById('hdr'),scene=document.querySelector('.scene');
-  function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);power.style.width=(p*100)+'%';hdr.classList.toggle('scrolled',h.scrollTop>20);if(scene){const r=scene.getBoundingClientRect(),q=-r.top/Math.max(1,scene.offsetHeight-innerHeight);scene.classList.toggle('copy-gone',q>.2);}}
+  function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);power.style.width=(p*100)+'%';hdr.classList.toggle('scrolled',h.scrollTop>20);if(scene){const r=scene.getBoundingClientRect(),q=-r.top/Math.max(1,scene.offsetHeight-innerHeight);scene.classList.toggle('copy-gone',q>.16);}}
   document.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
   // demo call player

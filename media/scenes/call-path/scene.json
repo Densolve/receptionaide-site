@@ -1,16 +1,16 @@
 {
-  "generated": "2026-10-21",
-  "source": "call-path-v3-spliced.mp4",
+  "generated": "2026-10-22",
+  "source": "call-path-v3-spliced.mp4 + logo tail (24 frames: phone collapses to a light streak, logo unfolds)",
   "portrait_source": "crop",
-  "duration_s": 9.583008,
+  "duration_s": 12.457925,
   "fps": 8.3481,
-  "frames": 80,
+  "frames": 104,
   "bytes": {
-    "scrub-large.mp4": 3184710,
-    "scrub-medium.mp4": 1710940,
-    "scrub-small.mp4": 816072,
-    "frames-large": 4431872,
-    "frames-small": 3760128,
+    "scrub-large.mp4": 3396963,
+    "scrub-medium.mp4": 1863753,
+    "scrub-small.mp4": 878384,
+    "frames-large": 4583784,
+    "frames-small": 3894104,
     "largest_frame": 107688
   }
 }
